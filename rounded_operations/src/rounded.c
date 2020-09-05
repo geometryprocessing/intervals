@@ -1,4 +1,5 @@
 #include "rounded.h"
+
 // perform addition of two double
 // with rounding mode set downward
 // the code will be further modified inside llvm ir
@@ -46,4 +47,3 @@ double multiply_up(double a, double b)
 {
     return a * b;
 }
-

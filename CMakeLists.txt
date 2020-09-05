@@ -13,4 +13,5 @@ file(GLOB LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/rounded_operations/src/*.dylib"
 message("LIBRARIES = ${LIBRARIES}")
 
 add_executable(unit_tests ${test_sources})
+target_include_directories(unit_tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/rounded_operations/src/)
 target_link_libraries(unit_tests ${LIBRARIES})
