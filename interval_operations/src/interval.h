@@ -10,14 +10,14 @@ extern "C" inline bool is_negative(double a);
 // returns if a is positive
 extern "C" inline bool is_positive(double a);
 
+// returns if a is zero
+extern "C" inline bool is_zero(double a);
+
 // returns the larger of two doubles
 extern "C" inline double max(double a, double b);
 
 // returns the smaller of two doubles
 extern "C" inline double min(double a, double b);
-
-// returns if a is zero
-extern "C" inline bool is_zero(double a);
 
 // perform addition of two double
 // with rounding mode set downward
