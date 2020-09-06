@@ -78,6 +78,7 @@ extern "C"
         const double bu = b.upper;
         interval result;
         if (is_negative(al))
+        {
             if (is_positive(au))
             {
                 if (is_negative(bl))
@@ -145,29 +146,34 @@ extern "C"
                     }
                 }
             }
+        }
         else
         {
             if (is_positive(au))
             {
                 if (is_negative(bl))
                 {
-                    if (is_positive(bu)){
+                    if (is_positive(bu))
+                    {
                         // situation 9
                         // a is greater than or equal to 0, b ranges from negative to positive
                         return {multiply_down(au, bl), multiply_up(au, bu)};
                     }
-                    else{
+                    else
+                    {
                         // situation 10
                         // a is greater than or equal to 0, b is less than or equal to 0
                         return {multiply_down(au, bl), multiply_up(al, bu)};
                     }
                 }
-                else if (is_positive(bu)){
+                else if (is_positive(bu))
+                {
                     // situation 11
                     // a is greater than or equal to 0, b is greater than or equal to 0
                     return {multiply_down(al, bl), multiply_up(au, bu)};
                 }
-                else {
+                else
+                {
                     // situation 12
                     // a is greater than or equal to 0, b is strictly 0
                     return {static_cast<double>(0), static_cast<double>(0)};
