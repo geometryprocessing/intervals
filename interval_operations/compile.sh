@@ -1,6 +1,6 @@
 cd src
 # echo "Compile to llvm ir"
-# clang++ -fpic interval.cc -emit-llvm -S -c -o interval.ll -O3
+# clang++ -fpic interval.cc -emit-llvm -S -c -o interval.ll -O1
 echo "Compile to bitcode"
 /usr/local/opt/llvm/bin/llvm-as interval.ll -o interval.bc
 echo "Compile to object file"
