@@ -9,9 +9,7 @@ set(test_sources
 
 
 ## add the dynamic library
-# add_library(rounded SHARED IMPORTED)
-# set_property(TARGET rounded PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/rounded_operations/src/rounded.dylib)
-file(GLOB_RECURSE LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/rounded_operations/src/*.dylib")
+file(GLOB_RECURSE LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/*.dylib")
 message("LIBRARIES = ${LIBRARIES}")
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
@@ -20,9 +18,9 @@ endif()
 
 add_executable(unit_tests ${test_sources})
 target_link_libraries(unit_tests PUBLIC "${LIBRARIES}")
-target_include_directories(unit_tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/rounded_operations/src/)
+target_include_directories(unit_tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/)
 
 add_custom_command (TARGET unit_tests
     POST_BUILD COMMAND "${CMAKE_INSTALL_NAME_TOOL}"
-        "-change" "rounded.dylib" "@executable_path/../rounded_operations/src/rounded.dylib"
+        "-change" "interval.dylib" "@executable_path/../interval_operations/src/interval.dylib"
     "$<TARGET_FILE:unit_tests>" VERBATIM)
