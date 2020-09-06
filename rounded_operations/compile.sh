@@ -1,6 +1,6 @@
 cd src
 # echo "Compile to llvm ir"
-# clang -fpic rounded.c -emit-llvm -S -c -o rounded.ll -O3
+# clang++ -fpic rounded.c -emit-llvm -S -c -o rounded.ll -O3
 echo "Compile to bitcode"
 /usr/local/opt/llvm/bin/llvm-as rounded.ll -o rounded.bc
 echo "Compile to object file"
