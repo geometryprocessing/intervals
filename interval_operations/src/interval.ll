@@ -85,29 +85,29 @@ define { double, double } @mult(%struct.interval* nocapture readonly dereference
   %8 = load double, double* %7, align 8, !tbaa !4
   %9 = getelementptr inbounds %struct.interval, %struct.interval* %1, i64 0, i32 1
   %10 = load double, double* %9, align 8, !tbaa !9
-  %11 = tail call zeroext i1 @is_negative(double %4)
-  %12 = tail call zeroext i1 @is_positive(double %6)
-  br i1 %11, label %13, label %44
+  %11 = tail call zeroext i1 @is_negative(double %4) ; check if a.lower is negative
+  %12 = tail call zeroext i1 @is_positive(double %6) ; check if a.upper is positive
+  br i1 %11, label %13, label %44 ; if a.lower is negative, bring code block 13, otherwise 44
 
 13:                                               ; preds = %2
-  %14 = tail call zeroext i1 @is_negative(double %8)
-  %15 = tail call zeroext i1 @is_positive(double %10)
-  br i1 %12, label %16, label %32
+  %14 = tail call zeroext i1 @is_negative(double %8) ; check if b.lower is negative
+  %15 = tail call zeroext i1 @is_positive(double %10) ; check if b.upper is positive
+  br i1 %12, label %16, label %32 ; if a.upper is positive, bring code block 16, otherwise 32
 
 16:                                               ; preds = %13
-  br i1 %14, label %17, label %28
+  br i1 %14, label %17, label %28 ; if b.lower is negative, bring code block 17, otherwise 28
 
 17:                                               ; preds = %16
-  br i1 %15, label %18, label %25
+  br i1 %15, label %18, label %25 ; if b.upper is positive, bring code block 18, otherwise 25
 
 18:                                               ; preds = %17
-  %19 = tail call double @multiply_down(double %4, double %10)
-  %20 = tail call double @multiply_down(double %6, double %8)
-  %21 = tail call double @min(double %19, double %20)
-  %22 = tail call double @multiply_up(double %4, double %8)
-  %23 = tail call double @multiply_up(double %6, double %10)
-  %24 = tail call double @max(double %22, double %23)
-  br label %58
+  %19 = tail call double @multiply_down(double %4, double %10) ; multiply downward a.lower and b.upper
+  %20 = tail call double @multiply_down(double %6, double %8) ; multiply downward a.upper, b.lower
+  %21 = tail call double @min(double %19, double %20) ; get the min of %19 and %20
+  %22 = tail call double @multiply_up(double %4, double %8) ; multiply upward a.lower and b.lower
+  %23 = tail call double @multiply_up(double %6, double %10) ; multiply upward a.upper and b.upper
+  %24 = tail call double @max(double %22, double %23) ; get the max of %23 and %24
+  br label %58 ; bring code block 58
 
 25:                                               ; preds = %17
   %26 = tail call double @multiply_down(double %6, double %8)
@@ -175,11 +175,11 @@ define { double, double } @mult(%struct.interval* nocapture readonly dereference
   br label %58
 
 58:                                               ; preds = %44, %54, %40, %28, %55, %52, %50, %41, %37, %34, %29, %25, %18
-  %59 = phi double [ %21, %18 ], [ %26, %25 ], [ %30, %29 ], [ %35, %34 ], [ %38, %37 ], [ %42, %41 ], [ %49, %50 ], [ %49, %52 ], [ %56, %55 ], [ 0.000000e+00, %28 ], [ 0.000000e+00, %40 ], [ 0.000000e+00, %54 ], [ 0.000000e+00, %44 ]
-  %60 = phi double [ %24, %18 ], [ %27, %25 ], [ %31, %29 ], [ %36, %34 ], [ %39, %37 ], [ %43, %41 ], [ %51, %50 ], [ %53, %52 ], [ %57, %55 ], [ 0.000000e+00, %28 ], [ 0.000000e+00, %40 ], [ 0.000000e+00, %54 ], [ 0.000000e+00, %44 ]
-  %61 = insertvalue { double, double } undef, double %59, 0
-  %62 = insertvalue { double, double } %61, double %60, 1
-  ret { double, double } %62
+  %59 = phi double [ %21, %18 ], [ %26, %25 ], [ %30, %29 ], [ %35, %34 ], [ %38, %37 ], [ %42, %41 ], [ %49, %50 ], [ %49, %52 ], [ %56, %55 ], [ 0.000000e+00, %28 ], [ 0.000000e+00, %40 ], [ 0.000000e+00, %54 ], [ 0.000000e+00, %44 ] ; for each of the list, if the second element is true, the first element will be set to value of %59
+  %60 = phi double [ %24, %18 ], [ %27, %25 ], [ %31, %29 ], [ %36, %34 ], [ %39, %37 ], [ %43, %41 ], [ %51, %50 ], [ %53, %52 ], [ %57, %55 ], [ 0.000000e+00, %28 ], [ 0.000000e+00, %40 ], [ 0.000000e+00, %54 ], [ 0.000000e+00, %44 ] ; for each of the list, if the second element is true, the first element will be set to value of %60
+  %61 = insertvalue { double, double } undef, double %59, 0 ; insert the value of %59 into empty struct 
+  %62 = insertvalue { double, double } %61, double %60, 1 ; insert value of %60 into %61, making it a contiguous 2 double struct
+  ret { double, double } %62 ; return %62
 }
 
 ; Function Attrs: inlinehint nounwind ssp uwtable
