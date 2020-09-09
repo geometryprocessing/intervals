@@ -82,6 +82,21 @@ define double @mod_up(double, double) local_unnamed_addr #0 {
   ret double %3
 }
 
+; Function Attrs: norecurse nounwind readnone ssp uwtable
+define double @floor(double) local_unnamed_addr #0 {
+  ; call the llvm intrinsic to perform upward remainder
+  %2 = call double @llvm.experimental.constrained.floor(double %0, metadata !"fpexcept.strict")
+  ret double %2
+}
+
+; Function Attrs: norecurse nounwind readnone ssp uwtable
+define double @ceil(double) local_unnamed_addr #0 {
+  ; call the llvm intrinsic to perform upward remainder
+  %2 = call double @llvm.experimental.constrained.ceil(double %0, metadata !"fpexcept.strict")
+  ret double %2
+}
+
+
 ; ; Function Attrs: norecurse nounwind readnone ssp uwtable
 ; define double @mod_down(double, double) local_unnamed_addr #0 {
 ;   ; call the llvm intrinsic to perform downward division
@@ -110,3 +125,5 @@ declare double @llvm.experimental.constrained.fdiv(double, double, metadata, met
 declare double @llvm.experimental.constrained.frem(double, double, metadata, metadata) ; for the modular operations
 declare double @llvm.experimental.constrained.floor(double, metadata) ; for flooring operations
 declare double @llvm.experimental.constrained.cos(double, metadata, metadata) ; for the cosine operation
+declare double @llvm.experimental.constrained.floor(double, metadata) ; for the floor operation
+declare double @llvm.experimental.constrained.ceil(double, metadata) ; for the ceil operation
