@@ -27,5 +27,15 @@ int main()
     cos = cosine_interval(test_interval);
     print_cos_result(test_interval, cos);
 
+    test_interval.lower = -0.2;
+    test_interval.upper = 0;
+    cos = cosine_interval(test_interval);
+    print_cos_result(test_interval, cos);
+
+    test_interval.lower = -0.2;
+    test_interval.upper = 0.3;
+    cos = cosine_interval(test_interval);
+    print_cos_result(test_interval, cos);
+
     return 0;
 }
