@@ -89,6 +89,21 @@ define double @mod_up(double, double) local_unnamed_addr #0 {
   ret double %3
 }
 
+; Function Attrs: norecurse nounwind readnone ssp uwtable
+define double @floor(double) local_unnamed_addr #0 {
+  ; call the llvm intrinsic to perform upward remainder
+  %2 = call double @llvm.experimental.constrained.floor(double %0, metadata !"fpexcept.strict")
+  ret double %2
+}
+
+; Function Attrs: norecurse nounwind readnone ssp uwtable
+define double @ceil(double) local_unnamed_addr #0 {
+  ; call the llvm intrinsic to perform upward remainder
+  %2 = call double @llvm.experimental.constrained.ceil(double %0, metadata !"fpexcept.strict")
+  ret double %2
+}
+
+
 ; ; Function Attrs: norecurse nounwind readnone ssp uwtable
 ; define double @mod_down(double, double) local_unnamed_addr #0 {
 ;   ; call the llvm intrinsic to perform downward division
@@ -115,8 +130,9 @@ declare double @llvm.experimental.constrained.fsub(double, double, metadata, met
 declare double @llvm.experimental.constrained.fmul(double, double, metadata, metadata) ; for the rounding multiplication operations
 declare double @llvm.experimental.constrained.fdiv(double, double, metadata, metadata) ; for the rounding division operations
 declare double @llvm.experimental.constrained.frem(double, double, metadata, metadata) ; for the modular operations
-declare double @llvm.experimental.constrained.floor(double, metadata) ; for flooring operations
 declare double @llvm.experimental.constrained.cos(double, metadata, metadata) ; for the cosine operation
+declare double @llvm.experimental.constrained.floor(double, metadata) ; for the floor operation
+declare double @llvm.experimental.constrained.ceil(double, metadata) ; for the ceil operation
 
 ; Function Attrs: norecurse nounwind readonly ssp uwtable
 define { double, double } @add_interval(%struct.interval* nocapture readonly dereferenceable(16), %struct.interval* nocapture readonly dereferenceable(16)) local_unnamed_addr #1 {
@@ -292,60 +308,65 @@ define { double, double } @cosine_interval(%struct.interval* nocapture readonly 
   %4 = getelementptr inbounds %struct.interval, %struct.interval* %0, i64 0, i32 1
   %5 = load double, double* %4, align 8, !tbaa !9
   %6 = tail call double @divide_up(double %3, double 0x400921FB54442D18)
-  %7 = tail call double @divide_down(double %5, double 0x400921FB54442D18)
-  %8 = fadd double %6, 1.000000e+00
-  %9 = fcmp ugt double %8, %7
-  br i1 %9, label %10, label %35
+  %7 = tail call double @llvm.ceil.f64(double %6)
+  %8 = tail call double @divide_down(double %5, double 0x400921FB54442D18)
+  %9 = fadd double %7, 1.000000e+00
+  %10 = fcmp ugt double %9, %8
+  br i1 %10, label %11, label %36
 
-10:                                               ; preds = %1
-  %11 = fcmp ugt double %6, %7
-  br i1 %11, label %28, label %12
+11:                                               ; preds = %1
+  %12 = fcmp ugt double %7, %8
+  br i1 %12, label %29, label %13
 
-12:                                               ; preds = %10
-  %13 = tail call double @mod_down(double %6, double 2.000000e+00)
-  %14 = fcmp oeq double %13, 1.000000e+00
-  br i1 %14, label %15, label %19
+13:                                               ; preds = %11
+  %14 = tail call double @mod_down(double %7, double 2.000000e+00)
+  %15 = fcmp oeq double %14, 1.000000e+00
+  br i1 %15, label %16, label %20
 
-15:                                               ; preds = %12
-  %16 = tail call double @cosine_up(double %3)
-  %17 = tail call double @cosine_up(double %5)
-  %18 = tail call double @max(double %16, double %17)
-  br label %35
+16:                                               ; preds = %13
+  %17 = tail call double @cosine_up(double %3)
+  %18 = tail call double @cosine_up(double %5)
+  %19 = tail call double @max(double %17, double %18)
+  br label %36
 
-19:                                               ; preds = %12
-  %20 = fcmp oeq double %13, 0.000000e+00
-  %21 = tail call double @cosine_down(double %3)
-  %22 = tail call double @cosine_down(double %5)
-  %23 = tail call double @min(double %21, double %22)
-  br i1 %20, label %35, label %24
+20:                                               ; preds = %13
+  %21 = fcmp oeq double %14, 0.000000e+00
+  %22 = tail call double @cosine_down(double %3)
+  %23 = tail call double @cosine_down(double %5)
+  %24 = tail call double @min(double %22, double %23)
+  br i1 %21, label %36, label %25
 
-24:                                               ; preds = %19
-  %25 = tail call double @cosine_up(double %3)
-  %26 = tail call double @cosine_up(double %5)
-  %27 = tail call double @max(double %25, double %26)
-  br label %35
+25:                                               ; preds = %20
+  %26 = tail call double @cosine_up(double %3)
+  %27 = tail call double @cosine_up(double %5)
+  %28 = tail call double @max(double %26, double %27)
+  br label %36
 
-28:                                               ; preds = %10
-  %29 = tail call double @cosine_down(double %3)
-  %30 = tail call double @cosine_down(double %5)
-  %31 = tail call double @min(double %29, double %30)
-  %32 = tail call double @cosine_up(double %3)
-  %33 = tail call double @cosine_up(double %5)
-  %34 = tail call double @max(double %32, double %33)
-  br label %35
+29:                                               ; preds = %11
+  %30 = tail call double @cosine_down(double %3)
+  %31 = tail call double @cosine_down(double %5)
+  %32 = tail call double @min(double %30, double %31)
+  %33 = tail call double @cosine_up(double %3)
+  %34 = tail call double @cosine_up(double %5)
+  %35 = tail call double @max(double %33, double %34)
+  br label %36
 
-35:                                               ; preds = %15, %24, %19, %1, %28
-  %36 = phi double [ %31, %28 ], [ -1.000000e+00, %1 ], [ -1.000000e+00, %15 ], [ %23, %24 ], [ %23, %19 ]
-  %37 = phi double [ %34, %28 ], [ 1.000000e+00, %1 ], [ %18, %15 ], [ %27, %24 ], [ 1.000000e+00, %19 ]
-  %38 = insertvalue { double, double } undef, double %36, 0
-  %39 = insertvalue { double, double } %38, double %37, 1
-  ret { double, double } %39
+36:                                               ; preds = %16, %25, %20, %1, %29
+  %37 = phi double [ %32, %29 ], [ -1.000000e+00, %1 ], [ -1.000000e+00, %16 ], [ %24, %25 ], [ %24, %20 ]
+  %38 = phi double [ %35, %29 ], [ 1.000000e+00, %1 ], [ %19, %16 ], [ %28, %25 ], [ 1.000000e+00, %20 ]
+  %39 = insertvalue { double, double } undef, double %37, 0
+  %40 = insertvalue { double, double } %39, double %38, 1
+  ret { double, double } %40
 }
+
+; Function Attrs: nounwind readnone speculatable
+declare double @llvm.ceil.f64(double) #4
 
 attributes #0 = { norecurse nounwind readnone ssp uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "darwin-stkchk-strong-link" "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "probe-stack"="___chkstk_darwin" "stack-protector-buffer-size"="8" "target-cpu"="penryn" "target-features"="+cx16,+cx8,+fxsr,+mmx,+sahf,+sse,+sse2,+sse3,+sse4.1,+ssse3,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #1 = { norecurse nounwind readonly ssp uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "darwin-stkchk-strong-link" "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "probe-stack"="___chkstk_darwin" "stack-protector-buffer-size"="8" "target-cpu"="penryn" "target-features"="+cx16,+cx8,+fxsr,+mmx,+sahf,+sse,+sse2,+sse3,+sse4.1,+ssse3,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #2 = { nounwind ssp uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "darwin-stkchk-strong-link" "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "probe-stack"="___chkstk_darwin" "stack-protector-buffer-size"="8" "target-cpu"="penryn" "target-features"="+cx16,+cx8,+fxsr,+mmx,+sahf,+sse,+sse2,+sse3,+sse4.1,+ssse3,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #3 = { inlinehint nounwind ssp uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "darwin-stkchk-strong-link" "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "probe-stack"="___chkstk_darwin" "stack-protector-buffer-size"="8" "target-cpu"="penryn" "target-features"="+cx16,+cx8,+fxsr,+mmx,+sahf,+sse,+sse2,+sse3,+sse4.1,+ssse3,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #4 = { nounwind readnone speculatable }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

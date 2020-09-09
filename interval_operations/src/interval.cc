@@ -88,6 +88,16 @@ extern "C"
         return a - b;
     }
 
+    double floor(double a)
+    {
+        return a;
+    }
+
+    double ceil(double a)
+    {
+        return a;
+    }
+
     interval add_interval(const interval &a, const interval &b)
     {
         interval result = {add_down(a.lower, b.lower), add_up(a.upper, b.upper)};
@@ -223,7 +233,7 @@ extern "C"
     {
         double lower = a.lower;
         double upper = a.upper;
-        double lower_ratio = divide_up(lower, static_cast<double>(PI));
+        double lower_ratio = ceil(divide_up(lower, static_cast<double>(PI)));
         double upper_ratio = divide_down(upper, static_cast<double>(PI));
         double lower_rem = mod_down(lower, static_cast<double>(PI));
         double upper_rem = mod_down(upper, static_cast<double>(PI));

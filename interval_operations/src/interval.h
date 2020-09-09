@@ -78,6 +78,14 @@ extern "C" double mod_down(double a, double b);
 // the code will be further modified inside llvm ir
 extern "C" double mod_up(double a, double b);
 
+// computes the floor of a double
+// the code will be further modified inside llvm ir
+extern "C" double floor(double a);
+
+// computes the ceil of a double
+// the code will be further modified inside llvm ir
+extern "C" double ceil(double a);
+
 // compute the addition of two intervals
 // a + b
 extern "C" interval add_interval(const interval &a, const interval &b);
