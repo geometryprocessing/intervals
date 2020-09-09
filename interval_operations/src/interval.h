@@ -48,18 +48,52 @@ extern "C" double multiply_down(double a, double b);
 // the code will be further modified inside llvm ir
 extern "C" double multiply_up(double a, double b);
 
+// perform division of two doubles, a/b
+// with the rounding mode set downward
+// the code will be further modified inside llvm ir
+extern "C" double divide_down(double a, double b);
+
+// perform division of two doubles, a/b
+// with the rounding mode set upward
+// the code will be further modified inside llvm ir
+extern "C" double divide_up(double a, double b);
+
+// perform the cosine of a double, cos(a)
+// with the rounding mode set downward
+// the code will be further modified inside llvm ir
+extern "C" double cosine_down(double a);
+
+// perform the cosine of a double, cos(a)
+// with the rounding mode set upward
+// the code will be further modified inside llvm ir
+extern "C" double cosine_up(double a);
+
+// computes the modulo of two doubles, a%b
+// with the rounding mode set downward
+// the code will be further modified inside llvm ir
+extern "C" double mod_down(double a, double b);
+
+// computes the modulo of two doubles, a%b
+// with the rounding mode set upward
+// the code will be further modified inside llvm ir
+extern "C" double mod_up(double a, double b);
+
 // compute the addition of two intervals
 // a + b
-extern "C" interval add(const interval &a, const interval &b);
+extern "C" interval add_interval(const interval &a, const interval &b);
 
 // compute the subtraction of two intervals
 // a - b
-extern "C" interval subtract(const interval &a, const interval &b);
+extern "C" interval subtract_interval(const interval &a, const interval &b);
 
 // conpute the multiplication of two intervals
 // a * b
-extern "C" interval mult(const interval &a, const interval &b);
+extern "C" interval mult_interval(const interval &a, const interval &b);
 
 // compute the division of two intervals
 // a / b
-extern "C" interval div(const interval &a, const interval &b);
+extern "C" interval div_interval(const interval &a, const interval &b);
+
+// compute the cosine of the interval
+// cos(a)
+extern "C" interval cosine_interval(const interval &a);
