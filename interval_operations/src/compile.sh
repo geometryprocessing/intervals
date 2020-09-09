@@ -1,4 +1,3 @@
-cd src
 # echo "Compile to llvm ir"
 # clang++ -fpic interval.cc -emit-llvm -S -c -o interval.ll -O1
 echo "Compile to bitcode"
@@ -9,4 +8,3 @@ echo "Compile to dynamic library"
 clang interval.o -o interval.dylib -dynamiclib -shared
 echo "Found operatiuons"
 nm -gU interval.dylib
-cd ..
