@@ -69,16 +69,16 @@ define double @divide_up(double, double) local_unnamed_addr #0 {
 
 ; Function Attrs: ssp uwtable
 define double @cosine_down(double returned) local_unnamed_addr #0 {
-  %2 = call double @llvm.experimental.constrained.cos(double %0, metadata !"round.downward", metadata !"fpexcept.strict")
-  %3 = call i32 @fesetround(i32 1024)
-  ret double %2
+  %2 = tail call i32 @fesetround(i32 1024)
+  %3 = call double @llvm.experimental.constrained.cos(double %0, metadata !"round.downward", metadata !"fpexcept.strict")
+  ret double %3
 }
 
 ; Function Attrs: ssp uwtable
 define double @cosine_up(double returned) local_unnamed_addr #0 {
-  %2 = call double @llvm.experimental.constrained.cos(double %0, metadata !"round.upward", metadata !"fpexcept.strict")
-  %3 = call i32 @fesetround(i32 2048)
-  ret double %2
+  %2 = tail call i32 @fesetround(i32 2048)
+  %3 = call double @llvm.experimental.constrained.cos(double %0, metadata !"round.upward", metadata !"fpexcept.strict")
+  ret double %3
 }
 
 ; Function Attrs: ssp uwtable
@@ -97,14 +97,14 @@ define double @mod_up(double, double) local_unnamed_addr #0 {
 
 ; Function Attrs: nounwind readnone ssp uwtable
 define double @floor(double returned) local_unnamed_addr #2 {
-  %2 = call i32 @fesetround(i32 1024)
+  %2 = tail call i32 @fesetround(i32 1024) #5
   %3 = call double @llvm.experimental.constrained.floor(double %0, metadata !"fpexcept.strict")
   ret double %3
 }
 
 ; Function Attrs: nounwind readnone ssp uwtable
 define double @ceil(double returned) local_unnamed_addr #2 {
-  %2 = call i32 @fesetround(i32 2048)
+  %2 = tail call i32 @fesetround(i32 2048) #5
   %3 = call double @llvm.experimental.constrained.ceil(double %0, metadata !"fpexcept.strict")
   ret double %3
 }
@@ -319,7 +319,7 @@ define { double, double } @cosine_interval(%struct.interval* nocapture readonly 
   %10 = tail call double @mod_down(double %5, double 0x400921FB54442D18)
   %11 = fadd double %7, 1.000000e+00
   %12 = fcmp ugt double %11, %8
-  br i1 %12, label %13, label %65
+  br i1 %12, label %13, label %62
 
 13:                                               ; preds = %1
   %14 = fcmp ugt double %7, %8
@@ -348,49 +348,46 @@ define { double, double } @cosine_interval(%struct.interval* nocapture readonly 
   %33 = tail call double @cosine_up(double %3)
   %34 = tail call double @cosine_up(double %5)
   %35 = tail call double @max(double %33, double %34)
-  br label %65
+  br label %62
 
 36:                                               ; preds = %15
   %37 = fcmp oeq double %16, 0.000000e+00
   %38 = tail call double @cosine_down(double %3)
   %39 = tail call double @cosine_down(double %5)
   %40 = tail call double @min(double %38, double %39)
-  br i1 %37, label %65, label %41
+  br i1 %37, label %62, label %41
 
 41:                                               ; preds = %36
   %42 = tail call double @cosine_up(double %3)
   %43 = tail call double @cosine_up(double %5)
   %44 = tail call double @max(double %42, double %43)
-  br label %65
+  br label %62
 
 45:                                               ; preds = %13
-  %46 = tail call double @cosine_up(double %3)
-  %47 = tail call double @cosine_up(double %5)
-  %48 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([34 x i8], [34 x i8]* @.str.1, i64 0, i64 0), double %46, double %47)
-  %49 = tail call double @cosine_down(double %3)
-  %50 = tail call double @cosine_down(double %5)
-  %51 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([34 x i8], [34 x i8]* @.str.1, i64 0, i64 0), double %49, double %50)
-  %52 = tail call double @cosine_down(double %3)
-  %53 = tail call double @cosine_down(double %5)
-  %54 = tail call double @min(double %52, double %53)
-  %55 = tail call double @cosine_up(double %3)
-  %56 = tail call double @cosine_up(double %5)
-  %57 = tail call double @max(double %55, double %56)
-  %58 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([26 x i8], [26 x i8]* @.str.2, i64 0, i64 0), double %54, double %57)
-  %59 = tail call double @cosine_down(double %3)
-  %60 = tail call double @cosine_down(double %5)
-  %61 = tail call double @min(double %59, double %60)
-  %62 = tail call double @cosine_up(double %3)
-  %63 = tail call double @cosine_up(double %5)
-  %64 = tail call double @max(double %62, double %63)
-  br label %65
+  %46 = tail call i32 @fesetround(i32 0)
+  %47 = tail call double @cosine_down(double %3)
+  %48 = tail call i32 @fesetround(i32 0)
+  %49 = tail call double @cosine_down(double %5)
+  %50 = tail call i32 @fesetround(i32 0)
+  %51 = tail call double @cosine_up(double %3)
+  %52 = tail call i32 @fesetround(i32 0)
+  %53 = tail call double @cosine_up(double %5)
+  %54 = tail call i32 @fesetround(i32 0)
+  %55 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([34 x i8], [34 x i8]* @.str.1, i64 0, i64 0), double %51, double %53)
+  %56 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([34 x i8], [34 x i8]* @.str.1, i64 0, i64 0), double %47, double %49)
+  %57 = tail call double @min(double %47, double %49)
+  %58 = tail call double @max(double %51, double %53)
+  %59 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([26 x i8], [26 x i8]* @.str.2, i64 0, i64 0), double %57, double %58)
+  %60 = tail call double @min(double %47, double %49)
+  %61 = tail call double @max(double %51, double %53)
+  br label %62
 
-65:                                               ; preds = %32, %41, %36, %1, %45
-  %66 = phi double [ %61, %45 ], [ -1.000000e+00, %1 ], [ -1.000000e+00, %32 ], [ %40, %41 ], [ %40, %36 ]
-  %67 = phi double [ %64, %45 ], [ 1.000000e+00, %1 ], [ %35, %32 ], [ %44, %41 ], [ 1.000000e+00, %36 ]
-  %68 = insertvalue { double, double } undef, double %66, 0
-  %69 = insertvalue { double, double } %68, double %67, 1
-  ret { double, double } %69
+62:                                               ; preds = %32, %41, %36, %1, %45
+  %63 = phi double [ %60, %45 ], [ -1.000000e+00, %1 ], [ -1.000000e+00, %32 ], [ %40, %41 ], [ %40, %36 ]
+  %64 = phi double [ %61, %45 ], [ 1.000000e+00, %1 ], [ %35, %32 ], [ %44, %41 ], [ 1.000000e+00, %36 ]
+  %65 = insertvalue { double, double } undef, double %63, 0
+  %66 = insertvalue { double, double } %65, double %64, 1
+  ret { double, double } %66
 }
 
 ; Function Attrs: nounwind readnone speculatable

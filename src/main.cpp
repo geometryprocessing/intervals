@@ -51,5 +51,11 @@ int main()
     cos = cosine_interval(test_interval);
     print_cos_result(test_interval, cos);
 
+    test_interval.lower = 3.1758805865013693;
+    test_interval.upper = 3.1758805865013693;
+    cos = cosine_interval(test_interval);
+    print_cos_result(test_interval, cos);
+
+
     return 0;
 }

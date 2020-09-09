@@ -1,7 +1,8 @@
 #include "interval.h"
-// #include <stdio.h>
+#include "iostream"
 extern "C"
 {
+#include <fenv.h>
 #define PI 3.1415926535897932
     inline bool is_negative(double a)
     {
@@ -30,71 +31,85 @@ extern "C"
 
     double add_down(double a, double b)
     {
+        fesetround(FE_DOWNWARD);
         return a + b;
     }
 
     double add_up(double a, double b)
     {
+        fesetround(FE_UPWARD);
         return a + b;
     }
 
     double subtract_down(double a, double b)
     {
+        fesetround(FE_DOWNWARD);
         return a - b;
     }
 
     double subtract_up(double a, double b)
     {
+        fesetround(FE_UPWARD);
         return a - b;
     }
 
     double multiply_down(double a, double b)
     {
+        fesetround(FE_DOWNWARD);
         return a * b;
     }
 
     double multiply_up(double a, double b)
     {
+        fesetround(FE_UPWARD);
         return a * b;
     }
 
     double divide_down(double a, double b)
     {
+        fesetround(FE_DOWNWARD);
         return a / b;
     }
 
     double divide_up(double a, double b)
     {
+        fesetround(FE_UPWARD);
         return a / b;
     }
 
     double cosine_down(double a)
     {
+        fesetround(FE_DOWNWARD);
         return a;
     }
 
     double cosine_up(double a)
     {
+        fesetround(FE_UPWARD);
         return a;
     }
 
     double mod_down(double a, double b)
     {
+        fesetround(FE_DOWNWARD);
         return a - b;
     }
 
     double mod_up(double a, double b)
     {
+        fesetround(FE_UPWARD);
         return a - b;
     }
 
     double floor(double a)
     {
+        fesetround(FE_DOWNWARD);
         return a;
     }
 
     double ceil(double a)
     {
+        fesetround(FE_UPWARD);
         return a;
     }
 
@@ -246,10 +261,10 @@ extern "C"
         else if (lower_ratio <= upper_ratio)
         {
             double remainder = mod_down(lower_ratio, static_cast<double>(2));
-            // printf("remainder: %f\n", remainder);
-            // printf("cos lower %f, cos upper %f\n", cosine_up(lower), cosine_up(upper));
-            // printf("cos lower %f, cos upper %f\n", cosine_down(lower), cosine_down(upper));
-            // printf("lower %f, upper %f\n", min(cosine_down(lower), cosine_down(upper)), max(cosine_up(lower), cosine_up(upper)));
+            printf("remainder: %f\n", remainder);
+            printf("cos lower %.20f, cos upper %.20f\n", cosine_up(lower), cosine_up(upper));
+            printf("cos lower %.20f, cos upper %.20f\n", cosine_down(lower), cosine_down(upper));
+            printf("lower %.20f, upper %.20f\n", min(cosine_down(lower), cosine_down(upper)), max(cosine_up(lower), cosine_up(upper)));
             if (remainder == static_cast<double>(1))
             {
                 // printf("Here1\n");
@@ -267,7 +282,19 @@ extern "C"
         }
         else
         {
-            return {min(cosine_down(lower), cosine_down(upper)), max(cosine_up(lower), cosine_up(upper))};
+            fesetround(FE_TONEAREST);
+            double lower_down = cosine_down(lower);
+            fesetround(FE_TONEAREST);
+            double upper_down = cosine_down(upper);
+            fesetround(FE_TONEAREST);
+            double lower_up = cosine_up(lower);
+            fesetround(FE_TONEAREST);
+            double upper_up = cosine_up(upper);
+            fesetround(FE_TONEAREST);
+            printf("cos lower %.20f, cos upper %.20f\n", lower_up, upper_up);
+            printf("cos lower %.20f, cos upper %.20f\n", lower_down, upper_down);
+            printf("lower %.20f, upper %.20f\n", min(lower_down, upper_down), max(lower_up, upper_up));
+            return {min(lower_down, upper_down), max(lower_up, upper_up)};
         }
     }
 }
