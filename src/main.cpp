@@ -1,9 +1,18 @@
 #include <iostream>
 #include "interval.h"
+#include <cmath>
+#include <limits>
+#include <iomanip>
 
 void print_cos_result(interval input, interval cos)
 {
-    printf("Input interval from %f to %f, cosine result from %f to %f\n", input.lower, input.upper, cos.lower, cos.upper);
+    std::cout << std::setprecision(std::numeric_limits<double>::digits10 + 1)
+              << "Input interval from " << input.lower << " to " << input.upper
+              << ", cosine result from " << cos.lower << " to " << cos.upper
+              << std::endl;
+    std::cout << "is empty: "
+              << (cos.lower > cos.upper ? "true" : "false")
+              << std::endl;
 }
 
 int main()
@@ -34,6 +43,11 @@ int main()
 
     test_interval.lower = -0.2;
     test_interval.upper = 0.3;
+    cos = cosine_interval(test_interval);
+    print_cos_result(test_interval, cos);
+
+    test_interval.lower = 0.79358805865013693;
+    test_interval.upper = 0.79358805865013693;
     cos = cosine_interval(test_interval);
     print_cos_result(test_interval, cos);
 
