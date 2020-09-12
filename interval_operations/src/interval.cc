@@ -103,7 +103,7 @@ extern "C"
 
     double floor(double a)
     {
-        fesetround(FE_DOWNWARD);
+        fesetround(FE_UPWARD);
         return a;
     }
 
@@ -115,13 +115,19 @@ extern "C"
 
     interval add_interval(const interval &a, const interval &b)
     {
-        interval result = {add_down(a.lower, b.lower), add_up(a.upper, b.upper)};
+        double lower = add_down(a.lower, b.lower);
+        double upper = add_up(a.upper, b.upper);
+        interval result = {lower, upper};
+        fesetround(FE_TONEAREST);
         return result;
     }
 
     interval subtract_interval(const interval &a, const interval &b)
     {
-        interval result = {subtract_down(a.lower, b.upper), subtract_up(a.upper, b.lower)};
+        double lower = subtract_down(a.lower, b.upper);
+        double upper = subtract_up(a.upper, b.lower);
+        interval result = {lower, upper};
+        fesetround(FE_TONEAREST);
         return result;
     }
 
@@ -143,14 +149,22 @@ extern "C"
                     {
                         // situation 1
                         // both interval a and b ranges from negative to positive
-                        return {min(multiply_down(al, bu), multiply_down(au, bl)),
-                                max(multiply_up(al, bl), multiply_up(au, bu))};
+                        double lower = min(multiply_down(al, bu), multiply_down(au, bl));
+                        double upper = max(multiply_up(al, bl), multiply_up(au, bu));
+                        interval result = {lower, upper};
+                        fesetround(FE_TONEAREST);
+                        return result;
                     }
                     else
                     {
                         // situation 2
                         // a ranges from negative to positive, but b is less than or equal to 0
-                        return {multiply_down(au, bl), multiply_up(al, bl)};
+
+                        double lower = multiply_down(au, bl);
+                        double upper = multiply_up(al, bl);
+                        interval result = {lower, upper};
+                        fesetround(FE_TONEAREST);
+                        return result;
                     }
                 }
                 else
@@ -159,13 +173,18 @@ extern "C"
                     {
                         // situation 3
                         // a ranges from negative to positive, but b is greater than or equal to 0
-                        return {multiply_down(al, bu), multiply_up(au, bu)};
+                        double lower = multiply_down(al, bu);
+                        double upper = multiply_up(au, bu);
+                        interval result = {lower, upper};
+                        fesetround(FE_TONEAREST);
+                        return result;
                     }
                     else
                     {
                         // situation 4
                         // a ranges from negative to positive, but b is strictly 0
-                        return {static_cast<double>(0), static_cast<double>(0)};
+                        interval result = {static_cast<double>(0), static_cast<double>(0)};
+                        return result;
                     }
                 }
             }
@@ -177,13 +196,21 @@ extern "C"
                     {
                         // situation 5
                         // a is less than or equal to 0, b ranges from negative to positive
-                        return {multiply_down(al, bu), multiply_up(al, bl)};
+                        double lower = multiply_down(al, bu);
+                        double upper = multiply_up(al, bl);
+                        interval result = {lower, upper};
+                        fesetround(FE_TONEAREST);
+                        return result;
                     }
                     else
                     {
                         // situation 6
                         // a is less than or equal to 0, b is less than or equal to 0
-                        return {multiply_down(au, bu), multiply_up(al, bl)};
+                        double lower = multiply_down(au, bu);
+                        double upper = multiply_up(al, bl);
+                        interval result = {lower, upper};
+                        fesetround(FE_TONEAREST);
+                        return result;
                     }
                 }
                 else
@@ -192,13 +219,18 @@ extern "C"
                     {
                         // situation 7
                         // a is less than or equal to 0, be is greater than or equal to 0
-                        return {multiply_down(al, bu), multiply_up(au, bl)};
+                        double lower = multiply_down(al, bu);
+                        double upper = multiply_up(au, bl);
+                        interval result = {lower, upper};
+                        fesetround(FE_TONEAREST);
+                        return result;
                     }
                     else
                     {
                         // situation 8
                         // a is less than or equal to 0, b is strictly 0
-                        return {static_cast<double>(0), static_cast<double>(0)};
+                        interval result = {static_cast<double>(0), static_cast<double>(0)};
+                        return result;
                     }
                 }
             }
@@ -213,88 +245,264 @@ extern "C"
                     {
                         // situation 9
                         // a is greater than or equal to 0, b ranges from negative to positive
-                        return {multiply_down(au, bl), multiply_up(au, bu)};
+                        double lower = multiply_down(au, bl);
+                        double upper = multiply_up(au, bu);
+                        interval result = {lower, upper};
+                        fesetround(FE_TONEAREST);
+                        return result;
                     }
                     else
                     {
                         // situation 10
                         // a is greater than or equal to 0, b is less than or equal to 0
-                        return {multiply_down(au, bl), multiply_up(al, bu)};
+                        double lower = multiply_down(au, bl);
+                        double upper = multiply_up(al, bu);
+                        interval result = {lower, upper};
+                        fesetround(FE_TONEAREST);
+                        return result;
                     }
                 }
                 else if (is_positive(bu))
                 {
                     // situation 11
                     // a is greater than or equal to 0, b is greater than or equal to 0
-                    return {multiply_down(al, bl), multiply_up(au, bu)};
+                    double lower = multiply_down(al, bl);
+                    double upper = multiply_up(au, bu);
+                    interval result = {lower, upper};
+                    fesetround(FE_TONEAREST);
+                    return result;
                 }
                 else
                 {
                     // situation 12
                     // a is greater than or equal to 0, b is strictly 0
-                    return {static_cast<double>(0), static_cast<double>(0)};
+                    interval result = {static_cast<double>(0), static_cast<double>(0)};
+                    return result;
                 }
             }
             else
             {
                 // situation 13
                 // a is strictly 0, we do not need to care about b's range
-                return {static_cast<double>(0), static_cast<double>(0)};
+                interval result = {static_cast<double>(0), static_cast<double>(0)};
+                return result;
             }
         }
     }
 
-    extern "C" interval cosine_interval(const interval &a)
+    interval div_interval(const interval &a, const interval &b)
     {
-        double lower = a.lower;
-        double upper = a.upper;
-        double lower_ratio = ceil(divide_up(lower, static_cast<double>(PI)));
-        double upper_ratio = divide_down(upper, static_cast<double>(PI));
-        double lower_rem = mod_down(lower, static_cast<double>(PI));
-        double upper_rem = mod_down(upper, static_cast<double>(PI));
-        // printf("Lower: %f. Upper: %f\n", lower_ratio, upper_ratio);
-        // printf("Lower: %f. Upper: %f\n", lower_rem, upper_rem);
-        if (1 + lower_ratio <= upper_ratio)
+        double al = a.lower;
+        double au = a.upper;
+        double bl = b.lower;
+        double bu = b.upper;
+        if (!is_positive(bl) && !is_negative(bu))
         {
-            return {-1, 1};
-        }
-        else if (lower_ratio <= upper_ratio)
-        {
-            double remainder = mod_down(lower_ratio, static_cast<double>(2));
-            printf("remainder: %f\n", remainder);
-            printf("cos lower %.20f, cos upper %.20f\n", cosine_up(lower), cosine_up(upper));
-            printf("cos lower %.20f, cos upper %.20f\n", cosine_down(lower), cosine_down(upper));
-            printf("lower %.20f, upper %.20f\n", min(cosine_down(lower), cosine_down(upper)), max(cosine_up(lower), cosine_up(upper)));
-            if (remainder == static_cast<double>(1))
+            // 0 is within the range
+            if (is_negative(bl))
             {
-                // printf("Here1\n");
-                return {static_cast<double>(-1), max(cosine_up(lower), cosine_up(upper))};
-            }
-            else if (remainder == static_cast<double>(0))
-            {
-                // printf("Here2\n");
-                return {min(cosine_down(lower), cosine_down(upper)), static_cast<double>(1)};
+                // bl is not zero
+                if (is_positive(bu))
+                {
+                    // bu is not zero
+                    // we can return -inf to inf
+                    interval result = {static_cast<double>(-1.0 / 0), static_cast<double>(1.0 / 0)};
+                    return result;
+                }
+                else
+                {
+                    // bu is zero
+                    // we have division by negative
+                    if (is_zero(al) && is_zero(au))
+                    {
+                        return a;
+                    }
+                    if (is_negative(au))
+                    {
+                        // a is negative, b is negative to 0
+                        interval result = {divide_down(au, bl), static_cast<double>(1.0 / 0)};
+                        fesetround(FE_TONEAREST);
+                        return result;
+                    }
+                    else if (is_negative(al))
+                    {
+                        // a is from negative to positive, b is negative to 0
+                        interval result = {static_cast<double>(-1.0 / 0), static_cast<double>(1.0 / 0)};
+                        return result;
+                    }
+                    else
+                    {
+                        // a is 0 to positive, b is negative to 0
+                        interval result = {static_cast<double>(-1.0 / 0), divide_up(al, bl)};
+                        fesetround(FE_TONEAREST);
+                        return result;
+                    }
+                }
             }
             else
             {
-                return {min(cosine_down(lower), cosine_down(upper)), max(cosine_up(lower), cosine_up(upper))};
+                // b is greater than or equal to 0
+                if (is_positive(bu))
+                {
+                    if (is_zero(al) && is_zero(au))
+                    {
+                        return a;
+                    }
+                    if (is_negative(au))
+                    {
+                        // a is strictly less than 0
+                        interval result = {static_cast<double>(-1.0 / 0), divide_up(au, bu)};
+                        fesetround(FE_TONEAREST);
+                        return result;
+                    }
+                    else if (is_negative(al))
+                    {
+                        interval result = {static_cast<double>(-1.0 / 0), static_cast<double>(1.0 / 0)};
+                        return result;
+                    }
+                    else
+                    {
+                        // a is 0 to positive
+                        interval result = {divide_down(al, bu), static_cast<double>(1.0 / 0)};
+                        fesetround(FE_TONEAREST);
+                        return result;
+                    }
+                }
+                else
+                {
+                    interval result = {static_cast<double>(-0.0 / 0), static_cast<double>(0.0 / 0)};
+                    return result;
+                }
             }
         }
         else
         {
+            // b does not include 0
+            if (is_negative(au))
+            {
+                // a is negative
+                if (is_negative(bu))
+                {
+                    // b is negative
+                    interval result = {divide_down(au, bl), divide_up(al, bu)};
+                    fesetround(FE_TONEAREST);
+                    return result;
+                }
+                else
+                {
+                    // b is positive
+                    interval result = {divide_down(al, bl), divide_up(au, bu)};
+                    fesetround(FE_TONEAREST);
+                    return result;
+                }
+            }
+            else if (is_negative(al))
+            {
+                // a from negative to positive
+                if (is_negative(bu))
+                {
+                    // b is negative
+                    interval result = {divide_down(au, bu), divide_up(al, bu)};
+                    fesetround(FE_TONEAREST);
+                    return result;
+                }
+                else
+                {
+                    // b is positive
+                    interval result = {divide_down(al, bl), divide_up(au, bl)};
+                    fesetround(FE_TONEAREST);
+                    return result;
+                }
+            }
+            else
+            {
+                // a is positive
+                if (is_negative(bu))
+                {
+                    // b is negative
+                    interval result = {divide_down(au, bu), divide_up(al, bl)};
+                    fesetround(FE_TONEAREST);
+                    return result;
+                }
+                else
+                {
+                    // b is positive
+                    interval result = {divide_down(al, bu), divide_up(au, bl)};
+                    fesetround(FE_TONEAREST);
+                    return result;
+                }
+            }
+        }
+    }
+
+    interval cosine_interval(const interval &a)
+    {
+        double al = a.lower;
+        double au = a.upper;
+        double al_ratio = ceil(divide_up(al, static_cast<double>(PI)));
+        double au_ratio = divide_down(au, static_cast<double>(PI));
+        double al_rem = mod_down(al, static_cast<double>(PI));
+        double au_rem = mod_down(au, static_cast<double>(PI));
+        // printf("Lower: %f. Upper: %f\n", al_ratio, au_ratio);
+        // printf("Lower: %f. Upper: %f\n", al_rem, au_rem);
+        if (1 + al_ratio <= au_ratio)
+        {
+            interval result = {static_cast<double>(-1), static_cast<double>(1)};
             fesetround(FE_TONEAREST);
-            double lower_down = cosine_down(lower);
+            return result;
+        }
+        else if (al_ratio <= au_ratio)
+        {
+            double remainder = mod_down(al_ratio, static_cast<double>(2));
+            // printf("remainder: %f\n", remainder);
+            // printf("cos lower %.20f, cos upper %.20f\n", cosine_up(al), cosine_up(au));
+            // printf("cos lower %.20f, cos upper %.20f\n", cosine_down(al), cosine_down(au));
+            // printf("lower %.20f, upper %.20f\n", min(cosine_down(al), cosine_down(au)), max(cosine_up(al), cosine_up(au)));
+            if (remainder == static_cast<double>(1))
+            {
+                double al_up = max(cosine_up(al), cosine_down(al));
+                double au_up = max(cosine_up(au), cosine_down(au));
+                interval result = {static_cast<double>(-1), max(al_up, au_up)};
+                fesetround(FE_TONEAREST);
+                return result;
+            }
+            else if (remainder == static_cast<double>(0))
+            {
+                double al_down = min(cosine_up(al), cosine_down(al));
+                double au_down = min(cosine_up(au), cosine_down(au));
+                interval result = {min(al_down, au_down), static_cast<double>(1)};
+                fesetround(FE_TONEAREST);
+                return result;
+            }
+            else
+            {
+                double al_down = min(cosine_up(al), cosine_down(al));
+                double au_down = min(cosine_up(au), cosine_down(au));
+                double al_up = max(cosine_up(al), cosine_down(al));
+                double au_up = max(cosine_up(au), cosine_down(au));
+                double lower = min(al_down, au_down);
+                double upper = max(al_up, au_up);
+                interval result = {lower, upper};
+                fesetround(FE_TONEAREST);
+                return result;
+            }
+        }
+        else
+        {
+            // printf("cos lower %.20f, cos upper %.20f\n", cosine_up(al), cosine_up(au));
+            // printf("cos lower %.20f, cos upper %.20f\n", cosine_down(al), cosine_down(au));
+            // printf("lower %.20f, upper %.20f\n", min(cosine_down(al), cosine_down(au)), max(cosine_up(al), cosine_up(au)));
+            double al_down = min(cosine_up(al), cosine_down(al));
+            double au_down = min(cosine_up(au), cosine_down(au));
+            double al_up = max(cosine_up(al), cosine_down(al));
+            double au_up = max(cosine_up(au), cosine_down(au));
+            double lower = min(al_down, au_down);
+            double upper = max(al_up, au_up);
+            interval result = {lower, upper};
+            // printf("%.20f\n", result.lower);
+            // printf("%.20f\n", result.upper);
             fesetround(FE_TONEAREST);
-            double upper_down = cosine_down(upper);
-            fesetround(FE_TONEAREST);
-            double lower_up = cosine_up(lower);
-            fesetround(FE_TONEAREST);
-            double upper_up = cosine_up(upper);
-            fesetround(FE_TONEAREST);
-            printf("cos lower %.20f, cos upper %.20f\n", lower_up, upper_up);
-            printf("cos lower %.20f, cos upper %.20f\n", lower_down, upper_down);
-            printf("lower %.20f, upper %.20f\n", min(lower_down, upper_down), max(lower_up, upper_up));
-            return {min(lower_down, upper_down), max(lower_up, upper_up)};
+            return result;
         }
     }
 }
