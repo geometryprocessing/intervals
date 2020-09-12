@@ -65,6 +65,17 @@ void test_add(double al, double au, double bl, double bu)
     std::cout << std::endl;
 }
 
+void test_sub(double al, double au, double bl, double bu)
+{
+    interval i1 = {al, au};
+    interval i2 = {bl, bu};
+    interval result = subtract_interval(i1, i2);
+    print_binary_result(i1, i2, result, "Subtraction");
+    bool within = within_range(result.lower, result.upper, {al - bl, al - bu, au - bl, au - bu});
+    std::cout << "Pass check:" << (within ? "true" : "false") << std::endl;
+    std::cout << std::endl;
+}
+
 void test_mult(double al, double au, double bl, double bu)
 {
     interval i1 = {al, au};
@@ -99,11 +110,10 @@ int main()
     // test_cos((24.0 / 17.0), (24.0 / 17.0));
 
     test_add(-(24.0 / 17.0), (24.0 / 17.0), 104, 257);
-
     test_mult(-(24.0 / 17.0), -(4.0 / 13.0), -3012, 298);
     test_mult(-3, -2, -3, -2);
-
-    test_div(-1, 1, -2, 3);
+    test_div(-1/17.0, 2/33.0, -3/7.0, -2/19.0);
+    test_sub(-1/17.0, 2/33.0, -3/7.0, -2/19.0);
 
     return 0;
 }
