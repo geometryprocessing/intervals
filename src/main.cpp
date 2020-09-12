@@ -155,14 +155,10 @@ int main(int argc, char *argv[])
     // std::cout << "Input interval 1 from " << aln << "/" << ald << " to " << aun << "/" << aud << std::endl;
     // std::cout << "Input interval 2 from " << bln << "/" << bld << " to " << bun << "/" << bud << std::endl;
 
-    double al = divide_down(aln, ald);
-    fesetround(FE_TONEAREST);
-    double au = divide_up(aun, aud);
-    fesetround(FE_TONEAREST);
-    double bl = divide_down(bln, bld);
-    fesetround(FE_TONEAREST);
-    double bu = divide_up(bun, bud);
-    fesetround(FE_TONEAREST);
+    double al = div_interval({aln * 1.0, aln * 1.0}, {ald * 1.0, ald * 1.0}).lower;
+    double au = div_interval({aun * 1.0, aun * 1.0}, {aud * 1.0, aud * 1.0}).upper;
+    double bl = div_interval({bln * 1.0, bln * 1.0}, {bld * 1.0, bld * 1.0}).lower;
+    double bu = div_interval({bun * 1.0, bun * 1.0}, {bud * 1.0, bud * 1.0}).upper;
 
     // make sure the interval is not empty
     if (al > au)
