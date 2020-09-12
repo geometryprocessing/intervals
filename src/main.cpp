@@ -152,13 +152,17 @@ int main(int argc, char *argv[])
     int bun = read_option<int>("--bun", argc, argv, "1"); // b upper numerator
     int bud = read_option<int>("--bud", argc, argv, "1"); // b upper denominator
 
-    std::cout << "Input interval 1 from " << aln << "/" << ald << " to " << aun << "/" << aud << std::endl;
-    std::cout << "Input interval 2 from " << bln << "/" << bld << " to " << bun << "/" << bud << std::endl;
+    // std::cout << "Input interval 1 from " << aln << "/" << ald << " to " << aun << "/" << aud << std::endl;
+    // std::cout << "Input interval 2 from " << bln << "/" << bld << " to " << bun << "/" << bud << std::endl;
 
-    double al = aln * 1.0 / (ald * 1.0);
-    double au = aun * 1.0 / (aud * 1.0);
-    double bl = bln * 1.0 / (bld * 1.0);
-    double bu = bun * 1.0 / (bud * 1.0);
+    double al = divide_down(aln, ald);
+    fesetround(FE_TONEAREST);
+    double au = divide_up(aun, aud);
+    fesetround(FE_TONEAREST);
+    double bl = divide_down(bln, bld);
+    fesetround(FE_TONEAREST);
+    double bu = divide_up(bun, bud);
+    fesetround(FE_TONEAREST);
 
     // make sure the interval is not empty
     if (al > au)
