@@ -7,6 +7,9 @@
 #include <string>
 #include <fenv.h>
 #include <vector>
+#include <fstream>
+#include <stdio.h>
+#include <string.h>
 
 void print_unary_result(interval input, interval cos_result, std::string operand)
 {
@@ -50,6 +53,45 @@ bool within_range(double lower, double upper, std::vector<double> values)
         }
     }
     return true;
+}
+template <class ValueType>
+ValueType read_option(const char *option, int argc, char **argv, const char *default_value = nullptr);
+
+template <>
+std::string read_option<std::string>(const char *option, int argc, char **argv, const char *default_value)
+{
+    for (int i = 0; i < argc - 1; i++)
+    {
+        if (!strcmp(argv[i], option))
+        {
+            return std::string(argv[i + 1]);
+        }
+    }
+    if (default_value)
+        return std::string(default_value);
+    std::cerr << "Option " << option << " was not provided. Exiting...\n";
+    exit(1);
+}
+
+template <>
+int read_option<int>(const char *option, int argc, char **argv, const char *default_value)
+{
+    return strtol(read_option<std::string>(option, argc, argv, default_value).c_str(), NULL, 10);
+}
+template <>
+long read_option<long>(const char *option, int argc, char **argv, const char *default_value)
+{
+    return strtol(read_option<std::string>(option, argc, argv, default_value).c_str(), NULL, 10);
+}
+template <>
+float read_option<float>(const char *option, int argc, char **argv, const char *default_value)
+{
+    return strtod(read_option<std::string>(option, argc, argv, default_value).c_str(), NULL);
+}
+template <>
+double read_option<double>(const char *option, int argc, char **argv, const char *default_value)
+{
+    return strtof(read_option<std::string>(option, argc, argv, default_value).c_str(), NULL);
 }
 
 void test_add(double al, double au, double bl, double bu)
@@ -98,22 +140,59 @@ void test_div(double al, double au, double bl, double bu)
     std::cout << std::endl;
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-    // test_cos(3.14, 6.28);
-    // test_cos(3, 8);
-    // test_cos(-1, 2.15);
-    // test_cos(3.12, 3.15);
-    // test_cos(-0.2, 0);
-    // test_cos(-0.2, 0.3);
-    // test_cos(0.79358805865013693, 0.79358805865013693);
-    // test_cos((24.0 / 17.0), (24.0 / 17.0));
+    int operation = read_option<int>("-o", argc, argv, "0");
+    int aln = read_option<int>("--aln", argc, argv, "1"); // a lower numerator
+    int ald = read_option<int>("--ald", argc, argv, "1"); // a lower denominator
+    int aun = read_option<int>("--aun", argc, argv, "1"); // a upper numerator
+    int aud = read_option<int>("--aud", argc, argv, "1"); // a upper denominator
+    int bln = read_option<int>("--bln", argc, argv, "1"); // b lower numerator
+    int bld = read_option<int>("--bld", argc, argv, "1"); // b lower denominator
+    int bun = read_option<int>("--bun", argc, argv, "1"); // b upper numerator
+    int bud = read_option<int>("--bud", argc, argv, "1"); // b upper denominator
 
-    test_add(-(24.0 / 17.0), (24.0 / 17.0), 104, 257);
-    test_mult(-(24.0 / 17.0), -(4.0 / 13.0), -3012, 298);
-    test_mult(-3, -2, -3, -2);
-    test_div(-1/17.0, 2/33.0, -3/7.0, -2/19.0);
-    test_sub(-1/17.0, 2/33.0, -3/7.0, -2/19.0);
+    std::cout << "Interval 1 from " << aln << "/" << ald << " to " << aun << "/" << aud << std::endl;
+    std::cout << "Interval 2 from " << bln << "/" << bld << " to " << bun << "/" << bud << std::endl;
+
+    double al = aln * 1.0 / (ald * 1.0);
+    double au = aun * 1.0 / (aud * 1.0);
+    double bl = bln * 1.0 / (bld * 1.0);
+    double bu = bun * 1.0 / (bud * 1.0);
+
+    // make sure the interval is not empty
+    if (al > au)
+    {
+        double tmp = au;
+        au = al;
+        al = tmp;
+    }
+
+    if (bl > bu)
+    {
+        double tmp = bu;
+        bu = bl;
+        bl = tmp;
+    }
+
+    switch (operation)
+    {
+    case 0:
+        test_add(al, au, bl, bu);
+        break;
+    case 1:
+        test_sub(al, au, bl, bu);
+        break;
+    case 2:
+        test_mult(al, au, bl, bu);
+        break;
+    case 3:
+        test_div(al, au, bl, bu);
+        break;
+    default:
+        test_add(al, au, bl, bu);
+        break;
+    }
 
     return 0;
 }
