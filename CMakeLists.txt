@@ -6,7 +6,7 @@ set(test_sources
     ${SRC_DIR}/main.cpp
 )
 
-
+set (CMAKE_CXX_STANDARD 11)
 
 ## add the dynamic library
 file(GLOB_RECURSE LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/*.dylib")
