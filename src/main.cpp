@@ -152,8 +152,8 @@ int main(int argc, char *argv[])
     int bun = read_option<int>("--bun", argc, argv, "1"); // b upper numerator
     int bud = read_option<int>("--bud", argc, argv, "1"); // b upper denominator
 
-    std::cout << "Interval 1 from " << aln << "/" << ald << " to " << aun << "/" << aud << std::endl;
-    std::cout << "Interval 2 from " << bln << "/" << bld << " to " << bun << "/" << bud << std::endl;
+    std::cout << "Input interval 1 from " << aln << "/" << ald << " to " << aun << "/" << aud << std::endl;
+    std::cout << "Input interval 2 from " << bln << "/" << bld << " to " << bun << "/" << bud << std::endl;
 
     double al = aln * 1.0 / (ald * 1.0);
     double au = aun * 1.0 / (aud * 1.0);
