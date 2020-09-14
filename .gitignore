@@ -223,3 +223,6 @@ dmypy.json
 
 # Atom beautifier files
 .atom-beautify.*
+
+# Bitcode
+*.bc
