@@ -384,14 +384,18 @@ extern "C"
                 if (is_negative(bu))
                 {
                     // b is negative
-                    interval result = {divide_down(au, bl), divide_up(al, bu)};
+                    double lower = divide_down(au, bl);
+                    double upper = divide_up(al, bu);
+                    interval result = {lower, upper};
                     fesetround(FE_TONEAREST);
                     return result;
                 }
                 else
                 {
                     // b is positive
-                    interval result = {divide_down(al, bl), divide_up(au, bu)};
+                    double lower = divide_down(al, bl);
+                    double upper = divide_up(au, bu);
+                    interval result = {lower, upper};
                     fesetround(FE_TONEAREST);
                     return result;
                 }
@@ -402,14 +406,18 @@ extern "C"
                 if (is_negative(bu))
                 {
                     // b is negative
-                    interval result = {divide_down(au, bu), divide_up(al, bu)};
+                    double lower = divide_down(au, bu);
+                    double upper = divide_up(al, bu);
+                    interval result = {lower, upper};
                     fesetround(FE_TONEAREST);
                     return result;
                 }
                 else
                 {
                     // b is positive
-                    interval result = {divide_down(al, bl), divide_up(au, bl)};
+                    double lower = divide_down(al, bl);
+                    double upper = divide_up(au, bl);
+                    interval result = {lower, upper};
                     fesetround(FE_TONEAREST);
                     return result;
                 }
@@ -420,14 +428,18 @@ extern "C"
                 if (is_negative(bu))
                 {
                     // b is negative
-                    interval result = {divide_down(au, bu), divide_up(al, bl)};
+                    double lower = divide_down(au, bu);
+                    double upper = divide_up(al, bl);
+                    interval result = {lower, upper};
                     fesetround(FE_TONEAREST);
                     return result;
                 }
                 else
                 {
                     // b is positive
-                    interval result = {divide_down(al, bu), divide_up(au, bl)};
+                    double lower = divide_down(al, bu);
+                    double upper = divide_up(au, bl);
+                    interval result = {lower, upper};
                     fesetround(FE_TONEAREST);
                     return result;
                 }
