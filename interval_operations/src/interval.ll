@@ -121,13 +121,13 @@ define { double, double } @add_interval(%struct.interval* nocapture readonly der
   %4 = load double, double* %3, align 8, !tbaa !4
   %5 = getelementptr inbounds %struct.interval, %struct.interval* %1, i64 0, i32 0
   %6 = load double, double* %5, align 8, !tbaa !4
-  %7 = tail call double @add_down(double %4, double %6)
+  %7 = call double @add_down(double %4, double %6)
   %8 = getelementptr inbounds %struct.interval, %struct.interval* %0, i64 0, i32 1
   %9 = load double, double* %8, align 8, !tbaa !9
   %10 = getelementptr inbounds %struct.interval, %struct.interval* %1, i64 0, i32 1
   %11 = load double, double* %10, align 8, !tbaa !9
-  %12 = tail call double @add_up(double %9, double %11)
-  %13 = tail call i32 @fesetround(i32 0)
+  %12 = call double @add_up(double %9, double %11)
+  %13 = call i32 @fesetround(i32 0)
   %14 = insertvalue { double, double } undef, double %7, 0
   %15 = insertvalue { double, double } %14, double %12, 1
   ret { double, double } %15
@@ -139,13 +139,13 @@ define { double, double } @subtract_interval(%struct.interval* nocapture readonl
   %4 = load double, double* %3, align 8, !tbaa !4
   %5 = getelementptr inbounds %struct.interval, %struct.interval* %1, i64 0, i32 1
   %6 = load double, double* %5, align 8, !tbaa !9
-  %7 = tail call double @subtract_down(double %4, double %6)
+  %7 = call double @subtract_down(double %4, double %6)
   %8 = getelementptr inbounds %struct.interval, %struct.interval* %0, i64 0, i32 1
   %9 = load double, double* %8, align 8, !tbaa !9
   %10 = getelementptr inbounds %struct.interval, %struct.interval* %1, i64 0, i32 0
   %11 = load double, double* %10, align 8, !tbaa !4
-  %12 = tail call double @subtract_up(double %9, double %11)
-  %13 = tail call i32 @fesetround(i32 0)
+  %12 = call double @subtract_up(double %9, double %11)
+  %13 = call i32 @fesetround(i32 0)
   %14 = insertvalue { double, double } undef, double %7, 0
   %15 = insertvalue { double, double } %14, double %12, 1
   ret { double, double } %15
@@ -161,13 +161,13 @@ define { double, double } @mult_interval(%struct.interval* nocapture readonly de
   %8 = load double, double* %7, align 8, !tbaa !4
   %9 = getelementptr inbounds %struct.interval, %struct.interval* %1, i64 0, i32 1
   %10 = load double, double* %9, align 8, !tbaa !9
-  %11 = tail call zeroext i1 @is_negative(double %4)
-  %12 = tail call zeroext i1 @is_positive(double %6)
+  %11 = call zeroext i1 @is_negative(double %4)
+  %12 = call zeroext i1 @is_positive(double %6)
   br i1 %11, label %13, label %50
 
 13:                                               ; preds = %2
-  %14 = tail call zeroext i1 @is_negative(double %8)
-  %15 = tail call zeroext i1 @is_positive(double %10)
+  %14 = call zeroext i1 @is_negative(double %8)
+  %15 = call zeroext i1 @is_positive(double %10)
   br i1 %12, label %16, label %35
 
 16:                                               ; preds = %13
@@ -177,28 +177,28 @@ define { double, double } @mult_interval(%struct.interval* nocapture readonly de
   br i1 %15, label %18, label %26
 
 18:                                               ; preds = %17
-  %19 = tail call double @multiply_down(double %4, double %10)
-  %20 = tail call double @multiply_down(double %6, double %8)
-  %21 = tail call double @min(double %19, double %20)
-  %22 = tail call double @multiply_up(double %4, double %8)
-  %23 = tail call double @multiply_up(double %6, double %10)
-  %24 = tail call double @max(double %22, double %23)
-  %25 = tail call i32 @fesetround(i32 0)
+  %19 = call double @multiply_down(double %4, double %10)
+  %20 = call double @multiply_down(double %6, double %8)
+  %21 = call double @min(double %19, double %20)
+  %22 = call double @multiply_up(double %4, double %8)
+  %23 = call double @multiply_up(double %6, double %10)
+  %24 = call double @max(double %22, double %23)
+  %25 = call i32 @fesetround(i32 0)
   br label %67
 
 26:                                               ; preds = %17
-  %27 = tail call double @multiply_down(double %6, double %8)
-  %28 = tail call double @multiply_up(double %4, double %8)
-  %29 = tail call i32 @fesetround(i32 0)
+  %27 = call double @multiply_down(double %6, double %8)
+  %28 = call double @multiply_up(double %4, double %8)
+  %29 = call i32 @fesetround(i32 0)
   br label %67
 
 30:                                               ; preds = %16
   br i1 %15, label %31, label %67
 
 31:                                               ; preds = %30
-  %32 = tail call double @multiply_down(double %4, double %10)
-  %33 = tail call double @multiply_up(double %6, double %10)
-  %34 = tail call i32 @fesetround(i32 0)
+  %32 = call double @multiply_down(double %4, double %10)
+  %33 = call double @multiply_up(double %6, double %10)
+  %34 = call i32 @fesetround(i32 0)
   br label %67
 
 35:                                               ; preds = %13
@@ -208,55 +208,55 @@ define { double, double } @mult_interval(%struct.interval* nocapture readonly de
   br i1 %15, label %37, label %41
 
 37:                                               ; preds = %36
-  %38 = tail call double @multiply_down(double %4, double %10)
-  %39 = tail call double @multiply_up(double %4, double %8)
-  %40 = tail call i32 @fesetround(i32 0)
+  %38 = call double @multiply_down(double %4, double %10)
+  %39 = call double @multiply_up(double %4, double %8)
+  %40 = call i32 @fesetround(i32 0)
   br label %67
 
 41:                                               ; preds = %36
-  %42 = tail call double @multiply_down(double %6, double %10)
-  %43 = tail call double @multiply_up(double %4, double %8)
-  %44 = tail call i32 @fesetround(i32 0)
+  %42 = call double @multiply_down(double %6, double %10)
+  %43 = call double @multiply_up(double %4, double %8)
+  %44 = call i32 @fesetround(i32 0)
   br label %67
 
 45:                                               ; preds = %35
   br i1 %15, label %46, label %67
 
 46:                                               ; preds = %45
-  %47 = tail call double @multiply_down(double %4, double %10)
-  %48 = tail call double @multiply_up(double %6, double %8)
-  %49 = tail call i32 @fesetround(i32 0)
+  %47 = call double @multiply_down(double %4, double %10)
+  %48 = call double @multiply_up(double %6, double %8)
+  %49 = call i32 @fesetround(i32 0)
   br label %67
 
 50:                                               ; preds = %2
   br i1 %12, label %51, label %67
 
 51:                                               ; preds = %50
-  %52 = tail call zeroext i1 @is_negative(double %8)
-  %53 = tail call zeroext i1 @is_positive(double %10)
+  %52 = call zeroext i1 @is_negative(double %8)
+  %53 = call zeroext i1 @is_positive(double %10)
   br i1 %52, label %54, label %62
 
 54:                                               ; preds = %51
-  %55 = tail call double @multiply_down(double %6, double %8)
+  %55 = call double @multiply_down(double %6, double %8)
   br i1 %53, label %56, label %59
 
 56:                                               ; preds = %54
-  %57 = tail call double @multiply_up(double %6, double %10)
-  %58 = tail call i32 @fesetround(i32 0)
+  %57 = call double @multiply_up(double %6, double %10)
+  %58 = call i32 @fesetround(i32 0)
   br label %67
 
 59:                                               ; preds = %54
-  %60 = tail call double @multiply_up(double %4, double %10)
-  %61 = tail call i32 @fesetround(i32 0)
+  %60 = call double @multiply_up(double %4, double %10)
+  %61 = call i32 @fesetround(i32 0)
   br label %67
 
 62:                                               ; preds = %51
   br i1 %53, label %63, label %67
 
 63:                                               ; preds = %62
-  %64 = tail call double @multiply_down(double %4, double %8)
-  %65 = tail call double @multiply_up(double %6, double %10)
-  %66 = tail call i32 @fesetround(i32 0)
+  %64 = call double @multiply_down(double %4, double %8)
+  %65 = call double @multiply_up(double %6, double %10)
+  %66 = call i32 @fesetround(i32 0)
   br label %67
 
 67:                                               ; preds = %50, %62, %45, %30, %63, %59, %56, %46, %41, %37, %31, %26, %18
@@ -303,27 +303,27 @@ define { double, double } @div_interval(%struct.interval* nocapture readonly der
   %8 = load double, double* %7, align 8, !tbaa !4
   %9 = getelementptr inbounds %struct.interval, %struct.interval* %1, i64 0, i32 1
   %10 = load double, double* %9, align 8, !tbaa !9
-  %11 = tail call zeroext i1 @is_positive(double %8)
+  %11 = call zeroext i1 @is_positive(double %8)
   br i1 %11, label %53, label %12
 
 12:                                               ; preds = %2
-  %13 = tail call zeroext i1 @is_negative(double %10)
+  %13 = call zeroext i1 @is_negative(double %10)
   br i1 %13, label %53, label %14
 
 14:                                               ; preds = %12
-  %15 = tail call zeroext i1 @is_negative(double %8)
-  %16 = tail call zeroext i1 @is_positive(double %10)
+  %15 = call zeroext i1 @is_negative(double %8)
+  %16 = call zeroext i1 @is_positive(double %10)
   br i1 %15, label %17, label %35
 
 17:                                               ; preds = %14
   br i1 %16, label %86, label %18
 
 18:                                               ; preds = %17
-  %19 = tail call zeroext i1 @is_zero(double %4)
+  %19 = call zeroext i1 @is_zero(double %4)
   br i1 %19, label %20, label %25
 
 20:                                               ; preds = %18
-  %21 = tail call zeroext i1 @is_zero(double %6)
+  %21 = call zeroext i1 @is_zero(double %6)
   br i1 %21, label %22, label %25
 
 22:                                               ; preds = %20
@@ -332,32 +332,32 @@ define { double, double } @div_interval(%struct.interval* nocapture readonly der
   br label %86
 
 25:                                               ; preds = %20, %18
-  %26 = tail call zeroext i1 @is_negative(double %6)
+  %26 = call zeroext i1 @is_negative(double %6)
   br i1 %26, label %27, label %30
 
 27:                                               ; preds = %25
-  %28 = tail call double @divide_down(double %6, double %8)
-  %29 = tail call i32 @fesetround(i32 0)
+  %28 = call double @divide_down(double %6, double %8)
+  %29 = call i32 @fesetround(i32 0)
   br label %86
 
 30:                                               ; preds = %25
-  %31 = tail call zeroext i1 @is_negative(double %4)
+  %31 = call zeroext i1 @is_negative(double %4)
   br i1 %31, label %86, label %32
 
 32:                                               ; preds = %30
-  %33 = tail call double @divide_up(double %4, double %8)
-  %34 = tail call i32 @fesetround(i32 0)
+  %33 = call double @divide_up(double %4, double %8)
+  %34 = call i32 @fesetround(i32 0)
   br label %86
 
 35:                                               ; preds = %14
   br i1 %16, label %36, label %86
 
 36:                                               ; preds = %35
-  %37 = tail call zeroext i1 @is_zero(double %4)
+  %37 = call zeroext i1 @is_zero(double %4)
   br i1 %37, label %38, label %43
 
 38:                                               ; preds = %36
-  %39 = tail call zeroext i1 @is_zero(double %6)
+  %39 = call zeroext i1 @is_zero(double %6)
   br i1 %39, label %40, label %43
 
 40:                                               ; preds = %38
@@ -366,76 +366,76 @@ define { double, double } @div_interval(%struct.interval* nocapture readonly der
   br label %86
 
 43:                                               ; preds = %38, %36
-  %44 = tail call zeroext i1 @is_negative(double %6)
+  %44 = call zeroext i1 @is_negative(double %6)
   br i1 %44, label %45, label %48
 
 45:                                               ; preds = %43
-  %46 = tail call double @divide_up(double %6, double %10)
-  %47 = tail call i32 @fesetround(i32 0)
+  %46 = call double @divide_up(double %6, double %10)
+  %47 = call i32 @fesetround(i32 0)
   br label %86
 
 48:                                               ; preds = %43
-  %49 = tail call zeroext i1 @is_negative(double %4)
+  %49 = call zeroext i1 @is_negative(double %4)
   br i1 %49, label %86, label %50
 
 50:                                               ; preds = %48
-  %51 = tail call double @divide_down(double %4, double %10)
-  %52 = tail call i32 @fesetround(i32 0)
+  %51 = call double @divide_down(double %4, double %10)
+  %52 = call i32 @fesetround(i32 0)
   br label %86
 
 53:                                               ; preds = %12, %2
-  %54 = tail call zeroext i1 @is_negative(double %6)
+  %54 = call zeroext i1 @is_negative(double %6)
   br i1 %54, label %55, label %65
 
 55:                                               ; preds = %53
-  %56 = tail call zeroext i1 @is_negative(double %10)
+  %56 = call zeroext i1 @is_negative(double %10)
   br i1 %56, label %57, label %61
 
 57:                                               ; preds = %55
-  %58 = tail call double @divide_down(double %6, double %8)
-  %59 = tail call double @divide_up(double %4, double %10)
-  %60 = tail call i32 @fesetround(i32 0)
+  %58 = call double @divide_down(double %6, double %8)
+  %59 = call double @divide_up(double %4, double %10)
+  %60 = call i32 @fesetround(i32 0)
   br label %86
 
 61:                                               ; preds = %55
-  %62 = tail call double @divide_down(double %4, double %8)
-  %63 = tail call double @divide_up(double %6, double %10)
-  %64 = tail call i32 @fesetround(i32 0)
+  %62 = call double @divide_down(double %4, double %8)
+  %63 = call double @divide_up(double %6, double %10)
+  %64 = call i32 @fesetround(i32 0)
   br label %86
 
 65:                                               ; preds = %53
-  %66 = tail call zeroext i1 @is_negative(double %4)
-  %67 = tail call zeroext i1 @is_negative(double %10)
+  %66 = call zeroext i1 @is_negative(double %4)
+  %67 = call zeroext i1 @is_negative(double %10)
   br i1 %66, label %68, label %77
 
 68:                                               ; preds = %65
   br i1 %67, label %69, label %73
 
 69:                                               ; preds = %68
-  %70 = tail call double @divide_down(double %6, double %10)
-  %71 = tail call double @divide_up(double %4, double %10)
-  %72 = tail call i32 @fesetround(i32 0)
+  %70 = call double @divide_down(double %6, double %10)
+  %71 = call double @divide_up(double %4, double %10)
+  %72 = call i32 @fesetround(i32 0)
   br label %86
 
 73:                                               ; preds = %68
-  %74 = tail call double @divide_down(double %4, double %8)
-  %75 = tail call double @divide_up(double %6, double %8)
-  %76 = tail call i32 @fesetround(i32 0)
+  %74 = call double @divide_down(double %4, double %8)
+  %75 = call double @divide_up(double %6, double %8)
+  %76 = call i32 @fesetround(i32 0)
   br label %86
 
 77:                                               ; preds = %65
   br i1 %67, label %78, label %82
 
 78:                                               ; preds = %77
-  %79 = tail call double @divide_down(double %6, double %10)
-  %80 = tail call double @divide_up(double %4, double %8)
-  %81 = tail call i32 @fesetround(i32 0)
+  %79 = call double @divide_down(double %6, double %10)
+  %80 = call double @divide_up(double %4, double %8)
+  %81 = call i32 @fesetround(i32 0)
   br label %86
 
 82:                                               ; preds = %77
-  %83 = tail call double @divide_down(double %4, double %10)
-  %84 = tail call double @divide_up(double %6, double %8)
-  %85 = tail call i32 @fesetround(i32 0)
+  %83 = call double @divide_down(double %4, double %10)
+  %84 = call double @divide_up(double %6, double %8)
+  %85 = call i32 @fesetround(i32 0)
   br label %86
 
 86:                                               ; preds = %35, %48, %30, %17, %82, %78, %73, %69, %61, %57, %50, %45, %40, %32, %27, %22
@@ -458,11 +458,11 @@ define { double, double } @cosine_interval(%struct.interval* nocapture readonly 
   %3 = load double, double* %2, align 8, !tbaa !4
   %4 = getelementptr inbounds %struct.interval, %struct.interval* %0, i64 0, i32 1
   %5 = load double, double* %4, align 8, !tbaa !9
-  %6 = tail call double @divide_up(double %3, double 0x400921FB54442D18)
-  %7 = tail call double @llvm.ceil.f64(double %6)
-  %8 = tail call double @divide_down(double %5, double 0x400921FB54442D18)
-  %9 = tail call double @mod_down(double %3, double 0x400921FB54442D18)
-  %10 = tail call double @mod_down(double %5, double 0x400921FB54442D18)
+  %6 = call double @divide_up(double %3, double 0x400921FB54442D18)
+  %7 = call double @llvm.ceil.f64(double %6)
+  %8 = call double @divide_down(double %5, double 0x400921FB54442D18)
+  %9 = call double @mod_down(double %3, double 0x400921FB54442D18)
+  %10 = call double @mod_down(double %5, double 0x400921FB54442D18)
   %11 = fadd double %7, 1.000000e+00
   %12 = fcmp ugt double %11, %8
   br i1 %12, label %13, label %60
@@ -472,66 +472,66 @@ define { double, double } @cosine_interval(%struct.interval* nocapture readonly 
   br i1 %14, label %45, label %15
 
 15:                                               ; preds = %13
-  %16 = tail call double @mod_down(double %7, double 2.000000e+00)
+  %16 = call double @mod_down(double %7, double 2.000000e+00)
   %17 = fcmp oeq double %16, 1.000000e+00
   br i1 %17, label %18, label %26
 
 18:                                               ; preds = %15
-  %19 = tail call double @cosine_up(double %3)
-  %20 = tail call double @cosine_down(double %3)
-  %21 = tail call double @max(double %19, double %20)
-  %22 = tail call double @cosine_up(double %5)
-  %23 = tail call double @cosine_down(double %5)
-  %24 = tail call double @max(double %22, double %23)
-  %25 = tail call double @max(double %21, double %24)
+  %19 = call double @cosine_up(double %3)
+  %20 = call double @cosine_down(double %3)
+  %21 = call double @max(double %19, double %20)
+  %22 = call double @cosine_up(double %5)
+  %23 = call double @cosine_down(double %5)
+  %24 = call double @max(double %22, double %23)
+  %25 = call double @max(double %21, double %24)
   br label %60
 
 26:                                               ; preds = %15
   %27 = fcmp oeq double %16, 0.000000e+00
-  %28 = tail call double @cosine_up(double %3)
-  %29 = tail call double @cosine_down(double %3)
-  %30 = tail call double @min(double %28, double %29)
-  %31 = tail call double @cosine_up(double %5)
-  %32 = tail call double @cosine_down(double %5)
-  %33 = tail call double @min(double %31, double %32)
+  %28 = call double @cosine_up(double %3)
+  %29 = call double @cosine_down(double %3)
+  %30 = call double @min(double %28, double %29)
+  %31 = call double @cosine_up(double %5)
+  %32 = call double @cosine_down(double %5)
+  %33 = call double @min(double %31, double %32)
   br i1 %27, label %34, label %36
 
 34:                                               ; preds = %26
-  %35 = tail call double @min(double %30, double %33)
+  %35 = call double @min(double %30, double %33)
   br label %60
 
 36:                                               ; preds = %26
-  %37 = tail call double @cosine_up(double %3)
-  %38 = tail call double @cosine_down(double %3)
-  %39 = tail call double @max(double %37, double %38)
-  %40 = tail call double @cosine_up(double %5)
-  %41 = tail call double @cosine_down(double %5)
-  %42 = tail call double @max(double %40, double %41)
-  %43 = tail call double @min(double %30, double %33)
-  %44 = tail call double @max(double %39, double %42)
+  %37 = call double @cosine_up(double %3)
+  %38 = call double @cosine_down(double %3)
+  %39 = call double @max(double %37, double %38)
+  %40 = call double @cosine_up(double %5)
+  %41 = call double @cosine_down(double %5)
+  %42 = call double @max(double %40, double %41)
+  %43 = call double @min(double %30, double %33)
+  %44 = call double @max(double %39, double %42)
   br label %60
 
 45:                                               ; preds = %13
-  %46 = tail call double @cosine_up(double %3)
-  %47 = tail call double @cosine_down(double %3)
-  %48 = tail call double @min(double %46, double %47)
-  %49 = tail call double @cosine_up(double %5)
-  %50 = tail call double @cosine_down(double %5)
-  %51 = tail call double @min(double %49, double %50)
-  %52 = tail call double @cosine_up(double %3)
-  %53 = tail call double @cosine_down(double %3)
-  %54 = tail call double @max(double %52, double %53)
-  %55 = tail call double @cosine_up(double %5)
-  %56 = tail call double @cosine_down(double %5)
-  %57 = tail call double @max(double %55, double %56)
-  %58 = tail call double @min(double %48, double %51)
-  %59 = tail call double @max(double %54, double %57)
+  %46 = call double @cosine_up(double %3)
+  %47 = call double @cosine_down(double %3)
+  %48 = call double @min(double %46, double %47)
+  %49 = call double @cosine_up(double %5)
+  %50 = call double @cosine_down(double %5)
+  %51 = call double @min(double %49, double %50)
+  %52 = call double @cosine_up(double %3)
+  %53 = call double @cosine_down(double %3)
+  %54 = call double @max(double %52, double %53)
+  %55 = call double @cosine_up(double %5)
+  %56 = call double @cosine_down(double %5)
+  %57 = call double @max(double %55, double %56)
+  %58 = call double @min(double %48, double %51)
+  %59 = call double @max(double %54, double %57)
   br label %60
 
 60:                                               ; preds = %1, %18, %34, %36, %45
   %61 = phi double [ %58, %45 ], [ -1.000000e+00, %18 ], [ %35, %34 ], [ %43, %36 ], [ -1.000000e+00, %1 ]
   %62 = phi double [ %59, %45 ], [ %25, %18 ], [ 1.000000e+00, %34 ], [ %44, %36 ], [ 1.000000e+00, %1 ]
-  %63 = tail call i32 @fesetround(i32 0)
+  %63 = call i32 @fesetround(i32 0)
   %64 = insertvalue { double, double } undef, double %61, 0
   %65 = insertvalue { double, double } %64, double %62, 1
   ret { double, double } %65
