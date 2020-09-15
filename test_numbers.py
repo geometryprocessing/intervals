@@ -1,3 +1,5 @@
+import csv
+import pandas as pd
 import random
 from decimal import *
 from fractions import Fraction
@@ -19,12 +21,15 @@ def within_range(lower, upper, nums):
     for item in nums:
         if item < lower or item > upper:
             print("Value not within range: {}".format(frac_to_dec(item)))
-            return False
-    return True
+            return [False, item]
+    return [True, None]
 
 
 def frac_to_dec(frac):
-    return Decimal(frac.numerator)/Decimal(frac.denominator)
+    if frac:
+        return Decimal(frac.numerator)/Decimal(frac.denominator)
+    else:
+        return None
 
 
 def test_add():
@@ -59,24 +64,35 @@ def test_add():
     result = output.split("\n")
     result_split = {}
     range = []
+    pass_c_check = ""
     for item in result:
         if ("interval 1 from") in item:
-            result_split["interval1"] = item
+            input_range = re.findall(r"[-+]?\d*\.\d+|\d+", item)
+            result_split["al"] = float(input_range[1])
+            result_split["au"] = float(input_range[2])
         elif ("interval 2 from") in item:
-            result_split["interval2"] = item
+            input_range = re.findall(r"[-+]?\d*\.\d+|\d+", item)
+            result_split["bl"] = float(input_range[1])
+            result_split["bu"] = float(input_range[2])
         elif "result from " in item:
             range = re.findall(r"[-+]?\d*\.\d+|\d+", item)
+        elif "Pass check: " in item:
+            pass_c_check = item.split(": ")[-1]
     lower = Decimal(range[0])
     upper = Decimal(range[1])
-    print(result_split["interval1"])
+    print("Computed interval 1 from {} to {}".format(
+        result_split["al"], result_split["au"]))
     print("True interval 1 from {} to {}, fraction from {} to {}".format(
         frac_to_dec(al), frac_to_dec(au), al, au))
-    print(result_split["interval2"])
+    print("Computed interval 2 from {} to {}".format(
+        result_split["bl"], result_split["bu"]))
     print("True interval 2 from {} to {}, fraction from {} to {}".format(
         frac_to_dec(bl), frac_to_dec(bu), bl, bu))
     print("Computed addition from {} to {}".format(lower, upper))
     within = within_range(lower, upper, [al+bl, au+bu])
-    print("Within range: {}".format(within))
+    print("Pass c++ check: {}".format(pass_c_check))
+    print("Pass python check: {}".format(within[0]))
+    return {"al": al, "au": au, "bl": bl, "bu": bu, "computed_lower": lower, "computed_upper": upper, "within": within[0], "computed_al": result_split["al"], "computed_au": result_split["au"], "computed_bl": result_split["bl"], "computed_bu": result_split["bu"], "al_negative": al < 0, "au_negative": au < 0, "bl_negative": bl < 0, "bu_negative": bu < 0, "not_within_element": frac_to_dec(within[1]), "al_correct": result_split["al"] <= al, "au_correct": result_split["au"] >= au, "bl_correct": result_split["bl"] <= bl, "bu_correct": result_split["bu"] >= bu, }
 
 
 def test_mult():
@@ -111,26 +127,56 @@ def test_mult():
     result = output.split("\n")
     result_split = {}
     range = []
+    pass_c_check = ""
     for item in result:
         if ("interval 1 from") in item:
-            result_split["interval1"] = item
+            input_range = re.findall(r"[-+]?\d*\.\d+|\d+", item)
+            result_split["al"] = float(input_range[1])
+            result_split["au"] = float(input_range[2])
         elif ("interval 2 from") in item:
-            result_split["interval2"] = item
+            input_range = re.findall(r"[-+]?\d*\.\d+|\d+", item)
+            result_split["bl"] = float(input_range[1])
+            result_split["bu"] = float(input_range[2])
         elif "result from " in item:
             range = re.findall(r"[-+]?\d*\.\d+|\d+", item)
+        elif "Pass check: " in item:
+            pass_c_check = item.split(": ")[-1]
     lower = Decimal(range[0])
     upper = Decimal(range[1])
-    print(result_split["interval1"])
+    print("Computed interval 1 from {} to {}".format(
+        result_split["al"], result_split["au"]))
     print("True interval 1 from {} to {}, fraction from {} to {}".format(
         frac_to_dec(al), frac_to_dec(au), al, au))
-    print(result_split["interval2"])
+    print("Computed interval 2 from {} to {}".format(
+        result_split["bl"], result_split["bu"]))
     print("True interval 2 from {} to {}, fraction from {} to {}".format(
         frac_to_dec(bl), frac_to_dec(bu), bl, bu))
     print("Computed multiplication from {} to {}".format(lower, upper))
     within = within_range(lower, upper, [al*bl, al*bu, au*bl, au*bu])
-    print("Within range: {}".format(within))
+    print("Pass c++ check: {}".format(pass_c_check))
+    print("Pass python check: {}".format(within[0]))
+    return {"al": al, "au": au, "bl": bl, "bu": bu, "computed_lower": lower, "computed_upper": upper, "within": within[0], "computed_al": result_split["al"], "computed_au": result_split["au"], "computed_bl": result_split["bl"], "computed_bu": result_split["bu"], "al_negative": al < 0, "au_negative": au < 0, "bl_negative": bl < 0, "bu_negative": bu < 0, "not_within_element": frac_to_dec(within[1]), "al_correct": result_split["al"] <= al, "au_correct": result_split["au"] >= au, "bl_correct": result_split["bl"] <= bl, "bu_correct": result_split["bu"] >= bu, }
 
 
-test_add()
-print()
-test_mult()
+def test_add_batch():
+    # df = pd.DataFrame(columns=["al", "computed_al", "al_negative",  "al_correct", "au", "computed_au", "au_negative",  "au_correct",  "bl",  "computed_bl", "bl_negative", "bl_correct", "bu", "computed_bu", "bu_negative", "bu_correct", "computed_lower", "computed_upper", "within",
+    #                            "not_within_element"])
+
+    # for i in range(1000):
+    #     result = test_add()
+    #     df = df.append(result, ignore_index=True)
+    # df.to_csv("add_batch.csv", float_format=".10f")
+    with open('add_batch.csv', mode='w') as csv_file:
+        fieldnames = ["al", "computed_al", "al_negative",  "al_correct", "au", "computed_au", "au_negative",  "au_correct",  "bl",  "computed_bl", "bl_negative", "bl_correct", "bu", "computed_bu", "bu_negative", "bu_correct", "computed_lower", "computed_upper", "within",
+                      "not_within_element"]
+        writer = csv.DictWriter(
+            csv_file, fieldnames=fieldnames, quoting=csv.QUOTE_NONE)
+        writer.writeheader()
+        for i in range(1000):
+            result = test_add()
+            writer.writerow(result)
+
+
+# for i in range(1000):
+#     result = test_add()
+test_add_batch()
