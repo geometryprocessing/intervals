@@ -103,7 +103,7 @@ void test_add(double al, double au, double bl, double bu)
     double computed_lower = al + bl;
     double computed_upper = au + bu;
     bool within = within_range(result.lower, result.upper, {computed_lower, computed_upper});
-    std::cout << "Pass check:" << (within ? "true" : "false") << std::endl;
+    std::cout << "Pass check: " << (within ? "true" : "false") << std::endl;
     std::cout << std::endl;
 }
 
@@ -114,7 +114,7 @@ void test_sub(double al, double au, double bl, double bu)
     interval result = subtract_interval(i1, i2);
     print_binary_result(i1, i2, result, "Subtraction");
     bool within = within_range(result.lower, result.upper, {al - bl, al - bu, au - bl, au - bu});
-    std::cout << "Pass check:" << (within ? "true" : "false") << std::endl;
+    std::cout << "Pass check: " << (within ? "true" : "false") << std::endl;
     std::cout << std::endl;
 }
 
@@ -125,7 +125,7 @@ void test_mult(double al, double au, double bl, double bu)
     interval result = mult_interval(i1, i2);
     print_binary_result(i1, i2, result, "Multiplication");
     bool within = within_range(result.lower, result.upper, {al * bl, al * bu, au * bl, au * bu});
-    std::cout << "Pass check:" << (within ? "true" : "false") << std::endl;
+    std::cout << "Pass check: " << (within ? "true" : "false") << std::endl;
     std::cout << std::endl;
 }
 
@@ -136,7 +136,7 @@ void test_div(double al, double au, double bl, double bu)
     interval result = div_interval(i1, i2);
     print_binary_result(i1, i2, result, "Division");
     bool within = within_range(result.lower, result.upper, {al / bl, al / bu, au / bl, au / bu});
-    std::cout << "Pass check:" << (within ? "true" : "false") << std::endl;
+    std::cout << "Pass check: " << (within ? "true" : "false") << std::endl;
     std::cout << std::endl;
 }
 
