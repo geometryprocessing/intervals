@@ -163,16 +163,15 @@ int main(int argc, char *argv[])
     // make sure the interval is not empty
     if (al > au)
     {
-        double tmp = au;
-        au = al;
-        al = tmp;
+        al = div_interval({aun * 1.0, aun * 1.0}, {aud * 1.0, aud * 1.0}).lower;
+        au = div_interval({aln * 1.0, aln * 1.0}, {ald * 1.0, ald * 1.0}).upper;
     }
 
     if (bl > bu)
     {
         double tmp = bu;
-        bu = bl;
-        bl = tmp;
+        bu = div_interval({bln * 1.0, bln * 1.0}, {bld * 1.0, bld * 1.0}).upper;
+        bl = div_interval({bun * 1.0, bun * 1.0}, {bud * 1.0, bud * 1.0}).lower;
     }
 
     switch (operation)
