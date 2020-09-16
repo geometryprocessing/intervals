@@ -10,7 +10,9 @@
 #include <fstream>
 #include <stdio.h>
 #include <string.h>
+#include <gmpxx.h>
 
+// print result of a unary operation
 void print_unary_result(interval input, interval cos_result, std::string operand)
 {
     std::cout << std::setprecision(std::numeric_limits<double>::digits10 + 1)
@@ -21,6 +23,7 @@ void print_unary_result(interval input, interval cos_result, std::string operand
               << std::endl;
 }
 
+// print result of a binary operation
 void print_binary_result(interval input_a, interval input_b, interval result, std::string operand)
 {
     std::cout << std::setprecision(std::numeric_limits<double>::digits10 + 1)
@@ -32,17 +35,19 @@ void print_binary_result(interval input_a, interval input_b, interval result, st
               << std::endl;
 }
 
-void test_cos(double lower, double upper)
-{
-    interval test_interval = {lower, upper};
-    interval cos_result = cosine_interval(test_interval);
-    print_unary_result(test_interval, cos_result, "Cosine");
-    std::cout << std::setprecision(std::numeric_limits<double>::digits10 + 1)
-              << "Cosine of lower is: " << cos(lower) << std::endl
-              << "Cosine of upper is: " << cos(upper) << std::endl
-              << std::endl;
-}
+// // test the result of a consine
+// void test_cos(double lower, double upper)
+// {
+//     interval test_interval = {lower, upper};
+//     interval cos_result = cosine_interval(test_interval);
+//     print_unary_result(test_interval, cos_result, "Cosine");
+//     std::cout << std::setprecision(std::numeric_limits<double>::digits10 + 1)
+//               << "Cosine of lower is: " << cos(lower) << std::endl
+//               << "Cosine of upper is: " << cos(upper) << std::endl
+//               << std::endl;
+// }
 
+// check if a list of values are within the given lower and upper range
 bool within_range(double lower, double upper, std::vector<double> values)
 {
     for (int i = 0; i < values.size(); i++)
@@ -142,56 +147,62 @@ void test_div(double al, double au, double bl, double bu)
 
 int main(int argc, char *argv[])
 {
-    int operation = read_option<int>("-o", argc, argv, "0");
-    int aln = read_option<int>("--aln", argc, argv, "1"); // a lower numerator
-    int ald = read_option<int>("--ald", argc, argv, "1"); // a lower denominator
-    int aun = read_option<int>("--aun", argc, argv, "1"); // a upper numerator
-    int aud = read_option<int>("--aud", argc, argv, "1"); // a upper denominator
-    int bln = read_option<int>("--bln", argc, argv, "1"); // b lower numerator
-    int bld = read_option<int>("--bld", argc, argv, "1"); // b lower denominator
-    int bun = read_option<int>("--bun", argc, argv, "1"); // b upper numerator
-    int bud = read_option<int>("--bud", argc, argv, "1"); // b upper denominator
+    mpz_t n;
+    mpz_init(n);
+    mpz_set_ui(n, 20);
+    printf("n = ");
+    mpz_out_str(stdout, 10, n);
+    printf("\n");
+    // int operation = read_option<int>("-o", argc, argv, "0");
+    // int aln = read_option<int>("--aln", argc, argv, "1"); // a lower numerator
+    // int ald = read_option<int>("--ald", argc, argv, "1"); // a lower denominator
+    // int aun = read_option<int>("--aun", argc, argv, "1"); // a upper numerator
+    // int aud = read_option<int>("--aud", argc, argv, "1"); // a upper denominator
+    // int bln = read_option<int>("--bln", argc, argv, "1"); // b lower numerator
+    // int bld = read_option<int>("--bld", argc, argv, "1"); // b lower denominator
+    // int bun = read_option<int>("--bun", argc, argv, "1"); // b upper numerator
+    // int bud = read_option<int>("--bud", argc, argv, "1"); // b upper denominator
 
-    // std::cout << "Input interval 1 from " << aln << "/" << ald << " to " << aun << "/" << aud << std::endl;
-    // std::cout << "Input interval 2 from " << bln << "/" << bld << " to " << bun << "/" << bud << std::endl;
+    // // std::cout << "Input interval 1 from " << aln << "/" << ald << " to " << aun << "/" << aud << std::endl;
+    // // std::cout << "Input interval 2 from " << bln << "/" << bld << " to " << bun << "/" << bud << std::endl;
 
-    double al = div_interval({aln * 1.0, aln * 1.0}, {ald * 1.0, ald * 1.0}).lower;
-    double au = div_interval({aun * 1.0, aun * 1.0}, {aud * 1.0, aud * 1.0}).upper;
-    double bl = div_interval({bln * 1.0, bln * 1.0}, {bld * 1.0, bld * 1.0}).lower;
-    double bu = div_interval({bun * 1.0, bun * 1.0}, {bud * 1.0, bud * 1.0}).upper;
+    // double al = div_interval({aln * 1.0, aln * 1.0}, {ald * 1.0, ald * 1.0}).lower;
+    // double au = div_interval({aun * 1.0, aun * 1.0}, {aud * 1.0, aud * 1.0}).upper;
+    // double bl = div_interval({bln * 1.0, bln * 1.0}, {bld * 1.0, bld * 1.0}).lower;
+    // double bu = div_interval({bun * 1.0, bun * 1.0}, {bud * 1.0, bud * 1.0}).upper;
 
-    // make sure the interval is not empty
-    if (al > au)
-    {
-        al = div_interval({aun * 1.0, aun * 1.0}, {aud * 1.0, aud * 1.0}).lower;
-        au = div_interval({aln * 1.0, aln * 1.0}, {ald * 1.0, ald * 1.0}).upper;
-    }
+    // // make sure the interval is not empty
+    // if (al > au)
+    // {
+    //     al = div_interval({aun * 1.0, aun * 1.0}, {aud * 1.0, aud * 1.0}).lower;
+    //     au = div_interval({aln * 1.0, aln * 1.0}, {ald * 1.0, ald * 1.0}).upper;
+    // }
 
-    if (bl > bu)
-    {
-        double tmp = bu;
-        bu = div_interval({bln * 1.0, bln * 1.0}, {bld * 1.0, bld * 1.0}).upper;
-        bl = div_interval({bun * 1.0, bun * 1.0}, {bud * 1.0, bud * 1.0}).lower;
-    }
+    // if (bl > bu)
+    // {
+    //     double tmp = bu;
+    //     bu = div_interval({bln * 1.0, bln * 1.0}, {bld * 1.0, bld * 1.0}).upper;
+    //     bl = div_interval({bun * 1.0, bun * 1.0}, {bud * 1.0, bud * 1.0}).lower;
+    // }
 
-    switch (operation)
-    {
-    case 0:
-        test_add(al, au, bl, bu);
-        break;
-    case 1:
-        test_sub(al, au, bl, bu);
-        break;
-    case 2:
-        test_mult(al, au, bl, bu);
-        break;
-    case 3:
-        test_div(al, au, bl, bu);
-        break;
-    default:
-        test_add(al, au, bl, bu);
-        break;
-    }
+    // switch (operation)
+    // {
+    // case 0:
+    //     test_add(al, au, bl, bu);
+    //     break;
+    // case 1:
+    //     test_sub(al, au, bl, bu);
+    //     break;
+    // case 2:
+    //     test_mult(al, au, bl, bu);
+    //     break;
+    // case 3:
+    //     test_div(al, au, bl, bu);
+    //     break;
+    // default:
+    //     test_add(al, au, bl, bu);
+    //     break;
+    // }
 
     return 0;
 }
