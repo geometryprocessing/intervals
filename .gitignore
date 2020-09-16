@@ -226,3 +226,5 @@ dmypy.json
 
 # Bitcode
 *.bc
+
+3rdparty
