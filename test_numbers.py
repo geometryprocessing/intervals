@@ -92,7 +92,7 @@ def test_add():
     within = within_range(lower, upper, [al+bl, au+bu])
     print("Pass c++ check: {}".format(pass_c_check))
     print("Pass python check: {}".format(within[0]))
-    return {"al": al, "au": au, "bl": bl, "bu": bu, "computed_lower": lower, "computed_upper": upper, "within": within[0], "computed_al": result_split["al"], "computed_au": result_split["au"], "computed_bl": result_split["bl"], "computed_bu": result_split["bu"], "al_negative": al < 0, "au_negative": au < 0, "bl_negative": bl < 0, "bu_negative": bu < 0, "not_within_element": frac_to_dec(within[1]), "al_correct": result_split["al"] <= al, "au_correct": result_split["au"] >= au, "bl_correct": result_split["bl"] <= bl, "bu_correct": result_split["bu"] >= bu, }
+    return {"al": al, "au": au, "bl": bl, "bu": bu, "computed_lower": lower, "computed_upper": upper, "within": within[0], "computed_al": result_split["al"], "computed_au": result_split["au"], "computed_bl": result_split["bl"], "computed_bu": result_split["bu"], "al_negative": al < 0, "au_negative": au < 0, "bl_negative": bl < 0, "bu_negative": bu < 0, "not_within_element": frac_to_dec(within[1]), "al_correct": result_split["al"] <= al, "au_correct": result_split["au"] >= au, "bl_correct": result_split["bl"] <= bl, "bu_correct": result_split["bu"] >= bu, "pass c++ check": pass_c_check}
 
 
 def test_mult():
@@ -155,7 +155,7 @@ def test_mult():
     within = within_range(lower, upper, [al*bl, al*bu, au*bl, au*bu])
     print("Pass c++ check: {}".format(pass_c_check))
     print("Pass python check: {}".format(within[0]))
-    return {"al": al, "au": au, "bl": bl, "bu": bu, "computed_lower": lower, "computed_upper": upper, "within": within[0], "computed_al": result_split["al"], "computed_au": result_split["au"], "computed_bl": result_split["bl"], "computed_bu": result_split["bu"], "al_negative": al < 0, "au_negative": au < 0, "bl_negative": bl < 0, "bu_negative": bu < 0, "not_within_element": frac_to_dec(within[1]), "al_correct": result_split["al"] <= al, "au_correct": result_split["au"] >= au, "bl_correct": result_split["bl"] <= bl, "bu_correct": result_split["bu"] >= bu, }
+    return {"al": al, "au": au, "bl": bl, "bu": bu, "computed_lower": lower, "computed_upper": upper, "within": within[0], "computed_al": result_split["al"], "computed_au": result_split["au"], "computed_bl": result_split["bl"], "computed_bu": result_split["bu"], "al_negative": al < 0, "au_negative": au < 0, "bl_negative": bl < 0, "bu_negative": bu < 0, "not_within_element": frac_to_dec(within[1]), "al_correct": result_split["al"] <= al, "au_correct": result_split["au"] >= au, "bl_correct": result_split["bl"] <= bl, "bu_correct": result_split["bu"] >= bu, "pass c++ check": pass_c_check}
 
 
 def test_add_batch():
@@ -168,7 +168,7 @@ def test_add_batch():
     # df.to_csv("add_batch.csv", float_format=".10f")
     with open('add_batch.csv', mode='w') as csv_file:
         fieldnames = ["al", "computed_al", "al_negative",  "al_correct", "au", "computed_au", "au_negative",  "au_correct",  "bl",  "computed_bl", "bl_negative", "bl_correct", "bu", "computed_bu", "bu_negative", "bu_correct", "computed_lower", "computed_upper", "within",
-                      "not_within_element"]
+                      "not_within_element", "pass c++ check"]
         writer = csv.DictWriter(
             csv_file, fieldnames=fieldnames, quoting=csv.QUOTE_NONE)
         writer.writeheader()
