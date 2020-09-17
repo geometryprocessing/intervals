@@ -15,6 +15,17 @@
 
 using namespace std;
 
+// numerator of a, denominator of a
+// numerator of b, denominator of b
+int an, ad, bn, bd, cn, cd;
+
+// for the variable conversions
+mpz_t an_mpz, ad_mpz, bn_mpz, bd_mpz, cn_mpz, cd_mpz;
+mpq_t an_mpq, ad_mpq, bn_mpq, bd_mpq, cn_mpq, cd_mpq, a_mpq, b_mpq, c_mpq, result_lower_mpq, result_upper_mpq;
+
+// for the result in rational
+mpq_t result_mpq;
+
 // print result of a unary operation
 void print_unary_result(interval input, interval result, string operand)
 {
@@ -108,28 +119,13 @@ bool within_range(mpq_t lower, mpq_t upper, mpq_t known_value)
     return mpq_cmp(known_value, lower) >= 0 && mpq_cmp(known_value, upper) <= 0;
 }
 
-bool test_add(int an, int ad, int bn, int bd)
+bool test_add()
 {
     // generate the interval
     interval a = rational_to_interval(an, ad);
     interval b = rational_to_interval(bn, bd);
 
     interval result = add_interval(a, b);
-
-    // initialize the mpz types and mpq types
-    mpz_t an_mpz, ad_mpz, bn_mpz, bd_mpz;
-    mpq_t an_mpq, ad_mpq, bn_mpq, bd_mpq, a_mpq, b_mpq, result_lower_mpq, result_upper_mpq;
-    mpz_inits(an_mpz, ad_mpz, bn_mpz, bd_mpz, (mpz_ptr)0);
-    mpq_inits(an_mpq, ad_mpq, bn_mpq, bd_mpq, a_mpq, b_mpq, result_lower_mpq, result_upper_mpq, (mpz_ptr)0);
-    mpz_set_si(an_mpz, an);
-    mpz_set_si(ad_mpz, ad);
-    mpz_set_si(bn_mpz, bn);
-    mpz_set_si(bd_mpz, bd);
-
-    mpq_set_z(an_mpq, an_mpz);
-    mpq_set_z(ad_mpq, ad_mpz);
-    mpq_set_z(bn_mpq, bn_mpz);
-    mpq_set_z(bd_mpq, bd_mpz);
 
     mpq_div(a_mpq, an_mpq, ad_mpq);
     mpq_div(b_mpq, bn_mpq, bd_mpq);
@@ -139,8 +135,6 @@ bool test_add(int an, int ad, int bn, int bd)
     mpq_set_d(result_lower_mpq, result.lower);
     mpq_set_d(result_upper_mpq, result.upper);
 
-    mpq_t result_mpq;
-    mpq_init(result_mpq);
     mpq_add(result_mpq, a_mpq, b_mpq);
     print_rational("Addition rational result", result_mpq);
     print_rational("Interval lower rational", result_lower_mpq);
@@ -158,27 +152,12 @@ bool test_add(int an, int ad, int bn, int bd)
     }
 }
 
-bool test_mul(int an, int ad, int bn, int bd)
+bool test_mul()
 {
     // generate the interval
     interval a = rational_to_interval(an, ad);
     interval b = rational_to_interval(bn, bd);
     interval result = mult_interval(a, b);
-
-    // initialize the mpz types and mpq types
-    mpz_t an_mpz, ad_mpz, bn_mpz, bd_mpz;
-    mpq_t an_mpq, ad_mpq, bn_mpq, bd_mpq, a_mpq, b_mpq, result_lower_mpq, result_upper_mpq;
-    mpz_inits(an_mpz, ad_mpz, bn_mpz, bd_mpz, (mpz_ptr)0);
-    mpq_inits(an_mpq, ad_mpq, bn_mpq, bd_mpq, a_mpq, b_mpq, result_lower_mpq, result_upper_mpq, (mpz_ptr)0);
-    mpz_set_si(an_mpz, an);
-    mpz_set_si(ad_mpz, ad);
-    mpz_set_si(bn_mpz, bn);
-    mpz_set_si(bd_mpz, bd);
-
-    mpq_set_z(an_mpq, an_mpz);
-    mpq_set_z(ad_mpq, ad_mpz);
-    mpq_set_z(bn_mpq, bn_mpz);
-    mpq_set_z(bd_mpq, bd_mpz);
 
     mpq_div(a_mpq, an_mpq, ad_mpq);
     mpq_div(b_mpq, bn_mpq, bd_mpq);
@@ -188,8 +167,6 @@ bool test_mul(int an, int ad, int bn, int bd)
     mpq_set_d(result_lower_mpq, result.lower);
     mpq_set_d(result_upper_mpq, result.upper);
 
-    mpq_t result_mpq;
-    mpq_init(result_mpq);
     mpq_mul(result_mpq, a_mpq, b_mpq);
     print_rational("Multiplication rational result", result_mpq);
     print_rational("Interval lower rational", result_lower_mpq);
@@ -207,27 +184,12 @@ bool test_mul(int an, int ad, int bn, int bd)
     }
 }
 
-bool test_sub(int an, int ad, int bn, int bd)
+bool test_sub()
 {
     // generate the interval
     interval a = rational_to_interval(an, ad);
     interval b = rational_to_interval(bn, bd);
     interval result = subtract_interval(a, b);
-
-    // initialize the mpz types and mpq types
-    mpz_t an_mpz, ad_mpz, bn_mpz, bd_mpz;
-    mpq_t an_mpq, ad_mpq, bn_mpq, bd_mpq, a_mpq, b_mpq, result_lower_mpq, result_upper_mpq;
-    mpz_inits(an_mpz, ad_mpz, bn_mpz, bd_mpz, (mpz_ptr)0);
-    mpq_inits(an_mpq, ad_mpq, bn_mpq, bd_mpq, a_mpq, b_mpq, result_lower_mpq, result_upper_mpq, (mpz_ptr)0);
-    mpz_set_si(an_mpz, an);
-    mpz_set_si(ad_mpz, ad);
-    mpz_set_si(bn_mpz, bn);
-    mpz_set_si(bd_mpz, bd);
-
-    mpq_set_z(an_mpq, an_mpz);
-    mpq_set_z(ad_mpq, ad_mpz);
-    mpq_set_z(bn_mpq, bn_mpz);
-    mpq_set_z(bd_mpq, bd_mpz);
 
     mpq_div(a_mpq, an_mpq, ad_mpq);
     mpq_div(b_mpq, bn_mpq, bd_mpq);
@@ -237,8 +199,6 @@ bool test_sub(int an, int ad, int bn, int bd)
     mpq_set_d(result_lower_mpq, result.lower);
     mpq_set_d(result_upper_mpq, result.upper);
 
-    mpq_t result_mpq;
-    mpq_init(result_mpq);
     mpq_sub(result_mpq, a_mpq, b_mpq);
     print_rational("Subtraction rational result", result_mpq);
     print_rational("Interval lower rational", result_lower_mpq);
@@ -256,27 +216,12 @@ bool test_sub(int an, int ad, int bn, int bd)
     }
 }
 
-bool test_div(int an, int ad, int bn, int bd)
+bool test_div()
 {
     // generate the interval
     interval a = rational_to_interval(an, ad);
     interval b = rational_to_interval(bn, bd);
     interval result = div_interval(a, b);
-
-    // initialize the mpz types and mpq types
-    mpz_t an_mpz, ad_mpz, bn_mpz, bd_mpz;
-    mpq_t an_mpq, ad_mpq, bn_mpq, bd_mpq, a_mpq, b_mpq, result_lower_mpq, result_upper_mpq;
-    mpz_inits(an_mpz, ad_mpz, bn_mpz, bd_mpz, (mpz_ptr)0);
-    mpq_inits(an_mpq, ad_mpq, bn_mpq, bd_mpq, a_mpq, b_mpq, result_lower_mpq, result_upper_mpq, (mpz_ptr)0);
-    mpz_set_si(an_mpz, an);
-    mpz_set_si(ad_mpz, ad);
-    mpz_set_si(bn_mpz, bn);
-    mpz_set_si(bd_mpz, bd);
-
-    mpq_set_z(an_mpq, an_mpz);
-    mpq_set_z(ad_mpq, ad_mpz);
-    mpq_set_z(bn_mpq, bn_mpz);
-    mpq_set_z(bd_mpq, bd_mpz);
 
     mpq_div(a_mpq, an_mpq, ad_mpq);
     mpq_div(b_mpq, bn_mpq, bd_mpq);
@@ -286,8 +231,6 @@ bool test_div(int an, int ad, int bn, int bd)
     mpq_set_d(result_lower_mpq, result.lower);
     mpq_set_d(result_upper_mpq, result.upper);
 
-    mpq_t result_mpq;
-    mpq_init(result_mpq);
     mpq_div(result_mpq, a_mpq, b_mpq);
     print_rational("Division rational result", result_mpq);
     print_rational("Interval lower rational", result_lower_mpq);
@@ -305,20 +248,145 @@ bool test_div(int an, int ad, int bn, int bd)
     }
 }
 
+// composite expression 1
+// a * b - c / a
+bool test_comp1()
+{
+    // initialze c
+    random_rational(cn, cd);
+    interval a = rational_to_interval(an, ad);
+    interval b = rational_to_interval(bn, bd);
+    interval c = rational_to_interval(cn, cd);
+    interval result = subtract_interval(mult_interval(a, b), div_interval(c, a));
+
+    // setup rational c
+    mpz_set_si(cn_mpz, cn);
+    mpz_set_si(cd_mpz, cd);
+    mpq_set_z(cn_mpq, cn_mpz);
+    mpq_set_z(cd_mpq, cd_mpz);
+
+    mpq_div(a_mpq, an_mpq, ad_mpq);
+    mpq_div(b_mpq, bn_mpq, bd_mpq);
+    mpq_div(c_mpq, cn_mpq, cd_mpq);
+
+    print_rational("Rational a", a_mpq);
+    print_rational("Rational b", b_mpq);
+    print_rational("Rational c", c_mpq);
+    mpq_set_d(result_lower_mpq, result.lower);
+    mpq_set_d(result_upper_mpq, result.upper);
+
+    mpz_set_si(cn_mpz, cn);
+    mpz_set_si(cd_mpz, cd);
+
+    mpq_set_z(cn_mpq, cn_mpz);
+    mpq_set_z(cd_mpq, cd_mpz);
+
+    mpq_t tmp;
+    mpq_init(tmp);
+    mpq_div(result_mpq, c_mpq, a_mpq);
+    mpq_mul(tmp, a_mpq, b_mpq);
+    mpq_sub(result_mpq, tmp, result_mpq);
+    print_rational("Comp1 rational result", result_mpq);
+    print_rational("Interval lower rational", result_lower_mpq);
+    print_rational("Interval upper rational", result_upper_mpq);
+    if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
+    {
+        printf("Passed comp1 check\n");
+        return true;
+    }
+    else
+    {
+        printf("Failed comp1 check\n");
+        return false;
+    }
+}
+
+// composite expression 1
+// (a + b) * (a - b - c) / (b + c)
+bool test_comp2()
+{
+    // initialze c
+    random_rational(cn, cd);
+    interval a = rational_to_interval(an, ad);
+    interval b = rational_to_interval(bn, bd);
+    interval c = rational_to_interval(cn, cd);
+    interval result = div_interval(mult_interval(add_interval(a, b), subtract_interval(subtract_interval(a, b), c)), add_interval(b, c));
+
+    // setup rational c
+    mpz_set_si(cn_mpz, cn);
+    mpz_set_si(cd_mpz, cd);
+    mpq_set_z(cn_mpq, cn_mpz);
+    mpq_set_z(cd_mpq, cd_mpz);
+
+    mpq_div(a_mpq, an_mpq, ad_mpq);
+    mpq_div(b_mpq, bn_mpq, bd_mpq);
+    mpq_div(c_mpq, cn_mpq, cd_mpq);
+
+    print_rational("Rational a", a_mpq);
+    print_rational("Rational b", b_mpq);
+    print_rational("Rational c", c_mpq);
+    mpq_set_d(result_lower_mpq, result.lower);
+    mpq_set_d(result_upper_mpq, result.upper);
+
+    mpz_set_si(cn_mpz, cn);
+    mpz_set_si(cd_mpz, cd);
+
+    mpq_set_z(cn_mpq, cn_mpz);
+    mpq_set_z(cd_mpq, cd_mpz);
+
+    mpq_t tmp1, tmp2;
+    mpq_inits(tmp1, tmp2, (mpz_ptr)0);
+    mpq_add(result_mpq, a_mpq, b_mpq);
+    mpq_sub(tmp1, a_mpq, b_mpq);
+    mpq_sub(tmp1, tmp1, c_mpq);
+    mpq_add(tmp2, b_mpq, c_mpq);
+    mpq_mul(result_mpq, result_mpq, tmp1);
+    mpq_div(result_mpq, result_mpq, tmp2);
+    print_rational("Comp2 rational result", result_mpq);
+    print_rational("Interval lower rational", result_lower_mpq);
+    print_rational("Interval upper rational", result_upper_mpq);
+    if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
+    {
+        printf("Passed comp2 check\n");
+        return true;
+    }
+    else
+    {
+        printf("Failed comp2 check\n");
+        return false;
+    }
+}
+
 int main(int argc, char *argv[])
 {
-    // numerator of a, denominator of a
-    // numerator of b, denominator of b
-    int an, ad, bn, bd;
+    // initialize the numbers in gmp
+    mpz_inits(an_mpz, ad_mpz, bn_mpz, bd_mpz, cn_mpz, cd_mpz, (mpz_ptr)0);
+    mpq_inits(an_mpq, ad_mpq, bn_mpq, bd_mpq, cn_mpq, cd_mpq, a_mpq, b_mpq, c_mpq, result_lower_mpq, result_upper_mpq, (mpz_ptr)0);
+    mpq_init(result_mpq);
+
     for (int i = 0; i < 100000; i++)
     {
         random_rational(an, ad);
         random_rational(bn, bd);
-        bool result_add = test_add(an, ad, bn, bd);
-        bool result_mul = test_mul(an, ad, bn, bd);
-        bool result_sub = test_sub(an, ad, bn, bd);
-        bool result_div = test_div(an, ad, bn, bd);
-        if (!result_add || !result_mul || !result_sub || !result_div)
+
+        // setup the rational numbers
+        mpz_set_si(an_mpz, an);
+        mpz_set_si(ad_mpz, ad);
+        mpz_set_si(bn_mpz, bn);
+        mpz_set_si(bd_mpz, bd);
+
+        mpq_set_z(an_mpq, an_mpz);
+        mpq_set_z(ad_mpq, ad_mpz);
+        mpq_set_z(bn_mpq, bn_mpz);
+        mpq_set_z(bd_mpq, bd_mpz);
+
+        bool result_add = test_add();
+        bool result_mul = test_mul();
+        bool result_sub = test_sub();
+        bool result_div = test_div();
+        bool result_comp1 = test_comp1();
+        bool result_comp2 = test_comp2();
+        if (!result_add || !result_mul || !result_sub || !result_div || !result_comp1 || !result_comp2)
         {
             printf("Failed test\n");
             return 1;
