@@ -22,45 +22,39 @@ jobs:
           config: [Debug, Release]
           static: [ON, OFF]
           include:
-            - name: ubuntu-18.04-gcc-7
-              os: ubuntu-18.04
-              compiler: gcc
-              version: "7"
+            # - name: ubuntu-18.04-gcc-7
+            #   os: ubuntu-18.04
+            #   compiler: gcc
+            #   version: "7"
 
-            - name: ubuntu-18.04-gcc-8
-              os: ubuntu-18.04
-              compiler: gcc
-              version: "8"
+            # - name: ubuntu-18.04-gcc-8
+            #   os: ubuntu-18.04
+            #   compiler: gcc
+            #   version: "8"
 
-            - name: ubuntu-18.04-gcc-9
-              os: ubuntu-18.04
-              compiler: gcc
-              version: "9"
+            # - name: ubuntu-18.04-gcc-9
+            #   os: ubuntu-18.04
+            #   compiler: gcc
+            #   version: "9"
 
-            - name: ubuntu-18.04-clang-7
-              os: ubuntu-18.04
-              compiler: clang
-              version: "7"
+            # - name: ubuntu-18.04-clang-7
+            #   os: ubuntu-18.04
+            #   compiler: clang
+            #   version: "7"
 
-            - name: ubuntu-18.04-clang-8
-              os: ubuntu-18.04
-              compiler: clang
-              version: "8"
+            # - name: ubuntu-18.04-clang-8
+            #   os: ubuntu-18.04
+            #   compiler: clang
+            #   version: "8"
 
-            - name: ubuntu-18.04-clang-9
-              os: ubuntu-18.04
-              compiler: clang
-              version: "9"
+            # - name: ubuntu-18.04-clang-9
+            #   os: ubuntu-18.04
+            #   compiler: clang
+            #   version: "9"
 
             - name: macOS-latest
               os: macOS-latest
 
-              # Build tutorials for most configurations
-            - tutorials: ON
-
-              # Except with Debug mode
-            - config: Debug
-              tutorials: OFF
       env:
         LIBIGL_NUM_THREADS: 1  # See https://github.com/libigl/libigl/pull/996
       steps:
@@ -102,7 +96,7 @@ jobs:
 
         - name: Configure
           run: |
-            cd ../interval_operations/src && ./compile.sh 
+            cd interval_operations/src && ./compile.sh 
             cd ../../
             rm -rf build && mkdir build && cd build
             cmake .. -DCMAKE_BUILD_TYPE=Release
