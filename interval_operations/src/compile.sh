@@ -8,7 +8,21 @@ echo "Compile to dynamic library"
 clang interval.o -o interval.dylib -dynamiclib -shared
 echo "Compile to shared object"
 clang interval.o -o interval.so -shared
-echo "Found operations of dylib"
-nm -gU interval.dylib
-echo "Found operations of so"
-nm -gD interval.so
+
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+echo ${machine}
+
+if [ "${machine}" == "Mac" ]; then
+    echo "Found operations of dylib"
+    nm -gU interval.dylib
+elif [ "${machine}" == "Linux" ]; then
+    echo "Found operations of so"
+    nm -gD interval.so
+fi
