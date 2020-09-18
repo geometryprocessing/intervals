@@ -13,6 +13,8 @@
 #include <gmpxx.h>
 #include <stdlib.h>
 
+#define TEST_PRINT false
+
 using namespace std;
 
 // numerator of a, denominator of a
@@ -51,9 +53,12 @@ void print_binary_result(interval input_a, interval input_b, interval result, st
 
 void print_rational(string info, mpq_t rat)
 {
-    printf("%s: ", info.c_str());
-    mpq_out_str(stdout, 10, rat);
-    printf("\n");
+    if (TEST_PRINT)
+    {
+        printf("%s: ", info.c_str());
+        mpq_out_str(stdout, 10, rat);
+        printf("\n");
+    }
 }
 
 template <class ValueType>
@@ -386,7 +391,7 @@ int main(int argc, char *argv[])
         bool result_div = test_div();
         bool result_comp1 = test_comp1();
         bool result_comp2 = test_comp2();
-        if (result_add || !result_mul || !result_sub || !result_div || !result_comp1 || !result_comp2)
+        if (!result_add || !result_mul || !result_sub || !result_div || !result_comp1 || !result_comp2)
         {
             printf("Failed test\n");
             return 1;
