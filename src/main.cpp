@@ -386,7 +386,7 @@ int main(int argc, char *argv[])
         bool result_div = test_div();
         bool result_comp1 = test_comp1();
         bool result_comp2 = test_comp2();
-        if (!result_add || !result_mul || !result_sub || !result_div || !result_comp1 || !result_comp2)
+        if (result_add || !result_mul || !result_sub || !result_div || !result_comp1 || !result_comp2)
         {
             printf("Failed test\n");
             return 1;
