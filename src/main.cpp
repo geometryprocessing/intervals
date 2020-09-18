@@ -350,7 +350,7 @@ bool test_comp2()
     print_rational("Comp2 rational result", result_mpq);
     print_rational("Interval lower rational", result_lower_mpq);
     print_rational("Interval upper rational", result_upper_mpq);
-    if (within_range(result_upper_mpq, result_lower_mpq, result_mpq))
+    if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
         printf("Passed comp2 check\n");
         return true;
