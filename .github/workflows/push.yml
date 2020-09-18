@@ -111,4 +111,4 @@ jobs:
           run: cd build; make -j2
 
         - name: Tests
-          run: ./unit_tests >> test_results.txt; grep -Ri "fail" test_results.txt; echo $?
+          run: cd build; ./unit_tests >> test_results.txt; grep -Ri "fail" test_results.txt
