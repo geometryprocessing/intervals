@@ -111,4 +111,4 @@ jobs:
           run: cd build; make -j2
 
         - name: Tests
-          run: cd build; ./unit_tests >> test_results.txt; grep -Ri "pass" test_results.txt
+          run: cd build; ./unit_tests
