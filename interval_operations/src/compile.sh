@@ -24,7 +24,7 @@ if [ "${machine}" == "Mac" ]; then
     nm -gU interval.dylib
 elif [ "${machine}" == "Linux" ]; then
     echo "Compile to bitcode"
-    llvm-as interval.ll -o interval.bc
+    llvm-mc -assemble interval.ll -o interval.bc
     echo "Compile to object file"
     llc -filetype=obj interval.bc -o interval.o
     echo "Compile to dynamic library"
