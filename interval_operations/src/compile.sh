@@ -24,9 +24,9 @@ if [ "${machine}" == "Mac" ]; then
     nm -gU interval.dylib
 elif [ "${machine}" == "Linux" ]; then
     echo "Compile to bitcode"
-    llvm-as interval.ll -o interval.bc
+    /usr/bin/llvm-as interval.ll -o interval.bc
     echo "Compile to object file"
-    llc -filetype=obj interval.bc -o interval.o
+    /usr/bin/llc -filetype=obj interval.bc -o interval.o
     echo "Compile to dynamic library"
     gcc interval.o -o interval.dylib -dynamiclib -shared
     echo "Compile to shared object"
