@@ -65,7 +65,7 @@ jobs:
         - name: Dependencies (Linux)
           if: runner.os == 'Linux'
           run: |
-              bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+              sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
               sudo apt-get update
               if [ "${{ matrix.compiler }}" = "gcc" ]; then
                 sudo apt-get install -y g++-${{ matrix.version }}
