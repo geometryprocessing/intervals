@@ -65,10 +65,6 @@ jobs:
         - name: Dependencies (Linux)
           if: runner.os == 'Linux'
           run: |
-              # # LLVM 9 is not in Bionic's repositories so we add the official LLVM repository.
-              # if [ "${{ matrix.compiler }}" = "clang" ] && [ "${{ matrix.version }}" = "9" ]; then
-              #   sudo add-apt-repository "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main"
-              # fi
               bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
               sudo apt-get update
               if [ "${{ matrix.compiler }}" = "gcc" ]; then
