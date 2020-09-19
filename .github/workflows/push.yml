@@ -70,15 +70,15 @@ jobs:
                 sudo add-apt-repository "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main"
               fi
               sudo apt-get update
-        #       if [ "${{ matrix.compiler }}" = "gcc" ]; then
-        #         sudo apt-get install -y g++-${{ matrix.version }}
-        #         echo "::set-env name=CC::gcc-${{ matrix.version }}"
-        #         echo "::set-env name=CXX::g++-${{ matrix.version }}"
-        #       else
-        #         sudo apt-get install -y clang-${{ matrix.version }}
-        #         echo "::set-env name=CC::clang-${{ matrix.version }}"
-        #         echo "::set-env name=CXX::clang++-${{ matrix.version }}"
-        #       fi
+              if [ "${{ matrix.compiler }}" = "gcc" ]; then
+                sudo apt-get install -y g++-${{ matrix.version }}
+                echo "::set-env name=CC::gcc-${{ matrix.version }}"
+                echo "::set-env name=CXX::g++-${{ matrix.version }}"
+              else
+                sudo apt-get install -y clang-${{ matrix.version }}
+                echo "::set-env name=CC::clang-${{ matrix.version }}"
+                echo "::set-env name=CXX::clang++-${{ matrix.version }}"
+              fi
         #       sudo apt-get install \
         #         libblas-dev \
         #         libboost-filesystem-dev \
