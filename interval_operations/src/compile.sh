@@ -1,5 +1,5 @@
 # echo "Compile to llvm ir"
-g++ -fpic interval.cc -emit-llvm -S -c -o interval.ll -O1
+clang++ -fpic interval.cc -emit-llvm -S -c -o interval.ll -O1
 
 unameOut="$(uname -s)"
 case "${unameOut}" in
