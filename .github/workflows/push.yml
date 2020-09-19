@@ -13,7 +13,7 @@ jobs:
           name: [
             # ubuntu-18.04-gcc-7,
             # ubuntu-18.04-gcc-8,
-            ubuntu-18.04-gcc-9,
+            # ubuntu-18.04-gcc-9,
             # ubuntu-18.04-clang-7,
             # ubuntu-18.04-clang-8,
             ubuntu-18.04-clang-9,
@@ -31,10 +31,10 @@ jobs:
             #   compiler: gcc
             #   version: "8"
 
-            - name: ubuntu-18.04-gcc-9
-              os: ubuntu-18.04
-              compiler: gcc
-              version: "9"
+            # - name: ubuntu-18.04-gcc-9
+            #   os: ubuntu-18.04
+            #   compiler: gcc
+            #   version: "9"
 
             # - name: ubuntu-18.04-clang-7
             #   os: ubuntu-18.04
@@ -79,15 +79,15 @@ jobs:
                 echo "::set-env name=CC::clang-${{ matrix.version }}"
                 echo "::set-env name=CXX::clang++-${{ matrix.version }}"
               fi
-        #       sudo apt-get install \
-        #         libblas-dev \
-        #         libboost-filesystem-dev \
-        #         libboost-system-dev \
-        #         libboost-thread-dev \
-        #         libglu1-mesa-dev \
-        #         liblapack-dev \
-        #         libmpfr-dev \
-        #         xorg-dev
+              sudo apt-get install \
+                libblas-dev \
+                libboost-filesystem-dev \
+                libboost-system-dev \
+                libboost-thread-dev \
+                libglu1-mesa-dev \
+                liblapack-dev \
+                libmpfr-dev \
+                xorg-dev
 
         - name: Dependencies (macOS)
           if: runner.os == 'macOS'
