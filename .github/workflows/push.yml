@@ -5,7 +5,7 @@ on:
 name: Push Event
 jobs:
   Unix:
-      name: ${{ matrix.name }} (${{ matrix.config }}, Static=${{ matrix.static }})
+      name: ${{ matrix.name }} (${{ matrix.config }})
       runs-on: ${{ matrix.os }}
       strategy:
         fail-fast: false
@@ -20,7 +20,6 @@ jobs:
             macOS-latest,
           ]
           config: [Debug, Release]
-          static: [ON, OFF]
           include:
             # - name: ubuntu-18.04-gcc-7
             #   os: ubuntu-18.04
