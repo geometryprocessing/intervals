@@ -14,8 +14,15 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 include(IntervalsDependencies)
 
 ## add the dynamic library
-file(GLOB_RECURSE LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/*.dylib")
-message("LIBRARIES = ${LIBRARIES}")
+if(APPLE)
+    file(GLOB_RECURSE LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/*.dylib")
+    message("MACOS LIBRARIES = ${LIBRARIES}")
+endif()
+
+if(UNIX AND NOT APPLE)
+    file(GLOB_RECURSE LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/*.so")
+    message("LINUX LIBRARIES = ${LIBRARIES}")
+endif()
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} -undefined dynamic_lookup")
@@ -35,8 +42,16 @@ target_link_libraries(unit_tests PUBLIC "${LIBRARIES}")
 target_link_libraries(unit_tests PUBLIC ${GMP_LIBRARIES})
 
 
+if(APPLE)
+    add_custom_command (TARGET unit_tests
+        POST_BUILD COMMAND "${CMAKE_INSTALL_NAME_TOOL}"
+            "-change" "interval.dylib" "@executable_path/../interval_operations/src/interval.dylib"
+        "$<TARGET_FILE:unit_tests>" VERBATIM)
+endif()
 
-add_custom_command (TARGET unit_tests
+if(UNIX AND NOT APPLE)
+    add_custom_command (TARGET unit_tests
     POST_BUILD COMMAND "${CMAKE_INSTALL_NAME_TOOL}"
-        "-change" "interval.dylib" "@executable_path/../interval_operations/src/interval.dylib"
+        "-change" "interval.so" "@executable_path/../interval_operations/src/interval.so"
     "$<TARGET_FILE:unit_tests>" VERBATIM)
+endif()
