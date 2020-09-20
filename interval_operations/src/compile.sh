@@ -26,7 +26,8 @@ if [ "${machine}" == "Mac" ]; then
     nm -gU interval.dylib
 elif [ "${machine}" == "Linux" ]; then
     echo "Compile to so"
-    g++ -fpic -shared interval.cc -c -o interval.so -O1
+    gcc -shared -o interval.so -fPIC -O1 interval.cc
+    ls
     # echo "Compile to bitcode"
     # llvm-as interval.ll -o interval.bc
     # echo "Compile to object file"
