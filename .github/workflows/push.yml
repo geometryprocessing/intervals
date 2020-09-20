@@ -95,6 +95,11 @@ jobs:
         #       sudo rm -rf /swapfile /usr/share/dotnet /usr/local/lib/android /opt/ghc
         #       df -h
         - name: Build
+          if: runner.os == 'Linux'
+          run: cd build; make -j2; ldd unit_tests
+
+        - name: Build
+          if: runner.os == 'macOS'
           run: cd build; make -j2
 
         - name: Tests
