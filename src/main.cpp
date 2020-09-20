@@ -177,7 +177,7 @@ bool test_mul()
     print_rational("Interval lower rational", result_lower_mpq);
     print_rational("Interval upper rational", result_upper_mpq);
 
-    if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
+    if (within_range(result_upper_mpq, result_upper_mpq, result_mpq))
     {
         printf("Passed multiplication check\n");
         return true;
