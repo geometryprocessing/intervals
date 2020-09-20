@@ -96,7 +96,10 @@ jobs:
         #       df -h
         - name: Build
           if: runner.os == 'Linux'
-          run: cd build; make -j2; ldd unit_tests
+          run: |
+            cp interval_operations/src/*.so build/
+            cd build
+            make -j2
 
         - name: Build
           if: runner.os == 'macOS'
