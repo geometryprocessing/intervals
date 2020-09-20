@@ -37,5 +37,5 @@ elif [ "${machine}" == "Linux" ]; then
     # echo "Compile to shared object"
     # gcc interval.o -o interval.so -shared
     echo "Found operations of so"
-    nm -gD interval.so
+    nm -gD libinterval.so
 fi
