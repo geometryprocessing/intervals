@@ -77,41 +77,41 @@ extern "C"
         return a / b;
     }
 
-    double cosine_down(double a)
-    {
-        fesetround(FE_DOWNWARD);
-        return a;
-    }
+    // double cosine_down(double a)
+    // {
+    //     fesetround(FE_DOWNWARD);
+    //     return a;
+    // }
 
-    double cosine_up(double a)
-    {
-        fesetround(FE_UPWARD);
-        return a;
-    }
+    // double cosine_up(double a)
+    // {
+    //     fesetround(FE_UPWARD);
+    //     return a;
+    // }
 
-    double mod_down(double a, double b)
-    {
-        fesetround(FE_DOWNWARD);
-        return a - b;
-    }
+    // double mod_down(double a, double b)
+    // {
+    //     fesetround(FE_DOWNWARD);
+    //     return a - b;
+    // }
 
-    double mod_up(double a, double b)
-    {
-        fesetround(FE_UPWARD);
-        return a - b;
-    }
+    // double mod_up(double a, double b)
+    // {
+    //     fesetround(FE_UPWARD);
+    //     return a - b;
+    // }
 
-    double floor(double a)
-    {
-        fesetround(FE_UPWARD);
-        return a;
-    }
+    // double floor(double a)
+    // {
+    //     fesetround(FE_UPWARD);
+    //     return a;
+    // }
 
-    double ceil(double a)
-    {
-        fesetround(FE_UPWARD);
-        return a;
-    }
+    // double ceil(double a)
+    // {
+    //     fesetround(FE_UPWARD);
+    //     return a;
+    // }
 
     interval add_interval(const interval &a, const interval &b)
     {
@@ -447,74 +447,74 @@ extern "C"
         }
     }
 
-    interval cosine_interval(const interval &a)
-    {
-        double al = a.lower;
-        double au = a.upper;
-        double al_ratio = ceil(divide_up(al, static_cast<double>(PI)));
-        double au_ratio = divide_down(au, static_cast<double>(PI));
-        double al_rem = mod_down(al, static_cast<double>(PI));
-        double au_rem = mod_down(au, static_cast<double>(PI));
-        // printf("Lower: %f. Upper: %f\n", al_ratio, au_ratio);
-        // printf("Lower: %f. Upper: %f\n", al_rem, au_rem);
-        if (1 + al_ratio <= au_ratio)
-        {
-            interval result = {static_cast<double>(-1), static_cast<double>(1)};
-            fesetround(FE_TONEAREST);
-            return result;
-        }
-        else if (al_ratio <= au_ratio)
-        {
-            double remainder = mod_down(al_ratio, static_cast<double>(2));
-            // printf("remainder: %f\n", remainder);
-            // printf("cos lower %.20f, cos upper %.20f\n", cosine_up(al), cosine_up(au));
-            // printf("cos lower %.20f, cos upper %.20f\n", cosine_down(al), cosine_down(au));
-            // printf("lower %.20f, upper %.20f\n", min(cosine_down(al), cosine_down(au)), max(cosine_up(al), cosine_up(au)));
-            if (remainder == static_cast<double>(1))
-            {
-                double al_up = max(cosine_up(al), cosine_down(al));
-                double au_up = max(cosine_up(au), cosine_down(au));
-                interval result = {static_cast<double>(-1), max(al_up, au_up)};
-                fesetround(FE_TONEAREST);
-                return result;
-            }
-            else if (remainder == static_cast<double>(0))
-            {
-                double al_down = min(cosine_up(al), cosine_down(al));
-                double au_down = min(cosine_up(au), cosine_down(au));
-                interval result = {min(al_down, au_down), static_cast<double>(1)};
-                fesetround(FE_TONEAREST);
-                return result;
-            }
-            else
-            {
-                double al_down = min(cosine_up(al), cosine_down(al));
-                double au_down = min(cosine_up(au), cosine_down(au));
-                double al_up = max(cosine_up(al), cosine_down(al));
-                double au_up = max(cosine_up(au), cosine_down(au));
-                double lower = min(al_down, au_down);
-                double upper = max(al_up, au_up);
-                interval result = {lower, upper};
-                fesetround(FE_TONEAREST);
-                return result;
-            }
-        }
-        else
-        {
-            // printf("cos lower %.20f, cos upper %.20f\n", cosine_up(al), cosine_up(au));
-            // printf("cos lower %.20f, cos upper %.20f\n", cosine_down(al), cosine_down(au));
-            // printf("lower %.20f, upper %.20f\n", min(cosine_down(al), cosine_down(au)), max(cosine_up(al), cosine_up(au)));
-            double al_down = min(cosine_up(al), cosine_down(al));
-            double au_down = min(cosine_up(au), cosine_down(au));
-            double al_up = max(cosine_up(al), cosine_down(al));
-            double au_up = max(cosine_up(au), cosine_down(au));
-            double lower = min(al_down, au_down);
-            double upper = max(al_up, au_up);
-            interval result = {lower, upper};
-            // printf("%.20f\n", result.lower);
-            // printf("%.20f\n", result.upper);
-            fesetround(FE_TONEAREST);
-            return result;
-        }
-    }
+    // interval cosine_interval(const interval &a)
+    // {
+    //     double al = a.lower;
+    //     double au = a.upper;
+    //     double al_ratio = ceil(divide_up(al, static_cast<double>(PI)));
+    //     double au_ratio = divide_down(au, static_cast<double>(PI));
+    //     double al_rem = mod_down(al, static_cast<double>(PI));
+    //     double au_rem = mod_down(au, static_cast<double>(PI));
+    //     // printf("Lower: %f. Upper: %f\n", al_ratio, au_ratio);
+    //     // printf("Lower: %f. Upper: %f\n", al_rem, au_rem);
+    //     if (1 + al_ratio <= au_ratio)
+    //     {
+    //         interval result = {static_cast<double>(-1), static_cast<double>(1)};
+    //         fesetround(FE_TONEAREST);
+    //         return result;
+    //     }
+    //     else if (al_ratio <= au_ratio)
+    //     {
+    //         double remainder = mod_down(al_ratio, static_cast<double>(2));
+    //         // printf("remainder: %f\n", remainder);
+    //         // printf("cos lower %.20f, cos upper %.20f\n", cosine_up(al), cosine_up(au));
+    //         // printf("cos lower %.20f, cos upper %.20f\n", cosine_down(al), cosine_down(au));
+    //         // printf("lower %.20f, upper %.20f\n", min(cosine_down(al), cosine_down(au)), max(cosine_up(al), cosine_up(au)));
+    //         if (remainder == static_cast<double>(1))
+    //         {
+    //             double al_up = max(cosine_up(al), cosine_down(al));
+    //             double au_up = max(cosine_up(au), cosine_down(au));
+    //             interval result = {static_cast<double>(-1), max(al_up, au_up)};
+    //             fesetround(FE_TONEAREST);
+    //             return result;
+    //         }
+    //         else if (remainder == static_cast<double>(0))
+    //         {
+    //             double al_down = min(cosine_up(al), cosine_down(al));
+    //             double au_down = min(cosine_up(au), cosine_down(au));
+    //             interval result = {min(al_down, au_down), static_cast<double>(1)};
+    //             fesetround(FE_TONEAREST);
+    //             return result;
+    //         }
+    //         else
+    //         {
+    //             double al_down = min(cosine_up(al), cosine_down(al));
+    //             double au_down = min(cosine_up(au), cosine_down(au));
+    //             double al_up = max(cosine_up(al), cosine_down(al));
+    //             double au_up = max(cosine_up(au), cosine_down(au));
+    //             double lower = min(al_down, au_down);
+    //             double upper = max(al_up, au_up);
+    //             interval result = {lower, upper};
+    //             fesetround(FE_TONEAREST);
+    //             return result;
+    //         }
+    //     }
+    //     else
+    //     {
+    //         // printf("cos lower %.20f, cos upper %.20f\n", cosine_up(al), cosine_up(au));
+    //         // printf("cos lower %.20f, cos upper %.20f\n", cosine_down(al), cosine_down(au));
+    //         // printf("lower %.20f, upper %.20f\n", min(cosine_down(al), cosine_down(au)), max(cosine_up(al), cosine_up(au)));
+    //         double al_down = min(cosine_up(al), cosine_down(al));
+    //         double au_down = min(cosine_up(au), cosine_down(au));
+    //         double al_up = max(cosine_up(al), cosine_down(al));
+    //         double au_up = max(cosine_up(au), cosine_down(au));
+    //         double lower = min(al_down, au_down);
+    //         double upper = max(al_up, au_up);
+    //         interval result = {lower, upper};
+    //         // printf("%.20f\n", result.lower);
+    //         // printf("%.20f\n", result.upper);
+    //         fesetround(FE_TONEAREST);
+    //         return result;
+    //     }
+    // }
 }

@@ -58,33 +58,33 @@ extern "C" double divide_down(double a, double b);
 // the code will be further modified inside llvm ir
 extern "C" double divide_up(double a, double b);
 
-// perform the cosine of a double, cos(a)
-// with the rounding mode set downward
-// the code will be further modified inside llvm ir
-extern "C" double cosine_down(double a);
+// // perform the cosine of a double, cos(a)
+// // with the rounding mode set downward
+// // the code will be further modified inside llvm ir
+// extern "C" double cosine_down(double a);
 
-// perform the cosine of a double, cos(a)
-// with the rounding mode set upward
-// the code will be further modified inside llvm ir
-extern "C" double cosine_up(double a);
+// // perform the cosine of a double, cos(a)
+// // with the rounding mode set upward
+// // the code will be further modified inside llvm ir
+// extern "C" double cosine_up(double a);
 
-// computes the modulo of two doubles, a%b
-// with the rounding mode set downward
-// the code will be further modified inside llvm ir
-extern "C" double mod_down(double a, double b);
+// // computes the modulo of two doubles, a%b
+// // with the rounding mode set downward
+// // the code will be further modified inside llvm ir
+// extern "C" double mod_down(double a, double b);
 
-// computes the modulo of two doubles, a%b
-// with the rounding mode set upward
-// the code will be further modified inside llvm ir
-extern "C" double mod_up(double a, double b);
+// // computes the modulo of two doubles, a%b
+// // with the rounding mode set upward
+// // the code will be further modified inside llvm ir
+// extern "C" double mod_up(double a, double b);
 
-// computes the floor of a double
-// the code will be further modified inside llvm ir
-extern "C" double floor(double a);
+// // computes the floor of a double
+// // the code will be further modified inside llvm ir
+// extern "C" double floor(double a);
 
-// computes the ceil of a double
-// the code will be further modified inside llvm ir
-extern "C" double ceil(double a);
+// // computes the ceil of a double
+// // the code will be further modified inside llvm ir
+// extern "C" double ceil(double a);
 
 // compute the addition of two intervals
 // a + b
