@@ -52,6 +52,6 @@ endif()
 if(UNIX AND NOT APPLE)
     add_custom_command (TARGET unit_tests
     POST_BUILD COMMAND "${CMAKE_INSTALL_NAME_TOOL}"
-        "-change" "interval.so" "@executable_path/../interval_operations/src/interval.so"
+            "-change" "interval.so" "@executable_path/../interval_operations/src/interval.so"
     "$<TARGET_FILE:unit_tests>" VERBATIM)
 endif()

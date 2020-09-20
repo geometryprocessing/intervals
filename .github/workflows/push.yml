@@ -87,6 +87,7 @@ jobs:
             cd ../../
             rm -rf build && mkdir build && cd build
             cmake .. -DCMAKE_BUILD_TYPE=Release
+            otool -L unit_tests
         # - name: Free Disk Space
         #   if: runner.os == 'Linux'
         #   run: |
