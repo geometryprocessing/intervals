@@ -23,7 +23,6 @@ if [ "${machine}" == "Mac" ]; then
     echo "Found operations of dylib"
     nm -gU interval.dylib
 elif [ "${machine}" == "Linux" ]; then
-    less interval.ll
     echo "Compile to bitcode"
     llvm-as interval.ll -o interval.bc
     echo "Compile to object file"

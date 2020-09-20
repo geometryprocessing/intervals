@@ -16,7 +16,7 @@ jobs:
             # ubuntu-18.04-gcc-9,
             # ubuntu-18.04-clang-7,
             # ubuntu-18.04-clang-8,
-            ubuntu-18.04-clang-9,
+            # ubuntu-18.04-clang-9,
             macOS-latest,
           ]
           config: [Release]
@@ -46,10 +46,10 @@ jobs:
             #   compiler: clang
             #   version: "8"
 
-            - name: ubuntu-18.04-clang-9
-              os: ubuntu-18.04
-              compiler: clang
-              version: "9"
+            # - name: ubuntu-18.04-clang-9
+            #   os: ubuntu-18.04
+            #   compiler: clang
+            #   version: "9"
 
             - name: macOS-latest
               os: macOS-latest
