@@ -11,40 +11,40 @@ jobs:
         fail-fast: false
         matrix:
           name: [
-            # ubuntu-18.04-gcc-7,
-            # ubuntu-18.04-gcc-8,
+            ubuntu-18.04-gcc-7,
+            ubuntu-18.04-gcc-8,
             ubuntu-18.04-gcc-9,
-            # ubuntu-18.04-clang-7,
-            # ubuntu-18.04-clang-8,
+            ubuntu-18.04-clang-7,
+            ubuntu-18.04-clang-8,
             ubuntu-18.04-clang-9,
             macOS-latest,
           ]
           config: [Release]
           include:
-            # - name: ubuntu-18.04-gcc-7
-            #   os: ubuntu-18.04
-            #   compiler: gcc
-            #   version: "7"
+            - name: ubuntu-18.04-gcc-7
+              os: ubuntu-18.04
+              compiler: gcc
+              version: "7"
 
-            # - name: ubuntu-18.04-gcc-8
-            #   os: ubuntu-18.04
-            #   compiler: gcc
-            #   version: "8"
+            - name: ubuntu-18.04-gcc-8
+              os: ubuntu-18.04
+              compiler: gcc
+              version: "8"
 
             - name: ubuntu-18.04-gcc-9
               os: ubuntu-18.04
               compiler: gcc
               version: "9"
 
-            # - name: ubuntu-18.04-clang-7
-            #   os: ubuntu-18.04
-            #   compiler: clang
-            #   version: "7"
+            - name: ubuntu-18.04-clang-7
+              os: ubuntu-18.04
+              compiler: clang
+              version: "7"
 
-            # - name: ubuntu-18.04-clang-8
-            #   os: ubuntu-18.04
-            #   compiler: clang
-            #   version: "8"
+            - name: ubuntu-18.04-clang-8
+              os: ubuntu-18.04
+              compiler: clang
+              version: "8"
 
             - name: ubuntu-18.04-clang-9
               os: ubuntu-18.04
