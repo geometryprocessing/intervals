@@ -34,17 +34,19 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 endif()
 
 ## download gmp
-intervals_download_gmp()
+# intervals_download_gmp()
 find_package(GMP REQUIRED)
 
 INCLUDE_DIRECTORIES(
     "${GMP_INCLUDES}"
 )
+message("GMP LIBRARY = ${GMP_LIBRARIES}")
 
 add_executable(unit_tests ${test_sources})
 target_include_directories(unit_tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/)
 target_link_libraries(unit_tests PUBLIC "${LIBRARIES}")
 target_link_libraries(unit_tests PUBLIC ${GMP_LIBRARIES})
+
 
 
 if(APPLE)
