@@ -56,9 +56,6 @@ jobs:
 
           - name: macOS-latest
             os: macOS-latest
-
-    env:
-      LIBIGL_NUM_THREADS: 1  # See https://github.com/libigl/libigl/pull/996
     steps:
       - name: Checkout repository
         uses: actions/checkout@v1
@@ -112,59 +109,60 @@ jobs:
         run: cd build; ./unit_tests
 
   
-  # ####################
-  # # Windows
-  # ####################
+  ####################
+  # Windows
+  ####################
 
-  # Windows:
-  #   runs-on: windows-2019
-  #   env:
-  #     CC: cl.exe
-  #     CXX: cl.exe
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       config: [Release]
-  #       static: [ON, OFF]
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v1
-  #       with:
-  #         fetch-depth: 10
-  #     - uses: seanmiddleditch/gha-setup-ninja@master
+  Windows:
+    runs-on: windows-2019
+    env:
+      CC: cl.exe
+      CXX: cl.exe
+    strategy:
+      fail-fast: false
+      matrix:
+        config: [Release]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 10
+      - uses: seanmiddleditch/gha-setup-ninja@master
 
-  #       # https://github.com/actions/cache/issues/101
-  #     - name: Set env
-  #       run: |
-  #         echo "::set-env name=appdata::$($env:LOCALAPPDATA)"
-  #         echo "::set-env name=BOOST_ROOT::$env:BOOST_ROOT_1_69_0"
-  #     - name: Cache build
-  #       id: cache-build
-  #       uses: actions/cache@v1
-  #       with:
-  #         path: ${{ env.appdata }}\Mozilla\sccache
-  #         key: ${{ runner.os }}-${{ matrix.config }}-${{ matrix.static }}-cache
+        # https://github.com/actions/cache/issues/101
+      - name: Set env
+        run: |
+          echo "::set-env name=appdata::$($env:LOCALAPPDATA)"
+          echo "::set-env name=BOOST_ROOT::$env:BOOST_ROOT_1_69_0"
+      - name: Cache build
+        id: cache-build
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.appdata }}\Mozilla\sccache
+          key: ${{ runner.os }}-${{ matrix.config }}-${{ matrix.static }}-cache
 
-  #     - name: Prepare sccache
-  #       run: |
-  #         Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
-  #         scoop install sccache --global
-  #         # Scoop modifies the PATH so we make the modified PATH global.
-  #         echo "::set-env name=PATH::$env:PATH"
-  #       # We run configure + build in the same step, since they both need to call VsDevCmd
-  #       # Also, cmd uses ^ to break commands into multiple lines (in powershell this is `)
-  #     - name: Configure and build
-  #       shell: cmd
-  #       run: |
-  #         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64
-  #         cmake -G Ninja ^
-  #           -DCMAKE_CXX_COMPILER_LAUNCHER=sccache ^
-  #           -DCMAKE_BUILD_TYPE=${{ matrix.config }} ^
-  #           -DLIBIGL_USE_STATIC_LIBRARY=${{ matrix.static }} ^
-  #           -DLIBIGL_WITH_CGAL=ON ^
-  #           -DLIBIGL_WITH_COMISO=OFF ^
-  #           -B build ^
-  #           -S .
-  #         cmake --build build
-  #     - name: Tests
-  #       run: cd build; ctest --verbose
+      - name: Prepare sccache
+        run: |
+          Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+          scoop install sccache --global
+          # Scoop modifies the PATH so we make the modified PATH global.
+          echo "::set-env name=PATH::$env:PATH"
+        # We run configure + build in the same step, since they both need to call VsDevCmd
+        # Also, cmd uses ^ to break commands into multiple lines (in powershell this is `)
+      - name: Compile dll
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64
+          cd interval_operations\src
+          g++ -c -DBUILD_DLL -O1 interval.cc -fPIC -o interval.dll
+      - name: Configure and build
+        shell: cmd
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64
+          cmake -G Ninja ^
+            -DCMAKE_CXX_COMPILER_LAUNCHER=sccache ^
+            -DCMAKE_BUILD_TYPE=${{ matrix.config }} ^
+            -B build ^
+            -S .
+          cmake --build build
+      - name: Tests
+        run: cd build; ./unit_tests

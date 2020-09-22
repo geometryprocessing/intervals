@@ -24,6 +24,11 @@ if(UNIX AND NOT APPLE)
     message("LINUX LIBRARIES = ${LIBRARIES}")
 endif()
 
+IF (WIN32)
+    file(GLOB_RECURSE LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/*.dll")
+    message("WINDOWS LIBRARIES = ${LIBRARIES}")
+endif()
+
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} -undefined dynamic_lookup")
 endif()
