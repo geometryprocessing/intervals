@@ -4,109 +4,109 @@ on:
     - master
 name: Push Event
 jobs:
-  ####################
-  # Linux / macOS
-  ####################
-  Unix:
-    name: ${{ matrix.name }} (${{ matrix.config }})
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        name: [
-          ubuntu-18.04-gcc-7,
-          ubuntu-18.04-gcc-8,
-          ubuntu-18.04-gcc-9,
-          ubuntu-18.04-clang-7,
-          ubuntu-18.04-clang-8,
-          ubuntu-18.04-clang-9,
-          macOS-latest,
-        ]
-        config: [Release]
-        include:
-          - name: ubuntu-18.04-gcc-7
-            os: ubuntu-18.04
-            compiler: gcc
-            version: "7"
+  # ####################
+  # # Linux / macOS
+  # ####################
+  # Unix:
+  #   name: ${{ matrix.name }} (${{ matrix.config }})
+  #   runs-on: ${{ matrix.os }}
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       name: [
+  #         ubuntu-18.04-gcc-7,
+  #         ubuntu-18.04-gcc-8,
+  #         ubuntu-18.04-gcc-9,
+  #         ubuntu-18.04-clang-7,
+  #         ubuntu-18.04-clang-8,
+  #         ubuntu-18.04-clang-9,
+  #         macOS-latest,
+  #       ]
+  #       config: [Release]
+  #       include:
+  #         - name: ubuntu-18.04-gcc-7
+  #           os: ubuntu-18.04
+  #           compiler: gcc
+  #           version: "7"
 
-          - name: ubuntu-18.04-gcc-8
-            os: ubuntu-18.04
-            compiler: gcc
-            version: "8"
+  #         - name: ubuntu-18.04-gcc-8
+  #           os: ubuntu-18.04
+  #           compiler: gcc
+  #           version: "8"
 
-          - name: ubuntu-18.04-gcc-9
-            os: ubuntu-18.04
-            compiler: gcc
-            version: "9"
+  #         - name: ubuntu-18.04-gcc-9
+  #           os: ubuntu-18.04
+  #           compiler: gcc
+  #           version: "9"
 
-          - name: ubuntu-18.04-clang-7
-            os: ubuntu-18.04
-            compiler: clang
-            version: "7"
+  #         - name: ubuntu-18.04-clang-7
+  #           os: ubuntu-18.04
+  #           compiler: clang
+  #           version: "7"
 
-          - name: ubuntu-18.04-clang-8
-            os: ubuntu-18.04
-            compiler: clang
-            version: "8"
+  #         - name: ubuntu-18.04-clang-8
+  #           os: ubuntu-18.04
+  #           compiler: clang
+  #           version: "8"
 
-          - name: ubuntu-18.04-clang-9
-            os: ubuntu-18.04
-            compiler: clang
-            version: "9"
+  #         - name: ubuntu-18.04-clang-9
+  #           os: ubuntu-18.04
+  #           compiler: clang
+  #           version: "9"
 
-          - name: macOS-latest
-            os: macOS-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v1
-        with:
-          fetch-depth: 10
+  #         - name: macOS-latest
+  #           os: macOS-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v1
+  #       with:
+  #         fetch-depth: 10
 
-      - name: Dependencies (Linux)
-        if: runner.os == 'Linux'
-        run: |
-            sudo apt-get update -y
-            sudo apt-get install -y llvm
-            if [ "${{ matrix.compiler }}" = "gcc" ]; then
-              sudo apt-get install -y g++-${{ matrix.version }}
-              echo "::set-env name=CC::gcc-${{ matrix.version }}"
-              echo "::set-env name=CXX::g++-${{ matrix.version }}"
-            else
-              sudo apt-get install -y clang-${{ matrix.version }}
-              echo "::set-env name=CC::clang-${{ matrix.version }}"
-              echo "::set-env name=CXX::clang++-${{ matrix.version }}"
-            fi
+  #     - name: Dependencies (Linux)
+  #       if: runner.os == 'Linux'
+  #       run: |
+  #           sudo apt-get update -y
+  #           sudo apt-get install -y llvm
+  #           if [ "${{ matrix.compiler }}" = "gcc" ]; then
+  #             sudo apt-get install -y g++-${{ matrix.version }}
+  #             echo "::set-env name=CC::gcc-${{ matrix.version }}"
+  #             echo "::set-env name=CXX::g++-${{ matrix.version }}"
+  #           else
+  #             sudo apt-get install -y clang-${{ matrix.version }}
+  #             echo "::set-env name=CC::clang-${{ matrix.version }}"
+  #             echo "::set-env name=CXX::clang++-${{ matrix.version }}"
+  #           fi
 
-      - name: Dependencies (macOS)
-        if: runner.os == 'macOS'
-        run: brew install gmp
+  #     - name: Dependencies (macOS)
+  #       if: runner.os == 'macOS'
+  #       run: brew install gmp
 
-      - name: Configure
-        run: |
-          cd interval_operations/src && ./compile.sh 
-          cd ../../
-          rm -rf build && mkdir build && cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Release
-      # - name: Free Disk Space
-      #   if: runner.os == 'Linux'
-      #   run: |
-      #       sudo swapoff -a
-      #       sudo apt clean
-      #       sudo rm -rf /swapfile /usr/share/dotnet /usr/local/lib/android /opt/ghc
-      #       df -h
-      - name: Build
-        if: runner.os == 'Linux'
-        run: |
-          cp interval_operations/src/*.so build/
-          cd build
-          make -j2
+  #     - name: Configure
+  #       run: |
+  #         cd interval_operations/src && ./compile.sh 
+  #         cd ../../
+  #         rm -rf build && mkdir build && cd build
+  #         cmake .. -DCMAKE_BUILD_TYPE=Release
+  #     # - name: Free Disk Space
+  #     #   if: runner.os == 'Linux'
+  #     #   run: |
+  #     #       sudo swapoff -a
+  #     #       sudo apt clean
+  #     #       sudo rm -rf /swapfile /usr/share/dotnet /usr/local/lib/android /opt/ghc
+  #     #       df -h
+  #     - name: Build
+  #       if: runner.os == 'Linux'
+  #       run: |
+  #         cp interval_operations/src/*.so build/
+  #         cd build
+  #         make -j2
 
-      - name: Build
-        if: runner.os == 'macOS'
-        run: cd build; make -j2
+  #     - name: Build
+  #       if: runner.os == 'macOS'
+  #       run: cd build; make -j2
 
-      - name: Tests
-        run: cd build; ./unit_tests
+  #     - name: Tests
+  #       run: cd build; ./unit_tests
 
   
   ####################
