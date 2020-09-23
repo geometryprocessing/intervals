@@ -14,6 +14,10 @@
 #include <stdlib.h>
 
 #define TEST_PRINT false
+#ifdef _WIN32
+#pragma comment(lib, "interval.lib")
+#endif
+
 
 using namespace std;
 
