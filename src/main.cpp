@@ -468,7 +468,7 @@ int main(int argc, char *argv[])
     mpq_inits(an_mpq, ad_mpq, bn_mpq, bd_mpq, cn_mpq, cd_mpq, a_mpq, b_mpq, c_mpq, result_lower_mpq, result_upper_mpq, (mpz_ptr)0);
     mpq_init(result_mpq);
 
-    for (int i = 0; i < 10000; i++)
+    for (int i = 0; i < 100000; i++)
     {
         random_rational(an, ad);
         random_rational(bn, bd);
