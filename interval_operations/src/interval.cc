@@ -306,7 +306,7 @@ extern "C"
                 {
                     // bu is not zero
                     // we can return -inf to inf
-                    interval result = {static_cast<double>(-1.0 / 0), static_cast<double>(1.0 / 0)};
+                    interval result = {static_cast<double>(-INFINITY), static_cast<double>(INFINITY)};
                     return result;
                 }
                 else
@@ -320,20 +320,20 @@ extern "C"
                     if (is_negative(au))
                     {
                         // a is negative, b is negative to 0
-                        interval result = {divide_down(au, bl), static_cast<double>(1.0 / 0)};
+                        interval result = {divide_down(au, bl), static_cast<double>(INFINITY)};
                         fesetround(FE_TONEAREST);
                         return result;
                     }
                     else if (is_negative(al))
                     {
                         // a is from negative to positive, b is negative to 0
-                        interval result = {static_cast<double>(-1.0 / 0), static_cast<double>(1.0 / 0)};
+                        interval result = {static_cast<double>(-INFINITY), static_cast<double>(INFINITY)};
                         return result;
                     }
                     else
                     {
                         // a is 0 to positive, b is negative to 0
-                        interval result = {static_cast<double>(-1.0 / 0), divide_up(al, bl)};
+                        interval result = {static_cast<double>(-INFINITY), divide_up(al, bl)};
                         fesetround(FE_TONEAREST);
                         return result;
                     }
@@ -351,26 +351,26 @@ extern "C"
                     if (is_negative(au))
                     {
                         // a is strictly less than 0
-                        interval result = {static_cast<double>(-1.0 / 0), divide_up(au, bu)};
+                        interval result = {static_cast<double>(-INFINITY), divide_up(au, bu)};
                         fesetround(FE_TONEAREST);
                         return result;
                     }
                     else if (is_negative(al))
                     {
-                        interval result = {static_cast<double>(-1.0 / 0), static_cast<double>(1.0 / 0)};
+                        interval result = {static_cast<double>(-INFINITY), static_cast<double>(INFINITY)};
                         return result;
                     }
                     else
                     {
                         // a is 0 to positive
-                        interval result = {divide_down(al, bu), static_cast<double>(1.0 / 0)};
+                        interval result = {divide_down(al, bu), static_cast<double>(INFINITY)};
                         fesetround(FE_TONEAREST);
                         return result;
                     }
                 }
                 else
                 {
-                    interval result = {static_cast<double>(-0.0 / 0), static_cast<double>(0.0 / 0)};
+                    interval result = {static_cast<double>(-NAN), static_cast<double>(NAN)};
                     return result;
                 }
             }
