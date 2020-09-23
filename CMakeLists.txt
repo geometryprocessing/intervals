@@ -25,7 +25,7 @@ if(UNIX AND NOT APPLE)
 endif()
 
 IF (WIN32)
-    file(GLOB_RECURSE LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/*.dll")
+    file(GLOB_RECURSE LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/*.lib")
     message("WINDOWS LIBRARIES = ${LIBRARIES}")
 endif()
 
