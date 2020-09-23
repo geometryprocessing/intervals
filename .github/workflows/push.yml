@@ -188,6 +188,8 @@ jobs:
           cmake --build build
           
       - name: Tests
+        shell: cmd
         run: |
           cd build
+          dir
           unit_tests.exe
