@@ -26,7 +26,7 @@ endif()
 
 if (WIN32)
     file(GLOB_RECURSE LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/*.lib")
-    file(GLOB_RECURSE DLL_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/*.lib")
+    file(GLOB_RECURSE DLL_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/*.dll")
     message("WINDOWS LIBRARIES = ${LIBRARIES}")
     message("WINDOWS DLL LIBRARIES = ${DLL_LIBRARIES}")
 endif()
