@@ -24,9 +24,11 @@ if(UNIX AND NOT APPLE)
     message("LINUX LIBRARIES = ${LIBRARIES}")
 endif()
 
-IF (WIN32)
+if (WIN32)
     file(GLOB_RECURSE LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/*.lib")
+    file(GLOB_RECURSE DLL_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/*.lib")
     message("WINDOWS LIBRARIES = ${LIBRARIES}")
+    message("WINDOWS DLL LIBRARIES = ${DLL_LIBRARIES}")
 endif()
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
@@ -45,6 +47,9 @@ message("GMP LIBRARY = ${GMP_LIBRARIES}")
 add_executable(unit_tests ${test_sources})
 target_include_directories(unit_tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/)
 target_link_libraries(unit_tests PUBLIC "${LIBRARIES}")
+if (WIN32)
+    target_link_libraries(unit_tests PUBLIC "${DLL_LIBRARIES}")
+endif()
 target_link_libraries(unit_tests PUBLIC ${GMP_LIBRARIES})
 
 
