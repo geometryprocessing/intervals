@@ -143,7 +143,7 @@ bool test_add()
 
     mpq_add(result_mpq, a_mpq, b_mpq);
 
-    if (within_range(result_upper_mpq, result_upper_mpq, result_mpq))
+    if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
         // printf("Passed addition check, ");
         // print_rational("", result_lower_mpq);
@@ -183,7 +183,7 @@ bool test_mul()
 
     mpq_mul(result_mpq, a_mpq, b_mpq);
 
-    if (within_range(result_upper_mpq, result_upper_mpq, result_mpq))
+    if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
         // printf("Passed multiplication check, ");
         // print_rational("", result_lower_mpq);
@@ -223,7 +223,7 @@ bool test_sub()
 
     mpq_sub(result_mpq, a_mpq, b_mpq);
 
-    if (within_range(result_upper_mpq, result_upper_mpq, result_mpq))
+    if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
         // printf("Passed subtraction check, ");
         // print_rational("", result_lower_mpq);
@@ -263,7 +263,7 @@ bool test_div()
 
     mpq_div(result_mpq, a_mpq, b_mpq);
 
-    if (within_range(result_upper_mpq, result_upper_mpq, result_mpq))
+    if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
         // printf("Passed division check, ");
         // print_rational("", result_lower_mpq);
@@ -309,7 +309,7 @@ bool test_comp1()
     mpq_mul(tmp, a_mpq, b_mpq);
     mpq_sub(result_mpq, tmp, result_mpq);
 
-    if (within_range(result_upper_mpq, result_upper_mpq, result_mpq))
+    if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
         // printf("Passed comp1 check, ");
         // print_rational("", result_lower_mpq);
@@ -360,7 +360,7 @@ bool test_comp2()
     mpq_mul(result_mpq, result_mpq, tmp1);
     mpq_div(result_mpq, result_mpq, tmp2);
 
-    if (within_range(result_upper_mpq, result_upper_mpq, result_mpq))
+    if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
         // printf("Passed comp2 check, ");
         // print_rational("", result_lower_mpq);
@@ -410,7 +410,7 @@ bool test_comp3()
     mpq_mul(tmp3, five, tmp3);
     mpq_add(result_mpq, tmp3, tmp1);
 
-    if (within_range(result_upper_mpq, result_upper_mpq, result_mpq))
+    if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
         // printf("Passed comp3 check, ");
         // print_rational("", result_lower_mpq);
