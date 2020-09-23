@@ -39,6 +39,11 @@ double interval::upper() const
     return this->val.upper;
 }
 
+interval_c interval::c_interval_val() const
+{
+    return this->val;
+}
+
 // interval with interval operation
 interval interval::operator+(const interval &v) const
 {
