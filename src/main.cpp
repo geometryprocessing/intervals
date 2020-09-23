@@ -13,7 +13,6 @@
 #include <gmpxx.h>
 #include <stdlib.h>
 
-#define TEST_PRINT false
 // #ifdef _WIN32
 // #pragma comment(lib, "interval.lib")
 // #endif
@@ -56,12 +55,8 @@ void print_binary_result(interval input_a, interval input_b, interval result, st
 
 void print_rational(string info, mpq_t rat)
 {
-    if (TEST_PRINT)
-    {
-        printf("%s: ", info.c_str());
-        mpq_out_str(stdout, 10, rat);
-        printf("\n");
-    }
+    printf("%s", info.c_str());
+    mpq_out_str(stdout, 10, rat);
 }
 
 template <class ValueType>
@@ -132,25 +127,22 @@ bool test_add()
     // generate the interval
     interval a = rational_to_interval(an, ad);
     interval b = rational_to_interval(bn, bd);
-
     interval result = add_interval(a, b);
 
-    mpq_div(a_mpq, an_mpq, ad_mpq);
-    mpq_div(b_mpq, bn_mpq, bd_mpq);
-
-    print_rational("Rational a", a_mpq);
-    print_rational("Rational b", b_mpq);
     mpq_set_d(result_lower_mpq, result.lower);
     mpq_set_d(result_upper_mpq, result.upper);
 
     mpq_add(result_mpq, a_mpq, b_mpq);
-    print_rational("Addition rational result", result_mpq);
-    print_rational("Interval lower rational", result_lower_mpq);
-    print_rational("Interval upper rational", result_upper_mpq);
 
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        printf("Passed addition check\n");
+        printf("Passed addition check, ");
+        print_rational("", result_lower_mpq);
+        printf(" <= ");
+        print_rational("", result_mpq);
+        printf(" <= ");
+        print_rational("", result_upper_mpq);
+        printf("\n");
         return true;
     }
     else
@@ -167,22 +159,20 @@ bool test_mul()
     interval b = rational_to_interval(bn, bd);
     interval result = mult_interval(a, b);
 
-    mpq_div(a_mpq, an_mpq, ad_mpq);
-    mpq_div(b_mpq, bn_mpq, bd_mpq);
-
-    print_rational("Rational a", a_mpq);
-    print_rational("Rational b", b_mpq);
     mpq_set_d(result_lower_mpq, result.lower);
     mpq_set_d(result_upper_mpq, result.upper);
 
     mpq_mul(result_mpq, a_mpq, b_mpq);
-    print_rational("Multiplication rational result", result_mpq);
-    print_rational("Interval lower rational", result_lower_mpq);
-    print_rational("Interval upper rational", result_upper_mpq);
 
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        printf("Passed multiplication check\n");
+        printf("Passed multiplication check, ");
+        print_rational("", result_lower_mpq);
+        printf(" <= ");
+        print_rational("", result_mpq);
+        printf(" <= ");
+        print_rational("", result_upper_mpq);
+        printf("\n");
         return true;
     }
     else
@@ -199,22 +189,20 @@ bool test_sub()
     interval b = rational_to_interval(bn, bd);
     interval result = subtract_interval(a, b);
 
-    mpq_div(a_mpq, an_mpq, ad_mpq);
-    mpq_div(b_mpq, bn_mpq, bd_mpq);
-
-    print_rational("Rational a", a_mpq);
-    print_rational("Rational b", b_mpq);
     mpq_set_d(result_lower_mpq, result.lower);
     mpq_set_d(result_upper_mpq, result.upper);
 
     mpq_sub(result_mpq, a_mpq, b_mpq);
-    print_rational("Subtraction rational result", result_mpq);
-    print_rational("Interval lower rational", result_lower_mpq);
-    print_rational("Interval upper rational", result_upper_mpq);
 
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        printf("Passed subtraction check\n");
+        printf("Passed subtraction check, ");
+        print_rational("", result_lower_mpq);
+        printf(" <= ");
+        print_rational("", result_mpq);
+        printf(" <= ");
+        print_rational("", result_upper_mpq);
+        printf("\n");
         return true;
     }
     else
@@ -231,22 +219,20 @@ bool test_div()
     interval b = rational_to_interval(bn, bd);
     interval result = div_interval(a, b);
 
-    mpq_div(a_mpq, an_mpq, ad_mpq);
-    mpq_div(b_mpq, bn_mpq, bd_mpq);
-
-    print_rational("Rational a", a_mpq);
-    print_rational("Rational b", b_mpq);
     mpq_set_d(result_lower_mpq, result.lower);
     mpq_set_d(result_upper_mpq, result.upper);
 
     mpq_div(result_mpq, a_mpq, b_mpq);
-    print_rational("Division rational result", result_mpq);
-    print_rational("Interval lower rational", result_lower_mpq);
-    print_rational("Interval upper rational", result_upper_mpq);
 
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        printf("Passed division check\n");
+        printf("Passed division check, ");
+        print_rational("", result_lower_mpq);
+        printf(" <= ");
+        print_rational("", result_mpq);
+        printf(" <= ");
+        print_rational("", result_upper_mpq);
+        printf("\n");
         return true;
     }
     else
@@ -273,13 +259,10 @@ bool test_comp1()
     mpq_set_z(cn_mpq, cn_mpz);
     mpq_set_z(cd_mpq, cd_mpz);
 
-    mpq_div(a_mpq, an_mpq, ad_mpq);
-    mpq_div(b_mpq, bn_mpq, bd_mpq);
     mpq_div(c_mpq, cn_mpq, cd_mpq);
 
-    print_rational("Rational a", a_mpq);
-    print_rational("Rational b", b_mpq);
-    print_rational("Rational c", c_mpq);
+    print_rational("Rational c: ", c_mpq);
+    printf("\n");
     mpq_set_d(result_lower_mpq, result.lower);
     mpq_set_d(result_upper_mpq, result.upper);
 
@@ -294,12 +277,16 @@ bool test_comp1()
     mpq_div(result_mpq, c_mpq, a_mpq);
     mpq_mul(tmp, a_mpq, b_mpq);
     mpq_sub(result_mpq, tmp, result_mpq);
-    print_rational("Comp1 rational result", result_mpq);
-    print_rational("Interval lower rational", result_lower_mpq);
-    print_rational("Interval upper rational", result_upper_mpq);
+
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        printf("Passed comp1 check\n");
+        printf("Passed comp1 check, ");
+        print_rational("", result_lower_mpq);
+        printf(" <= ");
+        print_rational("", result_mpq);
+        printf(" <= ");
+        print_rational("", result_upper_mpq);
+        printf("\n");
         return true;
     }
     else
@@ -326,13 +313,10 @@ bool test_comp2()
     mpq_set_z(cn_mpq, cn_mpz);
     mpq_set_z(cd_mpq, cd_mpz);
 
-    mpq_div(a_mpq, an_mpq, ad_mpq);
-    mpq_div(b_mpq, bn_mpq, bd_mpq);
     mpq_div(c_mpq, cn_mpq, cd_mpq);
 
-    print_rational("Rational a", a_mpq);
-    print_rational("Rational b", b_mpq);
-    print_rational("Rational c", c_mpq);
+    print_rational("Rational c: ", c_mpq);
+    printf("\n");
     mpq_set_d(result_lower_mpq, result.lower);
     mpq_set_d(result_upper_mpq, result.upper);
 
@@ -350,12 +334,16 @@ bool test_comp2()
     mpq_add(tmp2, b_mpq, c_mpq);
     mpq_mul(result_mpq, result_mpq, tmp1);
     mpq_div(result_mpq, result_mpq, tmp2);
-    print_rational("Comp2 rational result", result_mpq);
-    print_rational("Interval lower rational", result_lower_mpq);
-    print_rational("Interval upper rational", result_upper_mpq);
+
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        printf("Passed comp2 check\n");
+        printf("Passed comp2 check, ");
+        print_rational("", result_lower_mpq);
+        printf(" <= ");
+        print_rational("", result_mpq);
+        printf(" <= ");
+        print_rational("", result_upper_mpq);
+        printf("\n");
         return true;
     }
     else
@@ -367,12 +355,10 @@ bool test_comp2()
 
 int main(int argc, char *argv[])
 {
-    cout << "Entering\n";
     // initialize the numbers in gmp
     mpz_inits(an_mpz, ad_mpz, bn_mpz, bd_mpz, cn_mpz, cd_mpz, (mpz_ptr)0);
     mpq_inits(an_mpq, ad_mpq, bn_mpq, bd_mpq, cn_mpq, cd_mpq, a_mpq, b_mpq, c_mpq, result_lower_mpq, result_upper_mpq, (mpz_ptr)0);
     mpq_init(result_mpq);
-    cout << "MPZ INITS\n";
 
     for (int i = 0; i < 100000; i++)
     {
@@ -390,6 +376,12 @@ int main(int argc, char *argv[])
         mpq_set_z(bn_mpq, bn_mpz);
         mpq_set_z(bd_mpq, bd_mpz);
 
+        mpq_div(a_mpq, an_mpq, ad_mpq);
+        mpq_div(b_mpq, bn_mpq, bd_mpq);
+        print_rational("Rational a: ", a_mpq);
+        printf("\n");
+        print_rational("Rational b: ", b_mpq);
+        printf("\n");
         bool result_add = test_add();
         bool result_mul = test_mul();
         bool result_sub = test_sub();
@@ -401,6 +393,7 @@ int main(int argc, char *argv[])
             printf("Failed test\n");
             return 1;
         }
+        printf("\n");
     }
     return 0;
 }
