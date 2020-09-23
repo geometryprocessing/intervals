@@ -18,7 +18,6 @@
 // #pragma comment(lib, "interval.lib")
 // #endif
 
-
 using namespace std;
 
 // numerator of a, denominator of a
@@ -368,10 +367,12 @@ bool test_comp2()
 
 int main(int argc, char *argv[])
 {
+    cout << "Entering\n";
     // initialize the numbers in gmp
     mpz_inits(an_mpz, ad_mpz, bn_mpz, bd_mpz, cn_mpz, cd_mpz, (mpz_ptr)0);
     mpq_inits(an_mpq, ad_mpq, bn_mpq, bd_mpq, cn_mpq, cd_mpq, a_mpq, b_mpq, c_mpq, result_lower_mpq, result_upper_mpq, (mpz_ptr)0);
     mpq_init(result_mpq);
+    cout << "MPZ INITS\n";
 
     for (int i = 0; i < 100000; i++)
     {
