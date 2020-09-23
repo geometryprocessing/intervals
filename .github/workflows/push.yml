@@ -173,8 +173,7 @@ jobs:
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64
           cd interval_operations\src
-          cl /c /D_USRDLL /D_WINDLL /link /DLL /O1 interval.cc -o interval.dll /LD /OUT:interval.dll /DBUILD_DLL
-          # g++ -c -DBUILD_DLL -shared -O1 interval.cc -fPIC -o interval.dll
+          cl /c /O1 /LD /DBUILD_DLL /D_USRDLL /D_WINDLL interval.cc /link /DLL /OUT:interval.dll 
 
       - name: Configure and build
         shell: cmd
