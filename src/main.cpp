@@ -11,6 +11,7 @@
 #include <string.h>
 #include <gmpxx.h>
 #include <stdlib.h>
+#include "interval_c.h"
 #include "interval.hpp"
 
 // #ifdef _WIN32
