@@ -190,6 +190,7 @@ jobs:
       - name: Tests
         shell: cmd
         run: |
+          set PATH=%PATH%;D:\a\intervals\intervals\interval_operations\src;
           cd build
           dir
           unit_tests.exe
