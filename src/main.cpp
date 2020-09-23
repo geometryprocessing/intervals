@@ -27,6 +27,9 @@ int an, ad, bn, bd, cn, cd;
 mpz_t an_mpz, ad_mpz, bn_mpz, bd_mpz, cn_mpz, cd_mpz;
 mpq_t an_mpq, ad_mpq, bn_mpq, bd_mpq, cn_mpq, cd_mpq, a_mpq, b_mpq, c_mpq, result_lower_mpq, result_upper_mpq;
 
+// constants
+mpq_t three, four, five, six;
+
 // for the result in rational
 mpq_t result_mpq;
 
@@ -292,20 +295,10 @@ bool test_div()
 // a * b - c / a
 bool test_comp1()
 {
-    // initialze c
-    random_rational(cn, cd);
     interval a = rational_to_interval(an, ad);
     interval b = rational_to_interval(bn, bd);
     interval c = rational_to_interval(cn, cd);
     interval result = a * b - c / a;
-
-    // setup rational c
-    mpz_set_si(cn_mpz, cn);
-    mpz_set_si(cd_mpz, cd);
-    mpq_set_z(cn_mpq, cn_mpz);
-    mpq_set_z(cd_mpq, cd_mpz);
-
-    mpq_div(c_mpq, cn_mpq, cd_mpq);
 
     mpq_set_d(result_lower_mpq, result.lower());
     mpq_set_d(result_upper_mpq, result.upper());
@@ -350,20 +343,10 @@ bool test_comp1()
 // (a + b) * (a - b - c) / (b + c)
 bool test_comp2()
 {
-    // initialze c
-    random_rational(cn, cd);
     interval a = rational_to_interval(an, ad);
     interval b = rational_to_interval(bn, bd);
     interval c = rational_to_interval(cn, cd);
     interval result = (a + b) * (a - b - c) / (b + c);
-
-    // setup rational c
-    mpz_set_si(cn_mpz, cn);
-    mpz_set_si(cd_mpz, cd);
-    mpq_set_z(cn_mpq, cn_mpz);
-    mpq_set_z(cd_mpq, cd_mpz);
-
-    mpq_div(c_mpq, cn_mpq, cd_mpq);
 
     mpq_set_d(result_lower_mpq, result.lower());
     mpq_set_d(result_upper_mpq, result.upper());
@@ -417,12 +400,8 @@ bool test_comp3()
     mpq_set_d(result_lower_mpq, result.lower());
     mpq_set_d(result_upper_mpq, result.upper());
 
-    mpq_t three, four, five, six, tmp1, tmp2, tmp3;
-    mpq_inits(three, four, five, six, tmp1, tmp2, tmp3, (mpz_ptr)0);
-    mpq_set_si(three, 3, 1);
-    mpq_set_si(four, 4, 1);
-    mpq_set_si(five, -5, 1);
-    mpq_set_si(six, 6, 1);
+    mpq_t tmp1, tmp2, tmp3;
+    mpq_inits(tmp1, tmp2, tmp3, (mpz_ptr)0);
 
     mpq_div(tmp1, a_mpq, six);
     mpq_sub(tmp2, b_mpq, four);
@@ -465,27 +444,38 @@ int main(int argc, char *argv[])
 {
     // initialize the numbers in gmp
     mpz_inits(an_mpz, ad_mpz, bn_mpz, bd_mpz, cn_mpz, cd_mpz, (mpz_ptr)0);
-    mpq_inits(an_mpq, ad_mpq, bn_mpq, bd_mpq, cn_mpq, cd_mpq, a_mpq, b_mpq, c_mpq, result_lower_mpq, result_upper_mpq, (mpz_ptr)0);
+    mpq_inits(an_mpq, ad_mpq, bn_mpq, bd_mpq, cn_mpq, cd_mpq, a_mpq, b_mpq, c_mpq, result_lower_mpq, result_upper_mpq, three, four, five, six, (mpz_ptr)0);
+    mpq_set_si(three, 3, 1);
+    mpq_set_si(four, 4, 1);
+    mpq_set_si(five, -5, 1);
+    mpq_set_si(six, 6, 1);
     mpq_init(result_mpq);
 
     for (int i = 0; i < 100000; i++)
     {
         random_rational(an, ad);
         random_rational(bn, bd);
+        random_rational(cn, cd);
 
         // setup the rational numbers
         mpz_set_si(an_mpz, an);
         mpz_set_si(ad_mpz, ad);
         mpz_set_si(bn_mpz, bn);
         mpz_set_si(bd_mpz, bd);
+        mpz_set_si(cn_mpz, cn);
+        mpz_set_si(cd_mpz, cd);
 
         mpq_set_z(an_mpq, an_mpz);
         mpq_set_z(ad_mpq, ad_mpz);
         mpq_set_z(bn_mpq, bn_mpz);
         mpq_set_z(bd_mpq, bd_mpz);
+        mpq_set_z(cn_mpq, cn_mpz);
+        mpq_set_z(cd_mpq, cd_mpz);
 
         mpq_div(a_mpq, an_mpq, ad_mpq);
         mpq_div(b_mpq, bn_mpq, bd_mpq);
+        mpq_div(c_mpq, cn_mpq, cd_mpq);
+
         bool result_add = test_add();
         bool result_mul = test_mul();
         bool result_sub = test_sub();
