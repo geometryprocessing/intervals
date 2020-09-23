@@ -1,77 +1,77 @@
 #include "interval.h"
 #include "iostream"
-extern "C" EXPORT
+extern "C"
 {
 #include <fenv.h>
 #define PI 3.1415926535897932
-    inline bool is_negative(double a)
+    EXPORT inline bool is_negative(double a)
     {
         return a < static_cast<double>(0);
     }
 
-    inline bool is_positive(double a)
+    EXPORT inline bool is_positive(double a)
     {
         return a > static_cast<double>(0);
     }
 
-    inline bool is_zero(double a)
+    EXPORT inline bool is_zero(double a)
     {
         return a == static_cast<double>(0);
     }
 
-    inline double max(double a, double b)
+    EXPORT inline double max(double a, double b)
     {
         return a > b ? a : b;
     }
 
-    inline double min(double a, double b)
+    EXPORT inline double min(double a, double b)
     {
         return a < b ? a : b;
     }
 
-    double add_down(double a, double b)
+    EXPORT double add_down(double a, double b)
     {
         fesetround(FE_DOWNWARD);
         return a + b;
     }
 
-    double add_up(double a, double b)
+    EXPORT double add_up(double a, double b)
     {
         fesetround(FE_UPWARD);
         return a + b;
     }
 
-    double subtract_down(double a, double b)
+    EXPORT double subtract_down(double a, double b)
     {
         fesetround(FE_DOWNWARD);
         return a - b;
     }
 
-    double subtract_up(double a, double b)
+    EXPORT double subtract_up(double a, double b)
     {
         fesetround(FE_UPWARD);
         return a - b;
     }
 
-    double multiply_down(double a, double b)
+    EXPORT double multiply_down(double a, double b)
     {
         fesetround(FE_DOWNWARD);
         return a * b;
     }
 
-    double multiply_up(double a, double b)
+    EXPORT double multiply_up(double a, double b)
     {
         fesetround(FE_UPWARD);
         return a * b;
     }
 
-    double divide_down(double a, double b)
+    EXPORT double divide_down(double a, double b)
     {
         fesetround(FE_DOWNWARD);
         return a / b;
     }
 
-    double divide_up(double a, double b)
+    EXPORT double divide_up(double a, double b)
     {
         fesetround(FE_UPWARD);
         return a / b;
@@ -113,7 +113,7 @@ extern "C" EXPORT
     //     return a;
     // }
 
-    interval add_interval(const interval &a, const interval &b)
+    EXPORT interval add_interval(const interval &a, const interval &b)
     {
         double lower = add_down(a.lower, b.lower);
         double upper = add_up(a.upper, b.upper);
@@ -122,7 +122,7 @@ extern "C" EXPORT
         return result;
     }
 
-    interval subtract_interval(const interval &a, const interval &b)
+    EXPORT interval subtract_interval(const interval &a, const interval &b)
     {
         double lower = subtract_down(a.lower, b.upper);
         double upper = subtract_up(a.upper, b.lower);
@@ -131,7 +131,7 @@ extern "C" EXPORT
         return result;
     }
 
-    interval mult_interval(const interval &a, const interval &b)
+    EXPORT interval mult_interval(const interval &a, const interval &b)
     {
         // get the individual elements
         const double al = a.lower;
@@ -290,7 +290,7 @@ extern "C" EXPORT
         }
     }
 
-    interval div_interval(const interval &a, const interval &b)
+    EXPORT interval div_interval(const interval &a, const interval &b)
     {
         double al = a.lower;
         double au = a.upper;
