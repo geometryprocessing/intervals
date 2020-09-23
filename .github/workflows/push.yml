@@ -127,7 +127,6 @@ jobs:
         uses: actions/checkout@v1
         with:
           fetch-depth: 10
-
       - uses: seanmiddleditch/gha-setup-ninja@master
 
       - name: Stetup Conda
@@ -174,7 +173,8 @@ jobs:
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64
           cd interval_operations\src
-          cl /c /D_USRDLL /D_WINDLL /shared /O1 interval.cc -o interval.dll /LD /OUT:interval.dll /DBUILD_DLL
+          # cl /c /D_USRDLL /D_WINDLL /shared /O1 interval.cc -o interval.dll /LD /OUT:interval.dll /DBUILD_DLL
+          g++ -c -DBUILD_DLL -shared -O1 interval.cc -fPIC -o interval.dll -DBUILD_DLL
 
       - name: Configure and build
         shell: cmd
