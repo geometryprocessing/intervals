@@ -1,5 +1,12 @@
 #include "interval.h"
 #include "iostream"
+#ifdef _WIN32
+#define INFINITY_NUM INFINITY
+#define NAN_NUM NAN
+#else
+#define INFINITY_NUM 1.0 / 0
+#define NAN_NUM 0.0 / 0
+#endif
 extern "C"
 {
 #include <fenv.h>
@@ -306,7 +313,7 @@ extern "C"
                 {
                     // bu is not zero
                     // we can return -inf to inf
-                    interval result = {static_cast<double>(-1.0 / 0), static_cast<double>(1.0 / 0)};
+                    interval result = {static_cast<double>(-INFINITY_NUM), static_cast<double>(INFINITY_NUM)};
                     return result;
                 }
                 else
@@ -320,20 +327,20 @@ extern "C"
                     if (is_negative(au))
                     {
                         // a is negative, b is negative to 0
-                        interval result = {divide_down(au, bl), static_cast<double>(1.0 / 0)};
+                        interval result = {divide_down(au, bl), static_cast<double>(INFINITY_NUM)};
                         fesetround(FE_TONEAREST);
                         return result;
                     }
                     else if (is_negative(al))
                     {
                         // a is from negative to positive, b is negative to 0
-                        interval result = {static_cast<double>(-1.0 / 0), static_cast<double>(1.0 / 0)};
+                        interval result = {static_cast<double>(-INFINITY_NUM), static_cast<double>(INFINITY_NUM)};
                         return result;
                     }
                     else
                     {
                         // a is 0 to positive, b is negative to 0
-                        interval result = {static_cast<double>(-1.0 / 0), divide_up(al, bl)};
+                        interval result = {static_cast<double>(-INFINITY_NUM), divide_up(al, bl)};
                         fesetround(FE_TONEAREST);
                         return result;
                     }
@@ -351,26 +358,26 @@ extern "C"
                     if (is_negative(au))
                     {
                         // a is strictly less than 0
-                        interval result = {static_cast<double>(-1.0 / 0), divide_up(au, bu)};
+                        interval result = {static_cast<double>(-INFINITY_NUM), divide_up(au, bu)};
                         fesetround(FE_TONEAREST);
                         return result;
                     }
                     else if (is_negative(al))
                     {
-                        interval result = {static_cast<double>(-1.0 / 0), static_cast<double>(1.0 / 0)};
+                        interval result = {static_cast<double>(-INFINITY_NUM), static_cast<double>(INFINITY_NUM)};
                         return result;
                     }
                     else
                     {
                         // a is 0 to positive
-                        interval result = {divide_down(al, bu), static_cast<double>(1.0 / 0)};
+                        interval result = {divide_down(al, bu), static_cast<double>(INFINITY_NUM)};
                         fesetround(FE_TONEAREST);
                         return result;
                     }
                 }
                 else
                 {
-                    interval result = {static_cast<double>(-0.0 / 0), static_cast<double>(0.0 / 0)};
+                    interval result = {static_cast<double>(-NAN_NUM), static_cast<double>(NAN_NUM)};
                     return result;
                 }
             }
