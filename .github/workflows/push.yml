@@ -173,7 +173,7 @@ jobs:
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64
           cd interval_operations\src
-          g++ -c -DBUILD_DLL -O1 interval.cc -fPIC -o interval.dll
+          gcc -c -DBUILD_DLL -shared -O1 interval.cc -fPIC -o interval.dll
 
       - name: Configure and build
         shell: cmd
@@ -187,4 +187,6 @@ jobs:
           cmake --build build
           
       - name: Tests
-        run: cd build; ./unit_tests
+        run: |
+          cd build
+          unit_tests
