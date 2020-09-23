@@ -1,4 +1,5 @@
-struct interval
+#pragma once
+struct interval_c
 {
     double lower;
     double upper;
@@ -97,20 +98,20 @@ extern "C" EXPORT double divide_up(double a, double b);
 
 // compute the addition of two intervals
 // a + b
-extern "C" EXPORT interval add_interval(const interval &a, const interval &b);
+extern "C" EXPORT interval_c add_interval(const interval_c &a, const interval_c &b);
 
 // compute the subtraction of two intervals
 // a - b
-extern "C" EXPORT interval subtract_interval(const interval &a, const interval &b);
+extern "C" EXPORT interval_c subtract_interval(const interval_c &a, const interval_c &b);
 
 // conpute the multiplication of two intervals
 // a * b
-extern "C" EXPORT interval mult_interval(const interval &a, const interval &b);
+extern "C" EXPORT interval_c mult_interval(const interval_c &a, const interval_c &b);
 
 // compute the division of two intervals
 // a / b
-extern "C" EXPORT interval div_interval(const interval &a, const interval &b);
+extern "C" EXPORT interval_c div_interval(const interval_c &a, const interval_c &b);
 
-// compute the cosine of the interval
+// compute the cosine of the interval_c
 // cos(a)
-extern "C" EXPORT interval cosine_interval(const interval &a);
+extern "C" EXPORT interval_c cosine_interval(const interval_c &a);

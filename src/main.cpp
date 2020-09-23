@@ -12,9 +12,10 @@
 #include <string.h>
 #include <gmpxx.h>
 #include <stdlib.h>
+#include "interval.hpp"
 
 // #ifdef _WIN32
-// #pragma comment(lib, "interval.lib")
+// #pragma comment(lib, "interval_c.lib")
 // #endif
 
 using namespace std;
@@ -31,24 +32,24 @@ mpq_t an_mpq, ad_mpq, bn_mpq, bd_mpq, cn_mpq, cd_mpq, a_mpq, b_mpq, c_mpq, resul
 mpq_t result_mpq;
 
 // print result of a unary operation
-void print_unary_result(interval input, interval result, string operand)
+void print_unary_result(interval_c input, interval_c result, string operand)
 {
     cout << setprecision(numeric_limits<double>::digits10 + 1)
-         << "Input interval from " << input.lower << " to " << input.upper << endl
+         << "Input interval_c from " << input.lower << " to " << input.upper << endl
          << operand << " result from " << result.lower << " to " << result.upper << endl;
-    cout << "Interval is empty: "
+    cout << "Interval_c is empty: "
          << (result.lower > result.upper ? "true" : "false")
          << endl;
 }
 
 // print result of a binary operation
-void print_binary_result(interval input_a, interval input_b, interval result, string operand)
+void print_binary_result(interval_c input_a, interval_c input_b, interval_c result, string operand)
 {
     cout << setprecision(numeric_limits<double>::digits10 + 1)
-         << "Input interval 1 from " << input_a.lower << " to " << input_a.upper << endl
-         << "Input interval 2 from " << input_b.lower << " to " << input_b.upper << endl
+         << "Input interval_c 1 from " << input_a.lower << " to " << input_a.upper << endl
+         << "Input interval_c 2 from " << input_b.lower << " to " << input_b.upper << endl
          << operand << " result from " << result.lower << " to " << result.upper << endl;
-    cout << "Interval is empty: "
+    cout << "Interval_c is empty: "
          << (result.lower > result.upper ? "true" : "false")
          << endl;
 }
@@ -108,12 +109,12 @@ void random_rational(int &a, int &b)
     b = (rand() + 1);
 }
 
-// generate an interval based on numerator and denominator
-interval rational_to_interval(int a, int b)
+// generate an interval_c based on numerator and denominator
+interval_c rational_to_interval(int a, int b)
 {
     double lower = divide_down(static_cast<double>(a), static_cast<double>(b));
     double upper = divide_up(static_cast<double>(a), static_cast<double>(b));
-    interval val = {lower, upper};
+    interval_c val = {lower, upper};
     return val;
 }
 
@@ -124,10 +125,10 @@ bool within_range(mpq_t lower, mpq_t upper, mpq_t known_value)
 
 bool test_add()
 {
-    // generate the interval
-    interval a = rational_to_interval(an, ad);
-    interval b = rational_to_interval(bn, bd);
-    interval result = add_interval(a, b);
+    // generate the interval_c
+    interval_c a = rational_to_interval(an, ad);
+    interval_c b = rational_to_interval(bn, bd);
+    interval_c result = add_interval(a, b);
 
     mpq_set_d(result_lower_mpq, result.lower);
     mpq_set_d(result_upper_mpq, result.upper);
@@ -154,10 +155,10 @@ bool test_add()
 
 bool test_mul()
 {
-    // generate the interval
-    interval a = rational_to_interval(an, ad);
-    interval b = rational_to_interval(bn, bd);
-    interval result = mult_interval(a, b);
+    // generate the interval_c
+    interval_c a = rational_to_interval(an, ad);
+    interval_c b = rational_to_interval(bn, bd);
+    interval_c result = mult_interval(a, b);
 
     mpq_set_d(result_lower_mpq, result.lower);
     mpq_set_d(result_upper_mpq, result.upper);
@@ -184,10 +185,10 @@ bool test_mul()
 
 bool test_sub()
 {
-    // generate the interval
-    interval a = rational_to_interval(an, ad);
-    interval b = rational_to_interval(bn, bd);
-    interval result = subtract_interval(a, b);
+    // generate the interval_c
+    interval_c a = rational_to_interval(an, ad);
+    interval_c b = rational_to_interval(bn, bd);
+    interval_c result = subtract_interval(a, b);
 
     mpq_set_d(result_lower_mpq, result.lower);
     mpq_set_d(result_upper_mpq, result.upper);
@@ -214,10 +215,10 @@ bool test_sub()
 
 bool test_div()
 {
-    // generate the interval
-    interval a = rational_to_interval(an, ad);
-    interval b = rational_to_interval(bn, bd);
-    interval result = div_interval(a, b);
+    // generate the interval_c
+    interval_c a = rational_to_interval(an, ad);
+    interval_c b = rational_to_interval(bn, bd);
+    interval_c result = div_interval(a, b);
 
     mpq_set_d(result_lower_mpq, result.lower);
     mpq_set_d(result_upper_mpq, result.upper);
@@ -248,10 +249,10 @@ bool test_comp1()
 {
     // initialze c
     random_rational(cn, cd);
-    interval a = rational_to_interval(an, ad);
-    interval b = rational_to_interval(bn, bd);
-    interval c = rational_to_interval(cn, cd);
-    interval result = subtract_interval(mult_interval(a, b), div_interval(c, a));
+    interval_c a = rational_to_interval(an, ad);
+    interval_c b = rational_to_interval(bn, bd);
+    interval_c c = rational_to_interval(cn, cd);
+    interval_c result = subtract_interval(mult_interval(a, b), div_interval(c, a));
 
     // setup rational c
     mpz_set_si(cn_mpz, cn);
@@ -302,10 +303,10 @@ bool test_comp2()
 {
     // initialze c
     random_rational(cn, cd);
-    interval a = rational_to_interval(an, ad);
-    interval b = rational_to_interval(bn, bd);
-    interval c = rational_to_interval(cn, cd);
-    interval result = div_interval(mult_interval(add_interval(a, b), subtract_interval(subtract_interval(a, b), c)), add_interval(b, c));
+    interval_c a = rational_to_interval(an, ad);
+    interval_c b = rational_to_interval(bn, bd);
+    interval_c c = rational_to_interval(cn, cd);
+    interval_c result = div_interval(mult_interval(add_interval(a, b), subtract_interval(subtract_interval(a, b), c)), add_interval(b, c));
 
     // setup rational c
     mpz_set_si(cn_mpz, cn);

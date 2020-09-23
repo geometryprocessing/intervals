@@ -5,7 +5,7 @@ set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/)
 set(THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/)
 set(test_sources
     ${SRC_DIR}/main.cpp
-    ${SRC_DIR}/intervals.cpp
+    ${SRC_DIR}/interval.cpp
 )
 
 set (CMAKE_CXX_STANDARD 11)
