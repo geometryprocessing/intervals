@@ -1,6 +1,6 @@
 #include "interval.h"
 #include "iostream"
-extern "C"
+extern "C" EXPORT
 {
 #include <fenv.h>
 #define PI 3.1415926535897932
