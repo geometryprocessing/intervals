@@ -1,5 +1,5 @@
 # echo "Compile to llvm ir"
-# clang++ -fpic interval.cc -emit-llvm -S -c -o interval.ll -O1
+# clang++ -fpic interval_c.cc -emit-llvm -S -c -o interval_c.ll -O1
 
 unameOut="$(uname -s)"
 case "${unameOut}" in
@@ -13,29 +13,29 @@ echo ${machine}
 
 if [ "${machine}" == "Mac" ]; then
     echo "Compile to dylib"
-    clang++ -fpic -shared -dynamiclib interval.cc -c -o interval.dylib -O1
+    clang++ -fpic -shared -dynamiclib interval_c.cc -c -o interval_c.dylib -O1
     # echo "Compile to bitcode"
-    # /usr/local/opt/llvm/bin/llvm-as interval.ll -o interval.bc
+    # /usr/local/opt/llvm/bin/llvm-as interval_c.ll -o interval_c.bc
     # echo "Compile to object file"
-    # /usr/local/opt/llvm/bin/llc -filetype=obj interval.bc -o interval.o
+    # /usr/local/opt/llvm/bin/llc -filetype=obj interval_c.bc -o interval_c.o
     # echo "Compile to dynamic library"
-    # gcc interval.o -o interval.dylib -dynamiclib -shared
+    # gcc interval_c.o -o interval_c.dylib -dynamiclib -shared
     # echo "Compile to shared object"
-    # gcc interval.o -o interval.so -shared
+    # gcc interval_c.o -o interval_c.so -shared
     echo "Found operations of dylib"
-    nm -gU interval.dylib
+    nm -gU interval_c.dylib
 elif [ "${machine}" == "Linux" ]; then
     echo "Compile to so"
-    gcc -shared -o libinterval.so -fPIC -O1 interval.cc
+    gcc -shared -o libinterval_c.so -fPIC -O1 interval_c.cc
     ls
     # echo "Compile to bitcode"
-    # llvm-as interval.ll -o interval.bc
+    # llvm-as interval_c.ll -o interval_c.bc
     # echo "Compile to object file"
-    # llc -filetype=obj interval.bc -o interval.o
+    # llc -filetype=obj interval_c.bc -o interval_c.o
     # echo "Compile to dynamic library"
-    # gcc interval.o -o interval.dylib -dynamiclib -shared
+    # gcc interval_c.o -o interval_c.dylib -dynamiclib -shared
     # echo "Compile to shared object"
-    # gcc interval.o -o interval.so -shared
+    # gcc interval_c.o -o interval_c.so -shared
     echo "Found operations of so"
-    nm -gD libinterval.so
+    nm -gD libinterval_c.so
 fi

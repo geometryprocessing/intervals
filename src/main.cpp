@@ -1,5 +1,5 @@
 #include <iostream>
-#include "interval.h"
+#include "interval_c.h"
 #include <cmath>
 #include <limits>
 #include <iomanip>

@@ -1,4 +1,4 @@
-#include "interval.h"
+#include "interval_c.h"
 #include "iostream"
 #ifdef _WIN32
 #define INFINITY_NUM INFINITY

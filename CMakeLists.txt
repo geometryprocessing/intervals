@@ -5,6 +5,7 @@ set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/)
 set(THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/)
 set(test_sources
     ${SRC_DIR}/main.cpp
+    ${SRC_DIR}/intervals.cpp
 )
 
 set (CMAKE_CXX_STANDARD 11)
@@ -52,7 +53,7 @@ target_link_libraries(unit_tests PUBLIC ${GMP_LIBRARIES})
 if(APPLE)
     add_custom_command (TARGET unit_tests
         POST_BUILD COMMAND "${CMAKE_INSTALL_NAME_TOOL}"
-            "-change" "interval.dylib" "@executable_path/../interval_operations/src/interval.dylib"
+            "-change" "interval_c.dylib" "@executable_path/../interval_operations/src/interval_c.dylib"
         "$<TARGET_FILE:unit_tests>" VERBATIM)
 endif()
 
