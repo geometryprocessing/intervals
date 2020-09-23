@@ -190,4 +190,4 @@ jobs:
       - name: Tests
         run: |
           cd build
-          unit_tests
+          unit_tests.exe
