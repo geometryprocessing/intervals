@@ -498,6 +498,10 @@ int main(int argc, char *argv[])
             printf("Failed test\n");
             return 1;
         }
+        if ((i + 1) % 2000 == 0)
+        {
+            printf("Passed %d tests so far\n", (i + 1));
+        }
     }
     printf("Passed all tests\n");
     return 0;
