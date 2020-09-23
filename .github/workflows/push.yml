@@ -173,7 +173,7 @@ jobs:
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64
           cd interval_operations\src
-          cl /c /O1 /LD /DBUILD_DLL /D_USRDLL /D_WINDLL interval.cc /DLL /OUT:interval.dll 
+          cl /LD interval.cc
           dir
 
       - name: Configure and build
