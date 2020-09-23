@@ -142,13 +142,13 @@ bool test_add()
 
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        printf("Passed addition check, ");
+        // printf("Passed addition check, ");
         // print_rational("", result_lower_mpq);
         // printf(" <= ");
         // print_rational("", result_mpq);
         // printf(" <= ");
         // print_rational("", result_upper_mpq);
-        printf("\n");
+        // printf("\n");
         return true;
     }
     else
@@ -182,13 +182,13 @@ bool test_mul()
 
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        printf("Passed multiplication check, ");
+        // printf("Passed multiplication check, ");
         // print_rational("", result_lower_mpq);
         // printf(" <= ");
         // print_rational("", result_mpq);
         // printf(" <= ");
         // print_rational("", result_upper_mpq);
-        printf("\n");
+        // printf("\n");
         return true;
     }
     else
@@ -222,13 +222,13 @@ bool test_sub()
 
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        printf("Passed subtraction check, ");
+        // printf("Passed subtraction check, ");
         // print_rational("", result_lower_mpq);
         // printf(" <= ");
         // print_rational("", result_mpq);
         // printf(" <= ");
         // print_rational("", result_upper_mpq);
-        printf("\n");
+        // printf("\n");
         return true;
     }
     else
@@ -262,13 +262,13 @@ bool test_div()
 
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        printf("Passed division check, ");
+        // printf("Passed division check, ");
         // print_rational("", result_lower_mpq);
         // printf(" <= ");
         // print_rational("", result_mpq);
         // printf(" <= ");
         // print_rational("", result_upper_mpq);
-        printf("\n");
+        // printf("\n");
         return true;
     }
     else
@@ -318,13 +318,13 @@ bool test_comp1()
 
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        printf("Passed comp1 check, ");
+        // printf("Passed comp1 check, ");
         // print_rational("", result_lower_mpq);
         // printf(" <= ");
         // print_rational("", result_mpq);
         // printf(" <= ");
         // print_rational("", result_upper_mpq);
-        printf("\n");
+        // printf("\n");
         return true;
     }
     else
@@ -379,13 +379,13 @@ bool test_comp2()
 
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        printf("Passed comp2 check, ");
+        // printf("Passed comp2 check, ");
         // print_rational("", result_lower_mpq);
         // printf(" <= ");
         // print_rational("", result_mpq);
         // printf(" <= ");
         // print_rational("", result_upper_mpq);
-        printf("\n");
+        // printf("\n");
         return true;
     }
     else
@@ -433,13 +433,13 @@ bool test_comp3()
 
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        printf("Passed comp3 check, ");
+        // printf("Passed comp3 check, ");
         // print_rational("", result_lower_mpq);
         // printf(" <= ");
         // print_rational("", result_mpq);
         // printf(" <= ");
         // print_rational("", result_upper_mpq);
-        printf("\n");
+        // printf("\n");
         return true;
     }
     else
