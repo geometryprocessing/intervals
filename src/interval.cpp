@@ -1,3 +1,4 @@
+#pragma once
 #include "interval.hpp"
 
 interval::interval(const interval_c &val)
