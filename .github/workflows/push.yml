@@ -129,10 +129,30 @@ jobs:
           fetch-depth: 10
       - uses: seanmiddleditch/gha-setup-ninja@master
 
-        # https://github.com/actions/cache/issues/101
+      - name: Stetup Conda
+        uses: s-weigand/setup-conda@v1
+        with:
+          conda-channels: anaconda, conda-forge
+          activate-environment: ftetwild
+          python-version: 3.6
+
+      - name: Set GMP env
+        run: echo "::set-env name=GMP_LIB::C:\Miniconda\Library\lib"
+
+
+      - name: Install mpir
+        shell: powershell
+        run: |
+          conda install -c conda-forge mpir -y
+
       - name: Set env
         run: |
           echo "::set-env name=appdata::$($env:LOCALAPPDATA)"
+          echo "::set-env name=GMP_INC::C:\Miniconda\Library\include"
+
+      - name: Set GMP env
+        run: echo "::set-env name=GMP_LIB::C:\Miniconda\Library\lib"
+
       - name: Cache build
         id: cache-build
         uses: actions/cache@v1
@@ -154,6 +174,7 @@ jobs:
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64
           cd interval_operations\src
           g++ -c -DBUILD_DLL -O1 interval.cc -fPIC -o interval.dll
+
       - name: Configure and build
         shell: cmd
         run: |
@@ -164,5 +185,6 @@ jobs:
             -B build ^
             -S .
           cmake --build build
+          
       - name: Tests
         run: cd build; ./unit_tests
