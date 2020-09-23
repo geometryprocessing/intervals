@@ -11,7 +11,6 @@
 #include <string.h>
 #include <gmpxx.h>
 #include <stdlib.h>
-#include "interval_c.h"
 #include "interval.hpp"
 
 // #ifdef _WIN32
@@ -143,13 +142,13 @@ bool test_add()
 
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        // printf("Passed addition check, ");
+        printf("Passed addition check, ");
         // print_rational("", result_lower_mpq);
         // printf(" <= ");
         // print_rational("", result_mpq);
         // printf(" <= ");
         // print_rational("", result_upper_mpq);
-        // printf("\n");
+        printf("\n");
         return true;
     }
     else
@@ -183,13 +182,13 @@ bool test_mul()
 
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        // printf("Passed multiplication check, ");
+        printf("Passed multiplication check, ");
         // print_rational("", result_lower_mpq);
         // printf(" <= ");
         // print_rational("", result_mpq);
         // printf(" <= ");
         // print_rational("", result_upper_mpq);
-        // printf("\n");
+        printf("\n");
         return true;
     }
     else
@@ -223,13 +222,13 @@ bool test_sub()
 
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        // printf("Passed subtraction check, ");
+        printf("Passed subtraction check, ");
         // print_rational("", result_lower_mpq);
         // printf(" <= ");
         // print_rational("", result_mpq);
         // printf(" <= ");
         // print_rational("", result_upper_mpq);
-        // printf("\n");
+        printf("\n");
         return true;
     }
     else
@@ -263,13 +262,13 @@ bool test_div()
 
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        // printf("Passed division check, ");
+        printf("Passed division check, ");
         // print_rational("", result_lower_mpq);
         // printf(" <= ");
         // print_rational("", result_mpq);
         // printf(" <= ");
         // print_rational("", result_upper_mpq);
-        // printf("\n");
+        printf("\n");
         return true;
     }
     else
@@ -319,13 +318,13 @@ bool test_comp1()
 
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        // printf("Passed comp1 check, ");
+        printf("Passed comp1 check, ");
         // print_rational("", result_lower_mpq);
         // printf(" <= ");
         // print_rational("", result_mpq);
         // printf(" <= ");
         // print_rational("", result_upper_mpq);
-        // printf("\n");
+        printf("\n");
         return true;
     }
     else
@@ -380,13 +379,13 @@ bool test_comp2()
 
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        // printf("Passed comp2 check, ");
+        printf("Passed comp2 check, ");
         // print_rational("", result_lower_mpq);
         // printf(" <= ");
         // print_rational("", result_mpq);
         // printf(" <= ");
         // print_rational("", result_upper_mpq);
-        // printf("\n");
+        printf("\n");
         return true;
     }
     else
@@ -434,13 +433,13 @@ bool test_comp3()
 
     if (within_range(result_lower_mpq, result_upper_mpq, result_mpq))
     {
-        // printf("Passed comp3 check, ");
+        printf("Passed comp3 check, ");
         // print_rational("", result_lower_mpq);
         // printf(" <= ");
         // print_rational("", result_mpq);
         // printf(" <= ");
         // print_rational("", result_upper_mpq);
-        // printf("\n");
+        printf("\n");
         return true;
     }
     else
@@ -469,7 +468,7 @@ int main(int argc, char *argv[])
     mpq_inits(an_mpq, ad_mpq, bn_mpq, bd_mpq, cn_mpq, cd_mpq, a_mpq, b_mpq, c_mpq, result_lower_mpq, result_upper_mpq, (mpz_ptr)0);
     mpq_init(result_mpq);
 
-    for (int i = 0; i < 100000; i++)
+    for (int i = 0; i < 100; i++)
     {
         random_rational(an, ad);
         random_rational(bn, bd);
