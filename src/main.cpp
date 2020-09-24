@@ -377,10 +377,10 @@ int main(int argc, char *argv[])
 {
     // initialize the numbers in gmp
     mpq_inits(a_mpq, b_mpq, c_mpq, result_lower_mpq, result_upper_mpq, three, four, five, six, (mpz_ptr)0);
-    mpq_set_si(three, 3, 1);
-    mpq_set_si(four, 4, 1);
-    mpq_set_si(five, -5, 1);
-    mpq_set_si(six, 6, 1);
+    mpq_set_d(three, 3);
+    mpq_set_d(four, 4);
+    mpq_set_d(five, -5);
+    mpq_set_d(six, 6);
     mpq_init(result_mpq);
 
     for (int i = 0; i < 100000; i++)
