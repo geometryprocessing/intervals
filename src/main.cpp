@@ -375,6 +375,7 @@ bool test_comp3()
 
 int main(int argc, char *argv[])
 {
+    srand (13);
     // initialize the numbers in gmp
     mpq_inits(a_mpq, b_mpq, c_mpq, result_lower_mpq, result_upper_mpq, three, four, five, six, (mpz_ptr)0);
     mpq_set_d(three, 3);
