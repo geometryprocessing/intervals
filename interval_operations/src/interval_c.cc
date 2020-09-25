@@ -21,6 +21,16 @@ extern "C"
         -7320136535288236.0 / 36893488147419103232.0,
         -7571207865408408.0 / 302231454903657293676544.0};
 
+    double taylor_cos_positive[3] = {
+        6004799503160652.0 / 144115188075855872.0,
+        7320136533669489.0 / 295147905179352825856.0,
+        5047441620321680.0 / 2417851639229258349412352.0};
+
+    double taylor_cos_negative[3] = {
+        -6405119470031391.0 / 4611686018427387904.0,
+        -5205429515405659.0 / 18889465931478580854784.0,
+        -7031457305697611.0 / 618970019642690137449562112.0};
+
     EXPORT inline bool is_negative(double a)
     {
         return a < static_cast<double>(0);
@@ -138,6 +148,54 @@ extern "C"
         // for the positive ones they should be rounded down
         result += (((taylor_sin_positive[2] * a_square_up * a_square_up) + taylor_sin_positive[1]) * a_square_up * a_square_up + taylor_sin_positive[0]) * a_square_up * a_square_up * a;
         result += (((taylor_sin_negative[2] * a_square_down * a_square_down) + taylor_sin_negative[1]) * a_square_down * a_square_down + taylor_sin_negative[0]) * a_square_down * a;
+        fesetround(FE_TONEAREST);
+        return result;
+    }
+
+    EXPORT double kernel_cos_downward(double a)
+    {
+        if (a < taylor_sin_positive[2])
+        {
+            // a is small enough we can just return itself
+            return a;
+        }
+
+        // upward rounding a square
+        fesetround(FE_UPWARD);
+        double a_square_up = a * a;
+        double result = a_square_up * 0.5;
+
+        // downward rounding a square
+        fesetround(FE_DOWNWARD);
+        double a_square_down = a * a;
+
+        result = 1.0 - result;
+        result += (((taylor_cos_positive[2] * a_square_down * a_square_down) + taylor_cos_positive[1]) * a_square_down * a_square_down + taylor_cos_positive[0]) * a_square_down * a_square_down;
+        result += (((taylor_cos_negative[2] * a_square_up * a_square_up) + taylor_cos_negative[1]) * a_square_up * a_square_up + taylor_cos_negative[0]) * a_square_up * a_square_up * a_square_up;
+        fesetround(FE_TONEAREST);
+        return result;
+    }
+
+    EXPORT double kernel_cos_upward(double a)
+    {
+        if (a < taylor_sin_positive[2])
+        {
+            // a is small enough we can just return itself
+            return a;
+        }
+
+        // downward rounding a square
+        fesetround(FE_DOWNWARD);
+        double a_square_down = a * a;
+        double result = a_square_down * 0.5;
+
+        // upward rounding a square
+        fesetround(FE_UPWARD);
+        double a_square_up = a * a;
+
+        result = 1.0 - result;
+        result += (((taylor_cos_positive[2] * a_square_up * a_square_up) + taylor_cos_positive[1]) * a_square_up * a_square_up + taylor_cos_positive[0]) * a_square_up * a_square_up;
+        result += (((taylor_cos_negative[2] * a_square_down * a_square_down) + taylor_cos_negative[1]) * a_square_down * a_square_down + taylor_cos_negative[0]) * a_square_down * a_square_down * a_square_down;
         fesetround(FE_TONEAREST);
         return result;
     }

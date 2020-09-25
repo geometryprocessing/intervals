@@ -410,6 +410,43 @@ bool test_sin_small()
     }
 }
 
+
+bool test_cos_small()
+{
+    double random_double = ((double)rand() / RAND_MAX) * 0.78;
+    double cos_down = kernel_cos_downward(random_double);
+    double cos_up = kernel_cos_upward(random_double);
+    double c_cos = cos(random_double);
+    bool result = (cos_down <= c_cos) && (c_cos <= cos_up);
+    if (result){
+        // mpq_set_d(result_lower_mpq, cos_down);
+        // mpq_set_d(result_upper_mpq, cos_up);
+        // mpq_set_d(result_mpq, random_double);
+        // print_rational("", result_lower_mpq);
+        // printf(" <= ");
+        // printf("cos(");
+        // print_rational("", result_mpq);
+        // printf(")");
+        // printf(" <= ");
+        // print_rational("", result_upper_mpq);
+        // printf("\n");
+        return true;
+    }else{
+        mpq_set_d(result_lower_mpq, cos_down);
+        mpq_set_d(result_upper_mpq, cos_up);
+        mpq_set_d(result_mpq, random_double);
+        print_rational("", result_lower_mpq);
+        printf(" <=? ");
+        printf("cos(");
+        print_rational("", result_mpq);
+        printf(")");
+        printf(" <=? ");
+        print_rational("", result_upper_mpq);
+        printf("\n");
+        return false;
+    }
+}
+
 int main(int argc, char *argv[])
 {
     srand(13);
@@ -421,7 +458,7 @@ int main(int argc, char *argv[])
     mpq_set_d(six, 6);
     mpq_init(result_mpq);
 
-    for (int i = 0; i < 10000; i++)
+    for (int i = 0; i < 20000; i++)
     {
         random_init(a, a_mpq);
         random_init(b, b_mpq);
@@ -435,7 +472,8 @@ int main(int argc, char *argv[])
         bool result_comp2 = test_comp2();
         bool result_comp3 = test_comp3();
         bool result_sin_small = test_sin_small();
-        if (!result_add || !result_mul || !result_sub || !result_div || !result_comp1 || !result_comp2 || !result_comp3 || !result_sin_small)
+        bool result_cos_small = test_cos_small();
+        if (!result_add || !result_mul || !result_sub || !result_div || !result_comp1 || !result_comp2 || !result_comp3 || !result_sin_small|| !result_cos_small)
         {
             printf("Failed test\n");
             return 1;
