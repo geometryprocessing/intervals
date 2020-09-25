@@ -11,6 +11,16 @@ extern "C"
 {
 #include <fenv.h>
 #define PI 3.1415926535897932
+    double taylor_sin_positive[3] = {
+        4803839602527639.0 / 576460752303423488.0,
+        6506787178212600.0 / 2361183241434822606848.0,
+        6155219321001458.0 / 38685626227668133590597632.0};
+
+    double taylor_sin_negative[3] = {
+        -6004799503160666.0 / 36028797018963968.0,
+        -7320136535288236.0 / 36893488147419103232.0,
+        -7571207865408408.0 / 302231454903657293676544.0};
+
     EXPORT inline bool is_negative(double a)
     {
         return a < static_cast<double>(0);
@@ -82,6 +92,54 @@ extern "C"
     {
         fesetround(FE_UPWARD);
         return a / b;
+    }
+
+    EXPORT double kernel_sin_downward(double a)
+    {
+        if (a < taylor_sin_positive[2])
+        {
+            // a is small enough we can just return itself
+            return a;
+        }
+        double result = a;
+
+        // upward rounding a square
+        fesetround(FE_UPWARD);
+        double a_square_up = a * a;
+
+        // downward rounding a square
+        fesetround(FE_DOWNWARD);
+        double a_square_down = a * a;
+
+        // for the positive ones they should be rounded down
+        result += (((taylor_sin_positive[2] * a_square_down * a_square_down) + taylor_sin_positive[1]) * a_square_down * a_square_down + taylor_sin_positive[0]) * a_square_down * a_square_down * a;
+        result += (((taylor_sin_negative[2] * a_square_up * a_square_up) + taylor_sin_negative[1]) * a_square_up * a_square_up + taylor_sin_negative[0]) * a_square_up * a;
+        fesetround(FE_TONEAREST);
+        return result;
+    }
+
+    EXPORT double kernel_sin_upward(double a)
+    {
+        if (a < taylor_sin_positive[2])
+        {
+            // a is small enough we can just return itself
+            return a;
+        }
+        double result = a;
+
+        // downward rounding a square
+        fesetround(FE_DOWNWARD);
+        double a_square_down = a * a;
+
+        // upward rounding a square
+        fesetround(FE_UPWARD);
+        double a_square_up = a * a;
+
+        // for the positive ones they should be rounded down
+        result += (((taylor_sin_positive[2] * a_square_up * a_square_up) + taylor_sin_positive[1]) * a_square_up * a_square_up + taylor_sin_positive[0]) * a_square_up * a_square_up * a;
+        result += (((taylor_sin_negative[2] * a_square_down * a_square_down) + taylor_sin_negative[1]) * a_square_down * a_square_down + taylor_sin_negative[0]) * a_square_down * a;
+        fesetround(FE_TONEAREST);
+        return result;
     }
 
     // double cosine_down(double a)
