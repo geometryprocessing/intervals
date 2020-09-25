@@ -384,7 +384,7 @@ int main(int argc, char *argv[])
     mpq_set_d(six, 6);
     mpq_init(result_mpq);
 
-    for (int i = 0; i < 100000; i++)
+    for (int i = 0; i < 1000000; i++)
     {
         random_init(a, a_mpq);
         random_init(b, b_mpq);
