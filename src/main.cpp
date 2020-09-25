@@ -376,7 +376,7 @@ bool test_comp3()
 
 bool test_sin_small()
 {
-    double random_double = ((double)rand() / RAND_MAX) * 0.78;
+    double random_double = ((double)rand() / RAND_MAX) * 0.7853981633;
     double sin_down = kernel_sin_downward(random_double);
     double sin_up = kernel_sin_upward(random_double);
     double c_sin = sin(random_double);
@@ -413,7 +413,7 @@ bool test_sin_small()
 
 bool test_cos_small()
 {
-    double random_double = ((double)rand() / RAND_MAX) * 0.78;
+    double random_double = ((double)rand() / RAND_MAX) * 0.7853981633;
     double cos_down = kernel_cos_downward(random_double);
     double cos_up = kernel_cos_upward(random_double);
     double c_cos = cos(random_double);
