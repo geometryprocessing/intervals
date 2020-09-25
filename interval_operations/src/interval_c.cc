@@ -31,6 +31,8 @@ extern "C"
         -5205429515405659.0 / 18889465931478580854784.0,
         -7031457305697611.0 / 618970019642690137449562112.0};
 
+    double pi_over_four = 41629395862109680461101929914153.0 / 53004193035072394913113926582208.0;
+
     EXPORT inline bool is_negative(double a)
     {
         return a < static_cast<double>(0);
@@ -154,12 +156,6 @@ extern "C"
 
     EXPORT double kernel_cos_downward(double a)
     {
-        if (a < taylor_sin_positive[2])
-        {
-            // a is small enough we can just return itself
-            return a;
-        }
-
         // upward rounding a square
         fesetround(FE_UPWARD);
         double a_square_up = a * a;
@@ -178,12 +174,6 @@ extern "C"
 
     EXPORT double kernel_cos_upward(double a)
     {
-        if (a < taylor_sin_positive[2])
-        {
-            // a is small enough we can just return itself
-            return a;
-        }
-
         // downward rounding a square
         fesetround(FE_DOWNWARD);
         double a_square_down = a * a;
