@@ -88,6 +88,18 @@ extern "C" EXPORT double p_cos_downward(double a);
 // compute the upward cos function within positive range
 extern "C" EXPORT double p_cos_upward(double a);
 
+// compute the downward sin function for all range
+extern "C" EXPORT double sin_downward(double a);
+
+// compute the upward sin function for all range
+extern "C" EXPORT double sin_upward(double a);
+
+// compute the downward cos function for all range
+extern "C" EXPORT double cos_downward(double a);
+
+// compute the upward cos function for all range
+extern "C" EXPORT double cos_upward(double a);
+
 // // perform the cosine of a double, cos(a)
 // // with the rounding mode set downward
 //

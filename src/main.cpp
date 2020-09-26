@@ -535,6 +535,86 @@ bool test_cos_pos()
     }
 }
 
+bool test_sin()
+{
+    double random_double = (rand() % 100 > 50 ? 1.0 : -1.0) * (double)(rand() + 1) / (double)(rand() + 1);
+    double sin_up = sin_upward(random_double);
+    double sin_down = sin_downward(random_double);
+    double c_sin = sin(random_double);
+    if (sin_down <= c_sin && c_sin <= sin_up)
+    {
+        // mpq_set_d(result_lower_mpq, sin_down);
+        // mpq_set_d(result_upper_mpq, sin_up);
+        // mpq_set_d(result_mpq, random_double);
+        // print_rational("", result_lower_mpq);
+        // printf(" <= ");
+        // printf("sin(");
+        // print_rational("", result_mpq);
+        // printf(")");
+        // printf(" <= ");
+        // print_rational("", result_upper_mpq);
+        // printf("\n");
+        return true;
+    }
+    else
+    {
+        mpq_set_d(result_lower_mpq, sin_down);
+        mpq_set_d(result_upper_mpq, sin_up);
+        mpq_set_d(result_mpq, random_double);
+        print_rational("", result_lower_mpq);
+        printf(" <=? ");
+        mpq_set_d(result_upper_mpq, sin_up);
+        mpq_set_d(result_mpq, random_double);
+        printf("sin(");
+        print_rational("", result_mpq);
+        printf(")");
+        printf(" <=? ");
+        print_rational("", result_upper_mpq);
+        printf("\n");
+        return false;
+    }
+}
+
+bool test_cos()
+{
+    double random_double = (rand() % 100 > 50 ? 1.0 : -1.0) * (double)(rand() + 1) / (double)(rand() + 1);
+    double cos_up = cos_upward(random_double);
+    double cos_down = cos_downward(random_double);
+    double c_cos = cos(random_double);
+    if (cos_down <= c_cos && c_cos <= cos_up)
+    {
+        // mpq_set_d(result_lower_mpq, cos_down);
+        // mpq_set_d(result_upper_mpq, cos_up);
+        // mpq_set_d(result_mpq, random_double);
+        // print_rational("", result_lower_mpq);
+        // printf(" <= ");
+        // printf("cos(");
+        // print_rational("", result_mpq);
+        // printf(")");
+        // printf(" <= ");
+        // print_rational("", result_upper_mpq);
+        // printf("\n");
+        return true;
+    }
+    else
+    {
+        mpq_set_d(result_lower_mpq, cos_down);
+        mpq_set_d(result_upper_mpq, cos_up);
+        mpq_set_d(result_mpq, random_double);
+        print_rational("", result_lower_mpq);
+        printf(" <=? ");
+        mpq_set_d(result_upper_mpq, cos_up);
+        mpq_set_d(result_mpq, random_double);
+        printf("cos(");
+        print_rational("", result_mpq);
+        printf(")");
+        printf(" <=? ");
+        print_rational("", result_upper_mpq);
+        printf("\n");
+        return false;
+    }
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -560,9 +640,9 @@ int main(int argc, char *argv[])
         bool result_comp1 = test_comp1();
         bool result_comp2 = test_comp2();
         bool result_comp3 = test_comp3();
-        bool result_sin_pos = test_sin_pos();
-        bool result_cos_pos = test_cos_pos();
-        if (!result_add || !result_mul || !result_sub || !result_div || !result_comp1 || !result_comp2 || !result_comp3 || !result_sin_pos || !result_cos_pos)
+        bool result_sin = test_sin();
+        bool result_cos = test_cos();
+        if (!result_add || !result_mul || !result_sub || !result_div || !result_comp1 || !result_comp2 || !result_comp3 || !result_sin || !result_cos)
         {
             printf("Failed test\n");
             return 1;

@@ -980,6 +980,54 @@ extern "C"
         }
     }
 
+    EXPORT double sin_downward(double a)
+    {
+        if (a >= 0)
+        {
+            return p_sin_downward(a);
+        }
+        else
+        {
+            return -p_sin_upward(-a);
+        }
+    }
+
+    EXPORT double sin_upward(double a)
+    {
+        if (a >= 0)
+        {
+            return p_sin_upward(a);
+        }
+        else
+        {
+            return -p_sin_downward(-a);
+        }
+    }
+
+    EXPORT double cos_downward(double a)
+    {
+        if (a >= 0)
+        {
+            return p_cos_downward(a);
+        }
+        else
+        {
+            return p_cos_downward(-a);
+        }
+    }
+
+    EXPORT double cos_upward(double a)
+    {
+        if (a >= 0)
+        {
+            return p_cos_upward(a);
+        }
+        else
+        {
+            return p_cos_upward(-a);
+        }
+    }
+
     // interval_c cosine_interval(const interval_c &a)
     // {
     //     double al = a.lower;
