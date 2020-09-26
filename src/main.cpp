@@ -13,6 +13,11 @@
 #include <stdlib.h>
 #include "interval.hpp"
 #include "interval_c.h"
+#ifdef _WIN32
+#define TEST_SIZE 50000
+#else
+#define TEST_SIZE 5000000
+#endif
 
 // #ifdef _WIN32
 // #pragma comment(lib, "interval.lib")
@@ -490,6 +495,47 @@ bool test_sin_pos()
     }
 }
 
+bool test_cos_pos()
+{
+    double random_double = (double)(rand() + 1) / (double)(rand() + 1);
+    double cos_up = p_cos_upward(random_double);
+    double cos_down = p_cos_downward(random_double);
+    double c_cos = cos(random_double);
+    if (cos_down <= c_cos && c_cos <= cos_up)
+    {
+        mpq_set_d(result_lower_mpq, cos_down);
+        mpq_set_d(result_upper_mpq, cos_up);
+        mpq_set_d(result_mpq, random_double);
+        print_rational("", result_lower_mpq);
+        printf(" <= ");
+        printf("cos(");
+        print_rational("", result_mpq);
+        printf(")");
+        printf(" <= ");
+        print_rational("", result_upper_mpq);
+        printf("\n");
+        return true;
+    }
+    else
+    {
+        mpq_set_d(result_lower_mpq, cos_down);
+        mpq_set_d(result_upper_mpq, cos_up);
+        mpq_set_d(result_mpq, random_double);
+        print_rational("", result_lower_mpq);
+        printf(" <=? ");
+        mpq_set_d(result_upper_mpq, cos_up);
+        mpq_set_d(result_mpq, random_double);
+        printf("cos(");
+        print_rational("", result_mpq);
+        printf(")");
+        printf(" <=? ");
+        print_rational("", result_upper_mpq);
+        printf("\n");
+        return false;
+    }
+}
+
+
 int main(int argc, char *argv[])
 {
     srand(13);
@@ -501,7 +547,7 @@ int main(int argc, char *argv[])
     mpq_set_d(six, 6);
     mpq_init(result_mpq);
 
-    for (int i = 0; i < 50000; i++)
+    for (int i = 0; i < TEST_SIZE; i++)
     {
         random_init(a, a_mpq);
         random_init(b, b_mpq);
@@ -515,8 +561,8 @@ int main(int argc, char *argv[])
         bool result_comp2 = test_comp2();
         bool result_comp3 = test_comp3();
         bool result_sin_pos = test_sin_pos();
-        bool result_cos_small = test_cos_small();
-        if (!result_add || !result_mul || !result_sub || !result_div || !result_comp1 || !result_comp2 || !result_comp3 || !result_sin_pos || !result_cos_small)
+        bool result_cos_pos = test_cos_pos();
+        if (!result_add || !result_mul || !result_sub || !result_div || !result_comp1 || !result_comp2 || !result_comp3 || !result_sin_pos || !result_cos_pos)
         {
             printf("Failed test\n");
             return 1;
