@@ -503,17 +503,17 @@ bool test_cos_pos()
     double c_cos = cos(random_double);
     if (cos_down <= c_cos && c_cos <= cos_up)
     {
-        mpq_set_d(result_lower_mpq, cos_down);
-        mpq_set_d(result_upper_mpq, cos_up);
-        mpq_set_d(result_mpq, random_double);
-        print_rational("", result_lower_mpq);
-        printf(" <= ");
-        printf("cos(");
-        print_rational("", result_mpq);
-        printf(")");
-        printf(" <= ");
-        print_rational("", result_upper_mpq);
-        printf("\n");
+        // mpq_set_d(result_lower_mpq, cos_down);
+        // mpq_set_d(result_upper_mpq, cos_up);
+        // mpq_set_d(result_mpq, random_double);
+        // print_rational("", result_lower_mpq);
+        // printf(" <= ");
+        // printf("cos(");
+        // print_rational("", result_mpq);
+        // printf(")");
+        // printf(" <= ");
+        // print_rational("", result_upper_mpq);
+        // printf("\n");
         return true;
     }
     else
