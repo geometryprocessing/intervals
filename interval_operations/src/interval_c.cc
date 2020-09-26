@@ -32,6 +32,18 @@ extern "C"
         -7031457305697611.0 / 618970019642690137449562112.0};
 
     double pi_over_four = 41629395862109680461101929914153.0 / 53004193035072394913113926582208.0;
+    double four_over_pi = 287287539716868803909718206472821.0 / 225635106060600245736811431795777.0;
+    double two_over_pi = 5734161139222659.0 / 9007199254740992.0;
+    double pi_over_two = 7074237752028440.0 / 4503599627370496.0;
+    double pi_over_two_extended[7] = {
+        7074236338274304.0 / 4503599627370496.0,
+        5929713453236224.0 / 18889465931478580854784.0,
+        4930663257997312.0 / 79228162514264337593543950336.0,
+        5376096463749120.0 / 2658455991569831745807614120560689152.0,
+        4908338017992704.0 / 1393796574908163946345982392040522594123776.0,
+        8111234717057024.0 / 187072209578355573530071658587684226515959365500928.0,
+        5071617642201088.0 / 24519928653854221733733552434404946937899825954937634816.0};
+    double pi = 7074237752028440.0 / 2251799813685248.0;
 
     EXPORT inline bool is_negative(double a)
     {
@@ -188,6 +200,206 @@ extern "C"
         result += (((taylor_cos_negative[2] * a_square_down * a_square_down) + taylor_cos_negative[1]) * a_square_down * a_square_down + taylor_cos_negative[0]) * a_square_down * a_square_down * a_square_down;
         fesetround(FE_TONEAREST);
         return result;
+    }
+    EXPORT double p_sin_downward(double a)
+    {
+        // y = a / (pi/2) = a * (2/pi)
+        // y tells how many multiples of pi/2 is x
+        // a = k * (pi/2) + leftover
+        double y = a * two_over_pi;
+        int k = (int)y;
+        int n = (int)(y + 0.5) - k; // if there is at least a pi/4 in leftover
+        int m = k % 4;              // which part of pi/2 in range of 0 to 2pi is this
+        int range_ind = m * 2 + n;  // which range of pi/4 is this
+        double reduced_a = a;
+        fesetround(FE_DOWNWARD);
+        double factor0_down = k * pi_over_two_extended[0];
+        double factor1_down = k * pi_over_two_extended[1];
+        double factor2_down = k * pi_over_two_extended[2];
+        double factor3_down = k * pi_over_two_extended[3];
+        double factor4_down = k * pi_over_two_extended[4];
+        double factor5_down = k * pi_over_two_extended[5];
+        double factor6_down = k * pi_over_two_extended[6];
+        double factor_small_down = factor6_down + factor5_down + factor4_down;
+
+        fesetround(FE_UPWARD);
+        double factor0_up = k * pi_over_two_extended[0];
+        double factor1_up = k * pi_over_two_extended[1];
+        double factor2_up = k * pi_over_two_extended[2];
+        double factor3_up = k * pi_over_two_extended[3];
+        double factor4_up = k * pi_over_two_extended[4];
+        double factor5_up = k * pi_over_two_extended[5];
+        double factor6_up = k * pi_over_two_extended[6];
+        double factor_small_up = factor6_up + factor5_up + factor4_up;
+        double k_1_pi_over_2;
+        // printf("m: %d, ", m);
+        // printf("n: %d\n", n);
+        switch (range_ind)
+        {
+        case 0:
+            // reduce the range
+            fesetround(FE_DOWNWARD);
+            reduced_a -= factor0_up;
+            reduced_a -= factor1_up;
+            reduced_a -= factor2_up;
+            reduced_a -= factor3_up;
+            reduced_a -= factor_small_up;
+            return kernel_sin_downward(reduced_a);
+        case 1:
+            fesetround(FE_UPWARD);
+            // (k+1) * pi/2
+            k_1_pi_over_2 = pi_over_two_extended[6] + pi_over_two_extended[5] + pi_over_two_extended[4] + pi_over_two_extended[3] + pi_over_two_extended[2] + pi_over_two_extended[1] + pi_over_two_extended[0] + factor6_up + factor5_up + factor4_up + factor3_up + factor2_up + factor1_up + factor0_up;
+            reduced_a = k_1_pi_over_2 - reduced_a;
+            return kernel_cos_downward(reduced_a);
+        case 2:
+            fesetround(FE_UPWARD);
+            reduced_a -= factor0_down;
+            reduced_a -= factor1_down;
+            reduced_a -= factor2_down;
+            reduced_a -= factor3_down;
+            reduced_a -= factor_small_down;
+            return kernel_cos_downward(reduced_a);
+        case 3:
+            fesetround(FE_DOWNWARD);
+            // (k+1) * pi/2
+            k_1_pi_over_2 = pi_over_two_extended[6] + pi_over_two_extended[5] + pi_over_two_extended[4] + pi_over_two_extended[3] + pi_over_two_extended[2] + pi_over_two_extended[1] + pi_over_two_extended[0] + factor6_down + factor5_down + factor4_down + factor3_down + factor2_down + factor1_down + factor0_down;
+            reduced_a = k_1_pi_over_2 - reduced_a;
+            return kernel_sin_downward(reduced_a);
+        case 4:
+            // reduce the range
+            fesetround(FE_UPWARD);
+            reduced_a -= factor0_down;
+            reduced_a -= factor1_down;
+            reduced_a -= factor2_down;
+            reduced_a -= factor3_down;
+            reduced_a -= factor_small_down;
+            return -kernel_sin_upward(reduced_a);
+        case 5:
+            fesetround(FE_DOWNWARD);
+            // (k+1) * pi/2
+            k_1_pi_over_2 = pi_over_two_extended[6] + pi_over_two_extended[5] + pi_over_two_extended[4] + pi_over_two_extended[3] + pi_over_two_extended[2] + pi_over_two_extended[1] + pi_over_two_extended[0] + factor6_down + factor5_down + factor4_down + factor3_down + factor2_down + factor1_down + factor0_down;
+            reduced_a = k_1_pi_over_2 - reduced_a;
+            return -kernel_cos_upward(reduced_a);
+        case 6:
+            fesetround(FE_DOWNWARD);
+            reduced_a -= factor0_up;
+            reduced_a -= factor1_up;
+            reduced_a -= factor2_up;
+            reduced_a -= factor3_up;
+            reduced_a -= factor_small_up;
+            return -kernel_cos_upward(reduced_a);
+        case 7:
+            fesetround(FE_UPWARD);
+            // (k+1) * pi/2
+            k_1_pi_over_2 = pi_over_two_extended[6] + pi_over_two_extended[5] + pi_over_two_extended[4] + pi_over_two_extended[3] + pi_over_two_extended[2] + pi_over_two_extended[1] + pi_over_two_extended[0] + factor6_up + factor5_up + factor4_up + factor3_up + factor2_up + factor1_up + factor0_up;
+            reduced_a = k_1_pi_over_2 - reduced_a;
+            return -kernel_sin_upward(reduced_a);
+
+        default:
+            break;
+        }
+        return a;
+    }
+
+
+    EXPORT double p_sin_upward(double a)
+    {
+        // y = a / (pi/2) = a * (2/pi)
+        // y tells how many multiples of pi/2 is x
+        // a = k * (pi/2) + leftover
+        double y = a * two_over_pi;
+        int k = (int)y;
+        int n = (int)(y + 0.5) - k; // if there is at least a pi/4 in leftover
+        int m = k % 4;              // which part of pi/2 in range of 0 to 2pi is this
+        int range_ind = m * 2 + n;  // which range of pi/4 is this
+        double reduced_a = a;
+        fesetround(FE_DOWNWARD);
+        double factor0_down = k * pi_over_two_extended[0];
+        double factor1_down = k * pi_over_two_extended[1];
+        double factor2_down = k * pi_over_two_extended[2];
+        double factor3_down = k * pi_over_two_extended[3];
+        double factor4_down = k * pi_over_two_extended[4];
+        double factor5_down = k * pi_over_two_extended[5];
+        double factor6_down = k * pi_over_two_extended[6];
+        double factor_small_down = factor6_down + factor5_down + factor4_down;
+
+        fesetround(FE_UPWARD);
+        double factor0_up = k * pi_over_two_extended[0];
+        double factor1_up = k * pi_over_two_extended[1];
+        double factor2_up = k * pi_over_two_extended[2];
+        double factor3_up = k * pi_over_two_extended[3];
+        double factor4_up = k * pi_over_two_extended[4];
+        double factor5_up = k * pi_over_two_extended[5];
+        double factor6_up = k * pi_over_two_extended[6];
+        double factor_small_up = factor6_up + factor5_up + factor4_up;
+        double k_1_pi_over_2;
+        // printf("m: %d, ", m);
+        // printf("n: %d\n", n);
+        switch (range_ind)
+        {
+        case 0:
+            // reduce the range
+            fesetround(FE_UPWARD);
+            reduced_a -= factor0_down;
+            reduced_a -= factor1_down;
+            reduced_a -= factor2_down;
+            reduced_a -= factor3_down;
+            reduced_a -= factor_small_down;
+            return kernel_sin_upward(reduced_a);
+        case 1:
+            fesetround(FE_DOWNWARD);
+            // (k+1) * pi/2
+            k_1_pi_over_2 = pi_over_two_extended[6] + pi_over_two_extended[5] + pi_over_two_extended[4] + pi_over_two_extended[3] + pi_over_two_extended[2] + pi_over_two_extended[1] + pi_over_two_extended[0] + factor6_down + factor5_down + factor4_down + factor3_down + factor2_down + factor1_down + factor0_down;
+            reduced_a = k_1_pi_over_2 - reduced_a;
+            return kernel_cos_upward(reduced_a);
+        case 2:
+            fesetround(FE_DOWNWARD);
+            reduced_a -= factor0_up;
+            reduced_a -= factor1_up;
+            reduced_a -= factor2_up;
+            reduced_a -= factor3_up;
+            reduced_a -= factor_small_down;
+            return kernel_cos_upward(reduced_a);
+        case 3:
+            fesetround(FE_UPWARD);
+            // (k+1) * pi/2
+            k_1_pi_over_2 = pi_over_two_extended[6] + pi_over_two_extended[5] + pi_over_two_extended[4] + pi_over_two_extended[3] + pi_over_two_extended[2] + pi_over_two_extended[1] + pi_over_two_extended[0] + factor6_up + factor5_up + factor4_up + factor3_up + factor2_up + factor1_up + factor0_up;
+            reduced_a = k_1_pi_over_2 - reduced_a;
+            return kernel_sin_upward(reduced_a);
+        case 4:
+            // reduce the range
+            fesetround(FE_DOWNWARD);
+            reduced_a -= factor0_up;
+            reduced_a -= factor1_up;
+            reduced_a -= factor2_up;
+            reduced_a -= factor3_up;
+            reduced_a -= factor_small_up;
+            return -kernel_sin_downward(reduced_a);
+        case 5:
+            fesetround(FE_UPWARD);
+            // (k+1) * pi/2
+            k_1_pi_over_2 = pi_over_two_extended[6] + pi_over_two_extended[5] + pi_over_two_extended[4] + pi_over_two_extended[3] + pi_over_two_extended[2] + pi_over_two_extended[1] + pi_over_two_extended[0] + factor6_up + factor5_up + factor4_up + factor3_up + factor2_up + factor1_up + factor0_up;
+            reduced_a = k_1_pi_over_2 - reduced_a;
+            return -kernel_cos_downward(reduced_a);
+        case 6:
+            fesetround(FE_UPWARD);
+            reduced_a -= factor0_down;
+            reduced_a -= factor1_down;
+            reduced_a -= factor2_down;
+            reduced_a -= factor3_down;
+            reduced_a -= factor_small_down;
+            return -kernel_cos_downward(reduced_a);
+        case 7:
+            fesetround(FE_DOWNWARD);
+            // (k+1) * pi/2
+            k_1_pi_over_2 = pi_over_two_extended[6] + pi_over_two_extended[5] + pi_over_two_extended[4] + pi_over_two_extended[3] + pi_over_two_extended[2] + pi_over_two_extended[1] + pi_over_two_extended[0] + factor6_down + factor5_down + factor4_down + factor3_down + factor2_down + factor1_down + factor0_down;
+            reduced_a = k_1_pi_over_2 - reduced_a;
+            return -kernel_sin_downward(reduced_a);
+
+        default:
+            break;
+        }
+        return a;
     }
 
     // double cosine_down(double a)

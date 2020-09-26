@@ -73,7 +73,14 @@ extern "C" EXPORT double kernel_sin_upward(double a);
 extern "C" EXPORT double kernel_cos_downward(double a);
 
 // compute the upward cos function within 0 to pi/4
+// cos(a)
 extern "C" EXPORT double kernel_cos_upward(double a);
+
+// compute the downward sin function within positive range
+extern "C" EXPORT double p_sin_downward(double a);
+
+// compute the upward sin function within positive range
+extern "C" EXPORT double p_sin_upward(double a);
 
 // // perform the cosine of a double, cos(a)
 // // with the rounding mode set downward

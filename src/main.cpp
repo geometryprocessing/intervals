@@ -380,8 +380,8 @@ bool test_sin_small()
     double sin_down = kernel_sin_downward(random_double);
     double sin_up = kernel_sin_upward(random_double);
     double c_sin = sin(random_double);
-    bool result = (sin_down <= c_sin) && (c_sin <= sin_up);
-    if (result){
+    if (sin_down <= c_sin && c_sin <= sin_up)
+    {
         // mpq_set_d(result_lower_mpq, sin_down);
         // mpq_set_d(result_upper_mpq, sin_up);
         // mpq_set_d(result_mpq, random_double);
@@ -394,7 +394,9 @@ bool test_sin_small()
         // print_rational("", result_upper_mpq);
         // printf("\n");
         return true;
-    }else{
+    }
+    else
+    {
         mpq_set_d(result_lower_mpq, sin_down);
         mpq_set_d(result_upper_mpq, sin_up);
         mpq_set_d(result_mpq, random_double);
@@ -410,15 +412,14 @@ bool test_sin_small()
     }
 }
 
-
 bool test_cos_small()
 {
     double random_double = ((double)rand() / RAND_MAX) * 0.7853981633;
     double cos_down = kernel_cos_downward(random_double);
     double cos_up = kernel_cos_upward(random_double);
     double c_cos = cos(random_double);
-    bool result = (cos_down <= c_cos) && (c_cos <= cos_up);
-    if (result){
+    if (cos_down <= c_cos && c_cos <= cos_up)
+    {
         // mpq_set_d(result_lower_mpq, cos_down);
         // mpq_set_d(result_upper_mpq, cos_up);
         // mpq_set_d(result_mpq, random_double);
@@ -431,13 +432,55 @@ bool test_cos_small()
         // print_rational("", result_upper_mpq);
         // printf("\n");
         return true;
-    }else{
+    }
+    else
+    {
         mpq_set_d(result_lower_mpq, cos_down);
         mpq_set_d(result_upper_mpq, cos_up);
         mpq_set_d(result_mpq, random_double);
         print_rational("", result_lower_mpq);
         printf(" <=? ");
         printf("cos(");
+        print_rational("", result_mpq);
+        printf(")");
+        printf(" <=? ");
+        print_rational("", result_upper_mpq);
+        printf("\n");
+        return false;
+    }
+}
+
+bool test_sin_pos()
+{
+    double random_double = (double)(rand() + 1) / (double)(rand() + 1);
+    double sin_up = p_sin_upward(random_double);
+    double sin_down = p_sin_downward(random_double);
+    double c_sin = sin(random_double);
+    if (sin_down <= c_sin && c_sin <= sin_up)
+    {
+        // mpq_set_d(result_lower_mpq, sin_down);
+        // mpq_set_d(result_upper_mpq, sin_up);
+        // mpq_set_d(result_mpq, random_double);
+        // print_rational("", result_lower_mpq);
+        // printf(" <= ");
+        // printf("sin(");
+        // print_rational("", result_mpq);
+        // printf(")");
+        // printf(" <= ");
+        // print_rational("", result_upper_mpq);
+        // printf("\n");
+        return true;
+    }
+    else
+    {
+        mpq_set_d(result_lower_mpq, sin_down);
+        mpq_set_d(result_upper_mpq, sin_up);
+        mpq_set_d(result_mpq, random_double);
+        print_rational("", result_lower_mpq);
+        printf(" <=? ");
+        mpq_set_d(result_upper_mpq, sin_up);
+        mpq_set_d(result_mpq, random_double);
+        printf("sin(");
         print_rational("", result_mpq);
         printf(")");
         printf(" <=? ");
@@ -458,7 +501,7 @@ int main(int argc, char *argv[])
     mpq_set_d(six, 6);
     mpq_init(result_mpq);
 
-    for (int i = 0; i < 20000; i++)
+    for (int i = 0; i < 2000000; i++)
     {
         random_init(a, a_mpq);
         random_init(b, b_mpq);
@@ -471,9 +514,9 @@ int main(int argc, char *argv[])
         bool result_comp1 = test_comp1();
         bool result_comp2 = test_comp2();
         bool result_comp3 = test_comp3();
-        bool result_sin_small = test_sin_small();
+        bool result_sin_pos = test_sin_pos();
         bool result_cos_small = test_cos_small();
-        if (!result_add || !result_mul || !result_sub || !result_div || !result_comp1 || !result_comp2 || !result_comp3 || !result_sin_small|| !result_cos_small)
+        if (!result_add || !result_mul || !result_sub || !result_div || !result_comp1 || !result_comp2 || !result_comp3 || !result_sin_pos || !result_cos_small)
         {
             printf("Failed test\n");
             return 1;
@@ -484,9 +527,9 @@ int main(int argc, char *argv[])
         }
     }
 
-    // for (int i = 0; i < 100000; i++)
+    // for (int i = 0; i < 2000000; i++)
     // {
-    //     bool result_sin = test_sin_small();
+    //     bool result_sin = test_sin_pos();
     //     if (!result_sin)
     //     {
     //         printf("Failed test\n");
