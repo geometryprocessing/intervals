@@ -228,3 +228,5 @@ dmypy.json
 *.bc
 
 3rdparty
+errors_cos.txt
+errors_sin.txt
