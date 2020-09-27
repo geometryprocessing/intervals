@@ -135,7 +135,6 @@ extern "C"
             // a is small enough we can just return itself
             return a;
         }
-        double result = a;
 
         // upward rounding a square
         fesetround(FE_UPWARD);
@@ -144,9 +143,9 @@ extern "C"
         // downward rounding a square
         fesetround(FE_DOWNWARD);
         double a_square_down = a * a;
-
+        double result = 0.0;
         // for the positive ones they should be rounded down
-        result += (((taylor_sin_positive[2] * a_square_down * a_square_down) + taylor_sin_positive[1]) * a_square_down * a_square_down + taylor_sin_positive[0]) * a_square_down * a_square_down * a;
+        result += ((((taylor_sin_positive[2] * a_square_down * a_square_down) + taylor_sin_positive[1]) * a_square_down * a_square_down + taylor_sin_positive[0]) * a_square_down * a_square_down + 1.0) * a;
         result += (((taylor_sin_negative[2] * a_square_up * a_square_up) + taylor_sin_negative[1]) * a_square_up * a_square_up + taylor_sin_negative[0]) * a_square_up * a;
         fesetround(FE_TONEAREST);
         return result;
@@ -159,7 +158,6 @@ extern "C"
             // a is small enough we can just return itself
             return a;
         }
-        double result = a;
 
         // downward rounding a square
         fesetround(FE_DOWNWARD);
@@ -168,9 +166,9 @@ extern "C"
         // upward rounding a square
         fesetround(FE_UPWARD);
         double a_square_up = a * a;
-
-        // for the positive ones they should be rounded down
-        result += (((taylor_sin_positive[2] * a_square_up * a_square_up) + taylor_sin_positive[1]) * a_square_up * a_square_up + taylor_sin_positive[0]) * a_square_up * a_square_up * a;
+        double result = 0.0;
+        // for the positive ones they should be rounded up
+        result += ((((taylor_sin_positive[2] * a_square_up * a_square_up) + taylor_sin_positive[1]) * a_square_up * a_square_up + taylor_sin_positive[0]) * a_square_up * a_square_up + 1.0) * a;
         result += (((taylor_sin_negative[2] * a_square_down * a_square_down) + taylor_sin_negative[1]) * a_square_down * a_square_down + taylor_sin_negative[0]) * a_square_down * a;
         fesetround(FE_TONEAREST);
         return result;
