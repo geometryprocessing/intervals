@@ -1,5 +1,6 @@
 #pragma once
 #include "interval_c.h"
+#include <tuple>
 
 class interval
 {
@@ -39,4 +40,9 @@ public:
     friend interval operator-(double v, const interval &n);
     friend interval operator*(double v, const interval &n);
     friend interval operator/(double v, const interval &n);
+
+    double width();                                                 // return the width of the interval
+    friend double width(const interval &n);                         // return the width of the interval
+    friend bool zero_in(const interval &n);                         // return if zero is inside the interval
+    friend std::pair<interval, interval> bisect(const interval &n); // bisect the interval to two parts
 };

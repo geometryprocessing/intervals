@@ -183,3 +183,23 @@ interval operator/(double v, const interval &n)
     interval res = interval(result);
     return res;
 }
+
+double interval::width()
+{
+    return this->val.upper - this->val.lower;
+}
+
+double width(const interval &n)
+{
+    return n.upper() - n.lower();
+}
+
+bool zero_in(const interval &n)
+{
+    return n.upper() >= 0 && n.lower() <= 0;
+}
+
+std::pair<interval, interval> bisect(const interval &n)
+{
+    return {interval(n.lower(), (n.lower() + n.upper()) / 2), interval((n.lower() + n.upper()) / 2, n.upper())};
+}
