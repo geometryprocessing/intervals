@@ -22,7 +22,7 @@ jobs:
           ubuntu-18.04-clang-9,
           macOS-latest,
         ]
-        config: [Release]
+        config: [Release, Debug]
         include:
           - name: ubuntu-18.04-gcc-7
             os: ubuntu-18.04
@@ -86,7 +86,7 @@ jobs:
           cd interval_operations/src && ./compile.sh 
           cd ../../
           rm -rf build && mkdir build && cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Release
+          cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.config }}
       # - name: Free Disk Space
       #   if: runner.os == 'Linux'
       #   run: |
@@ -114,6 +114,7 @@ jobs:
   ####################
 
   Windows:
+    name: Windows (${{ matrix.config }})
     runs-on: windows-2019
     env:
       CC: cl.exe
@@ -121,7 +122,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        config: [Release]
+        config: [Release, Debug]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v1
