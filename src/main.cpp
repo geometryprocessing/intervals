@@ -14,9 +14,9 @@
 #include "interval.hpp"
 #include "interval_c.h"
 #ifdef _WIN32
-#define TEST_SIZE 10000
+#define TEST_SIZE 10000000
 #else
-#define TEST_SIZE 5000000
+#define TEST_SIZE 10000000
 #endif
 
 // #ifdef _WIN32
@@ -242,8 +242,13 @@ bool test_div()
 // a * b - c / a
 bool test_comp1()
 {
+#ifdef _WIN32
+    if (a.lower() == 0.0)
+    {
+        return true;
+    }
+#endif
     interval result = a * b - c / a;
-
     mpq_set_d(result_lower_mpq, result.lower());
     mpq_set_d(result_upper_mpq, result.upper());
 
@@ -287,6 +292,12 @@ bool test_comp1()
 // (a + b) * (a - b - c) / (b + c)
 bool test_comp2()
 {
+#ifdef _WIN32
+    if (b.lower() + c.lower() == 0.0)
+    {
+        return true;
+    }
+#endif
     interval result = (a + b) * (a - b - c) / (b + c);
 
     mpq_set_d(result_lower_mpq, result.lower());
@@ -335,6 +346,12 @@ bool test_comp2()
 // -5.0 * (a + 3.0) / (b - 4.0) + (a / 6.0)
 bool test_comp3()
 {
+#ifdef _WIN32
+    if (b.lower() - 4.0 == 0.0)
+    {
+        return true;
+    }
+#endif
     interval result = -5.0 * (a + 3.0) / (b - 4.0) + (a / 6.0);
     mpq_set_d(result_lower_mpq, result.lower());
     mpq_set_d(result_upper_mpq, result.upper());
@@ -615,7 +632,6 @@ bool test_cos()
     }
 }
 
-
 int main(int argc, char *argv[])
 {
     srand(13);
@@ -647,7 +663,7 @@ int main(int argc, char *argv[])
             printf("Failed test\n");
             return 1;
         }
-        if ((i + 1) % 2000 == 0)
+        if ((i + 1) % 20000 == 0)
         {
             printf("Passed %d tests so far\n", (i + 1));
         }
