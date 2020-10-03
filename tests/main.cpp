@@ -14,9 +14,9 @@
 #include "../src/interval.hpp"
 
 #ifdef _WIN32
-#define TEST_SIZE 100000
+#define TEST_SIZE 10000000
 #else
-#define TEST_SIZE 100000
+#define TEST_SIZE 10000000
 #endif
 
 // #ifdef _WIN32
