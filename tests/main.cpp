@@ -11,12 +11,12 @@
 #include <string.h>
 #include <gmpxx.h>
 #include <stdlib.h>
-#include "interval.hpp"
-#include "interval_c.h"
+#include "../src/interval.hpp"
+
 #ifdef _WIN32
-#define TEST_SIZE 10000000
+#define TEST_SIZE 100000
 #else
-#define TEST_SIZE 10000000
+#define TEST_SIZE 100000
 #endif
 
 // #ifdef _WIN32
