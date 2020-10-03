@@ -106,7 +106,7 @@ jobs:
         run: cd build; make -j2
 
       - name: Tests
-        run: cd build; ./unit_tests
+        run: cd build/tests; ./unit_tests
 
   
   ####################
@@ -193,6 +193,5 @@ jobs:
         run: |
           set PATH=%PATH%;D:\a\intervals\intervals\interval_operations\src;
           set PATH=%PATH%;D:\a\intervals\intervals\src;
-          cd build
-          dir
+          cd build/tests
           unit_tests.exe
