@@ -12,6 +12,7 @@
 #include <gmpxx.h>
 #include <stdlib.h>
 #include "../src/interval.hpp"
+#include "gmp_rational.h"
 
 #ifdef _WIN32
 #define TEST_SIZE 10000000
