@@ -68,7 +68,9 @@ message("GMP LIBRARY = ${GMP_LIBRARIES}")
 target_link_libraries(unit_tests PUBLIC "${LIBRARIES}")
 target_link_libraries(unit_tests PUBLIC ${GMP_LIBRARIES})
 
-
+find_library(prim prim "/usr/local/lib")
+message("filib LIBRARY = ${prim}")
+target_link_libraries(unit_tests PUBLIC ${prim})
 
 if(APPLE)
     add_custom_command (TARGET unit_tests
