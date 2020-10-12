@@ -228,10 +228,7 @@ dmypy.json
 *.bc
 
 3rdparty
-errors_cos.txt
-errors_sin.txt
-errors_cos_filib.txt
-errors_sin_filib.txt
+errors*
 *.py
 *.nb
 datas/
