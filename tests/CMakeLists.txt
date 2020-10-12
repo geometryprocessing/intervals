@@ -5,7 +5,9 @@ cmake_minimum_required(VERSION 3.1)
 
 set(test_sources
     main.cpp
-    gmp_rational.h
+    Rational.h
+    helper.hpp
+    Timer.h
 )
 
 include(CheckCXXCompilerFlag)
@@ -69,9 +71,13 @@ message("GMP LIBRARY = ${GMP_LIBRARIES}")
 target_link_libraries(unit_tests PUBLIC "${LIBRARIES}")
 target_link_libraries(unit_tests PUBLIC ${GMP_LIBRARIES})
 
-# find_library(prim prim "/usr/local/lib")
-# message("filib LIBRARY = ${prim}")
-# target_link_libraries(unit_tests PUBLIC ${prim})
+find_library(prim prim "/usr/local/lib")
+message("filib LIBRARY = ${prim}")
+target_link_libraries(unit_tests PUBLIC ${prim})
+
+find_package(Boost REQUIRED)
+target_link_libraries(unit_tests PUBLIC Boost::boost)
+
 
 if(APPLE)
     add_custom_command (TARGET unit_tests
