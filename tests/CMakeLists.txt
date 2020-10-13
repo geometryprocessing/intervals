@@ -58,8 +58,7 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} -undefined dynamic_lookup")
 endif()
 
-## download gmp
-# intervals_download_gmp()
+
 find_package(GMP REQUIRED)
 
 INCLUDE_DIRECTORIES(
