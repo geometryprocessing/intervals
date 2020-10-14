@@ -1,5 +1,5 @@
 #include "helper.hpp"
-
+#include "../src/interval.hpp"
 #define TEST_SIZE 10000000
 using namespace std;
 
@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
     comp_boost_intervals.resize(10);
 
     // test_gap();
-    test_time();
+    // test_time();
+    PRINT_QUERIES(square_root, "sqrt", distribution_positive, 1);
     return 0;
 }

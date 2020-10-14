@@ -45,4 +45,6 @@ public:
     friend double width(const interval &n);                         // return the width of the interval
     friend bool zero_in(const interval &n);                         // return if zero is inside the interval
     friend std::pair<interval, interval> bisect(const interval &n); // bisect the interval to two parts
+
+    friend interval sqrt(const interval &v);
 };

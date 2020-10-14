@@ -203,3 +203,9 @@ std::pair<interval, interval> bisect(const interval &n)
 {
     return {interval(n.lower(), (n.lower() + n.upper()) / 2), interval((n.lower() + n.upper()) / 2, n.upper())};
 }
+
+interval sqrt(const interval &v)
+{
+    interval_c result = sqrt_interval(v.val);
+    return result;
+}

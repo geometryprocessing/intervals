@@ -37,6 +37,7 @@ typedef boost::numeric::interval<
 std::default_random_engine generator;
 std::uniform_real_distribution<double> distribution_all_range(-RAND_MAX + 1, RAND_MAX);
 std::uniform_real_distribution<double> distribution_within_one(-1, 1);
+std::uniform_real_distribution<double> distribution_positive(0, RAND_MAX);
 
 std::vector<double> comp_doubles;                 // store the doubles
 std::vector<gmp::Rational> comp_gmp_rationals;    // store the gmp rationals
@@ -107,6 +108,12 @@ inline T expr3(const std::vector<T> &value_array)
     return (value_array[0] * (value_array[0] / value_array[1]) * (value_array[0] / value_array[1] / value_array[2]) - value_array[3] * (value_array[3] / value_array[4]) * (value_array[3] / value_array[4] / value_array[5]) + value_array[6] * (value_array[6] / value_array[7]) * (value_array[6] / value_array[7] / value_array[8])) * value_array[9];
 }
 
+template <class T>
+inline T square_root(const std::vector<T> &value_array)
+{
+    return sqrt(value_array[0]);
+}
+
 // compute the interval size and convert it to rational
 gmp::Rational interval_size(double lower, double upper)
 {
@@ -120,6 +127,19 @@ gmp::Rational interval_size(double lower, double upper)
 void print_rational(gmp::Rational r)
 {
     mpq_out_str(stdout, 10, r.value);
+}
+
+void print_query(double lower, double upper, double input, std::string info)
+{
+    gmp::Rational lower_rat = gmp::Rational(lower);
+    gmp::Rational upper_rat = gmp::Rational(upper);
+    gmp::Rational input_rat = gmp::Rational(comp_doubles[0]);
+    print_rational(lower_rat);
+    printf(" <= %s(", info.c_str());
+    print_rational(input_rat);
+    printf(") <= ");
+    print_rational(upper_rat);
+    printf("\n");
 }
 
 #define COMPUTE_GAP(METHOD, INFO, DISTRIBUTION, VARIABLE_COUNT)                                                                                                                                               \
@@ -290,6 +310,50 @@ inline double benchmarkTimer(std::function<void()> op)
         printf("TIME, %s, PRED SUCC, ", INFO);                                                                                                                                                                            \
         printf("%lf", pred_succ_time);                                                                                                                                                                                    \
         printf("\n");                                                                                                                                                                                                     \
+    } while (0)
+
+// print the queries for mathematica to verify
+#define PRINT_QUERIES(METHOD, INFO, DISTRIBUTION, VARIABLE_COUNT)                                                                                                                                             \
+    do                                                                                                                                                                                                        \
+    {                                                                                                                                                                                                         \
+        for (int i = 0; i < VARIABLE_COUNT; i++)                                                                                                                                                              \
+        {                                                                                                                                                                                                     \
+            double r = random_double(DISTRIBUTION);                                                                                                                                                           \
+            comp_doubles[i] = r;                                                                                                                                                                              \
+            comp_our_intervals[i] = interval(r);                                                                                                                                                              \
+            comp_boost_intervals[i] = boost_interval(r);                                                                                                                                                      \
+        }                                                                                                                                                                                                     \
+        interval our_result = METHOD<interval>(comp_our_intervals);                                                                                                                                           \
+        boost_interval boost_result = METHOD<boost_interval>(comp_boost_intervals);                                                                                                                           \
+        filib::fp_traits<double, filib::native_switched>::setup();                                                                                                                                            \
+        std::vector<filib::interval<double, filib::native_switched, filib::i_mode_normal>> native_switched_values;                                                                                            \
+        native_switched_values.resize(VARIABLE_COUNT);                                                                                                                                                        \
+        for (int i = 0; i < VARIABLE_COUNT; i++)                                                                                                                                                              \
+        {                                                                                                                                                                                                     \
+            native_switched_values[i] = filib::interval<double, filib::native_switched, filib::i_mode_normal>(comp_doubles[i]);                                                                               \
+        }                                                                                                                                                                                                     \
+        filib::interval<double, filib::native_switched, filib::i_mode_normal> native_switched_result = METHOD<filib::interval<double, filib::native_switched, filib::i_mode_normal>>(native_switched_values); \
+        filib::fp_traits<double, filib::multiplicative>::setup();                                                                                                                                             \
+        std::vector<filib::interval<double, filib::multiplicative, filib::i_mode_normal>> multiplicative_values;                                                                                              \
+        multiplicative_values.resize(VARIABLE_COUNT);                                                                                                                                                         \
+        for (int i = 0; i < VARIABLE_COUNT; i++)                                                                                                                                                              \
+        {                                                                                                                                                                                                     \
+            multiplicative_values[i] = filib::interval<double, filib::multiplicative, filib::i_mode_normal>(comp_doubles[i]);                                                                                 \
+        }                                                                                                                                                                                                     \
+        filib::interval<double, filib::multiplicative, filib::i_mode_normal> multiplicative_result = METHOD<filib::interval<double, filib::multiplicative, filib::i_mode_normal>>(multiplicative_values);     \
+        filib::fp_traits<double, filib::pred_succ_rounding>::setup();                                                                                                                                         \
+        std::vector<filib::interval<double, filib::pred_succ_rounding, filib::i_mode_normal>> pred_succ_values;                                                                                               \
+        pred_succ_values.resize(VARIABLE_COUNT);                                                                                                                                                              \
+        for (int i = 0; i < VARIABLE_COUNT; i++)                                                                                                                                                              \
+        {                                                                                                                                                                                                     \
+            pred_succ_values[i] = filib::interval<double, filib::pred_succ_rounding, filib::i_mode_normal>(comp_doubles[i]);                                                                                  \
+        }                                                                                                                                                                                                     \
+        filib::interval<double, filib::pred_succ_rounding, filib::i_mode_normal> pred_succ_result = METHOD<filib::interval<double, filib::pred_succ_rounding, filib::i_mode_normal>>(pred_succ_values);       \
+        print_query(our_result.lower(), our_result.upper(), comp_doubles[0], INFO);                                                                                                                           \
+        print_query(boost_result.lower(), boost_result.upper(), comp_doubles[0], INFO);                                                                                                                       \
+        print_query(native_switched_result.inf(), native_switched_result.sup(), comp_doubles[0], INFO);                                                                                                       \
+        print_query(multiplicative_result.inf(), multiplicative_result.sup(), comp_doubles[0], INFO);                                                                                                         \
+        print_query(pred_succ_result.inf(), pred_succ_result.sup(), comp_doubles[0], INFO);                                                                                                                   \
     } while (0)
 
 void comp_addition()
