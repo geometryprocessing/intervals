@@ -1027,6 +1027,16 @@ extern "C"
         }
     }
 
+    EXPORT interval_c sqrt_interval(const interval_c& a){
+        fesetround(FE_DOWNWARD);
+        double lower = sqrt(a.lower);
+        fesetround(FE_UPWARD);
+        double upper = sqrt(a.upper);
+        fesetround(FE_TONEAREST);
+        interval_c result = {lower, upper};
+        return result;
+    }
+
     // interval_c cosine_interval(const interval_c &a)
     // {
     //     double al = a.lower;

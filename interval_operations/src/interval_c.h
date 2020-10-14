@@ -100,34 +100,6 @@ extern "C" EXPORT double cos_downward(double a);
 // compute the upward cos function for all range
 extern "C" EXPORT double cos_upward(double a);
 
-// // perform the cosine of a double, cos(a)
-// // with the rounding mode set downward
-//
-// extern "C" EXPORT double cosine_down(double a);
-
-// // perform the cosine of a double, cos(a)
-// // with the rounding mode set upward
-//
-// extern "C" EXPORT double cosine_up(double a);
-
-// // computes the modulo of two doubles, a%b
-// // with the rounding mode set downward
-//
-// extern "C" EXPORT double mod_down(double a, double b);
-
-// // computes the modulo of two doubles, a%b
-// // with the rounding mode set upward
-//
-// extern "C" EXPORT double mod_up(double a, double b);
-
-// // computes the floor of a double
-//
-// extern "C" EXPORT double floor(double a);
-
-// // computes the ceil of a double
-//
-// extern "C" EXPORT double ceil(double a);
-
 // compute the addition of two intervals
 // a + b
 extern "C" EXPORT interval_c add_interval(const interval_c &a, const interval_c &b);
@@ -143,6 +115,10 @@ extern "C" EXPORT interval_c mult_interval(const interval_c &a, const interval_c
 // compute the division of two intervals
 // a / b
 extern "C" EXPORT interval_c div_interval(const interval_c &a, const interval_c &b);
+
+// compute the sqrt of an interval
+// sqrt(a)
+extern "C" EXPORT interval_c sqrt_interval(const interval_c &a);
 
 // // compute the cosine of the interval_c
 // // cos(a)
