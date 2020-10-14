@@ -6,9 +6,9 @@ set(THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/)
 
 
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
-	set(INLINE_EXPANSION_TOPLEVEL_PROJECT ON)
+	set(INTERVALS_TOPLEVEL_PROJECT ON)
 else()
-	set(INLINE_EXPANSION_TOPLEVEL_PROJECT OFF)
+	set(INTERVALS_TOPLEVEL_PROJECT OFF)
 endif()
 
 set (CMAKE_CXX_STANDARD 11)
@@ -35,7 +35,7 @@ target_include_directories(intervals PUBLIC ${PROJECT_BINARY_DIR}/include)
 target_compile_features(intervals PUBLIC ${CXX14_FEATURES})
 target_include_directories(intervals PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/)
 
-if(INLINE_EXPANSION_TOPLEVEL_PROJECT)
+if(INTERVALS_TOPLEVEL_PROJECT)
 	# Unit tests
 	include(CTest)
 	enable_testing()
