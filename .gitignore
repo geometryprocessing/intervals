@@ -229,7 +229,3 @@ dmypy.json
 
 3rdparty
 errors*
-*.py
-*.nb
-datas/
-graphs/
