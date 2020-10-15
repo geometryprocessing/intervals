@@ -10,6 +10,7 @@
 extern "C"
 {
 #include <fenv.h>
+#include <math.h>
 #define PI 3.1415926535897932
     double taylor_sin_positive[3] = {
         4803839602527639.0 / 576460752303423488.0,
