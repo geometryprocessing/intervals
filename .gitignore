@@ -229,3 +229,5 @@ dmypy.json
 
 3rdparty
 errors*
+
+mathmetica_notebooks/*.txt
