@@ -28,6 +28,14 @@ void test_time()
     time_expr3();
 }
 
+void test_sqrt()
+{
+    for (int i = 0; i < TEST_SIZE; i++)
+    {
+        print_square_root();
+    }
+}
+
 int main(int argc, char *argv[])
 {
     generator.seed(13);
@@ -38,6 +46,7 @@ int main(int argc, char *argv[])
 
     // test_gap();
     // test_time();
-    PRINT_QUERIES(square_root, "sqrt", distribution_positive, 1);
+    test_sqrt();
+
     return 0;
 }
