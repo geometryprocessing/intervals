@@ -9,11 +9,12 @@ void test_gap()
     {
         // comp_addition();
         // comp_subtraction();
-        comp_multiplication();
-        comp_division();
-        comp_expr1();
-        comp_expr2();
-        comp_expr3();
+        // comp_multiplication();
+        // comp_division();
+        // comp_expr1();
+        // comp_expr2();
+        // comp_expr3();
+        comp_square_root();
     }
 }
 
@@ -44,9 +45,9 @@ int main(int argc, char *argv[])
     comp_our_intervals.resize(10);
     comp_boost_intervals.resize(10);
 
-    // test_gap();
+    test_gap();
     // test_time();
-    test_sqrt();
+    // test_sqrt();
 
     return 0;
 }

@@ -126,7 +126,7 @@ def plot_comparisons(datas, saved_file="", system="mac"):
 
 
 # datas = populate_data("build/gaps_linux.txt", system="linux")
-plot_comparisons([], system="linux", saved_file="datas/comparison_linux.p")
+# plot_comparisons([], system="linux")
 
-# datas = populate_data("build/gaps_mac.txt", system="mac")
-plot_comparisons([], system="mac", saved_file ="datas/comparison_mac.p")
+datas = populate_data("build/gaps_mac_sqrt.txt", system="mac")
+plot_comparisons(datas, system="mac")

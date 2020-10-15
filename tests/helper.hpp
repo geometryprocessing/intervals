@@ -44,6 +44,12 @@ std::vector<gmp::Rational> comp_gmp_rationals;    // store the gmp rationals
 std::vector<interval> comp_our_intervals;         // store the intervals for us
 std::vector<boost_interval> comp_boost_intervals; // store the intervals for boost
 
+// define sqare root for a rational file
+gmp::Rational sqrt(const gmp::Rational &value)
+{
+    return gmp::Rational(0);
+}
+
 // return a random double
 double random_double(std::uniform_real_distribution<double> distribution)
 {
@@ -142,7 +148,7 @@ void print_query(double lower, double upper, double input, std::string info)
     printf("\n");
 }
 
-#define COMPUTE_GAP(METHOD, INFO, DISTRIBUTION, VARIABLE_COUNT)                                                                                                                                               \
+#define COMPUTE_GAP(METHOD, INFO, DISTRIBUTION, VARIABLE_COUNT, COMPUTE_RATIONAL)                                                                                                                             \
     do                                                                                                                                                                                                        \
     {                                                                                                                                                                                                         \
         for (int i = 0; i < VARIABLE_COUNT; i++)                                                                                                                                                              \
@@ -154,7 +160,6 @@ void print_query(double lower, double upper, double input, std::string info)
             comp_boost_intervals[i] = boost_interval(r);                                                                                                                                                      \
         }                                                                                                                                                                                                     \
         interval our_result = METHOD<interval>(comp_our_intervals);                                                                                                                                           \
-        gmp::Rational rational_result = METHOD<gmp::Rational>(comp_gmp_rationals);                                                                                                                            \
         boost_interval boost_result = METHOD<boost_interval>(comp_boost_intervals);                                                                                                                           \
         filib::fp_traits<double, filib::native_switched>::setup();                                                                                                                                            \
         std::vector<filib::interval<double, filib::native_switched, filib::i_mode_normal>> native_switched_values;                                                                                            \
@@ -180,25 +185,29 @@ void print_query(double lower, double upper, double input, std::string info)
             pred_succ_values[i] = filib::interval<double, filib::pred_succ_rounding, filib::i_mode_normal>(comp_doubles[i]);                                                                                  \
         }                                                                                                                                                                                                     \
         filib::interval<double, filib::pred_succ_rounding, filib::i_mode_normal> pred_succ_result = METHOD<filib::interval<double, filib::pred_succ_rounding, filib::i_mode_normal>>(pred_succ_values);       \
-        if (!within_range(our_result.lower(), our_result.upper(), rational_result))                                                                                                                           \
+        if (COMPUTE_RATIONAL)                                                                                                                                                                                 \
         {                                                                                                                                                                                                     \
-            printf("FAIL, %s, OUR METHOD\n", INFO);                                                                                                                                                           \
-        }                                                                                                                                                                                                     \
-        if (!within_range(boost_result.lower(), boost_result.upper(), rational_result))                                                                                                                       \
-        {                                                                                                                                                                                                     \
-            printf("FAIL, %s, BOOST METHOD\n", INFO);                                                                                                                                                         \
-        }                                                                                                                                                                                                     \
-        if (!within_range(native_switched_result.inf(), native_switched_result.sup(), rational_result))                                                                                                       \
-        {                                                                                                                                                                                                     \
-            printf("FAIL, %s, NATIVE SWITCHED\n", INFO);                                                                                                                                                      \
-        }                                                                                                                                                                                                     \
-        if (!within_range(multiplicative_result.inf(), multiplicative_result.sup(), rational_result))                                                                                                         \
-        {                                                                                                                                                                                                     \
-            printf("FAIL, %s, MULTIPLICATIVE\n", INFO);                                                                                                                                                       \
-        }                                                                                                                                                                                                     \
-        if (!within_range(pred_succ_result.inf(), pred_succ_result.sup(), rational_result))                                                                                                                   \
-        {                                                                                                                                                                                                     \
-            printf("FAIL, %s, PRED SUCC\n", INFO);                                                                                                                                                            \
+            gmp::Rational rational_result = METHOD<gmp::Rational>(comp_gmp_rationals);                                                                                                                        \
+            if (!within_range(our_result.lower(), our_result.upper(), rational_result))                                                                                                                       \
+            {                                                                                                                                                                                                 \
+                printf("FAIL, %s, OUR METHOD\n", INFO);                                                                                                                                                       \
+            }                                                                                                                                                                                                 \
+            if (!within_range(boost_result.lower(), boost_result.upper(), rational_result))                                                                                                                   \
+            {                                                                                                                                                                                                 \
+                printf("FAIL, %s, BOOST METHOD\n", INFO);                                                                                                                                                     \
+            }                                                                                                                                                                                                 \
+            if (!within_range(native_switched_result.inf(), native_switched_result.sup(), rational_result))                                                                                                   \
+            {                                                                                                                                                                                                 \
+                printf("FAIL, %s, NATIVE SWITCHED\n", INFO);                                                                                                                                                  \
+            }                                                                                                                                                                                                 \
+            if (!within_range(multiplicative_result.inf(), multiplicative_result.sup(), rational_result))                                                                                                     \
+            {                                                                                                                                                                                                 \
+                printf("FAIL, %s, MULTIPLICATIVE\n", INFO);                                                                                                                                                   \
+            }                                                                                                                                                                                                 \
+            if (!within_range(pred_succ_result.inf(), pred_succ_result.sup(), rational_result))                                                                                                               \
+            {                                                                                                                                                                                                 \
+                printf("FAIL, %s, PRED SUCC\n", INFO);                                                                                                                                                        \
+            }                                                                                                                                                                                                 \
         }                                                                                                                                                                                                     \
         printf("GAP, %s, OUR METHOD, ", INFO);                                                                                                                                                                \
         print_rational(interval_size(our_result.lower(), our_result.upper()));                                                                                                                                \
@@ -358,37 +367,42 @@ inline double benchmarkTimer(std::function<void()> op)
 
 void comp_addition()
 {
-    COMPUTE_GAP(addition, "ADDITION", distribution_within_one, 2);
+    COMPUTE_GAP(addition, "ADDITION", distribution_within_one, 2, true);
 }
 
 void comp_subtraction()
 {
-    COMPUTE_GAP(subtraction, "SUBTRACTION", distribution_within_one, 2);
+    COMPUTE_GAP(subtraction, "SUBTRACTION", distribution_within_one, 2, true);
 }
 
 void comp_multiplication()
 {
-    COMPUTE_GAP(multiplication, "MULTIPLICATION", distribution_within_one, 2);
+    COMPUTE_GAP(multiplication, "MULTIPLICATION", distribution_within_one, 2, true);
 }
 
 void comp_division()
 {
-    COMPUTE_GAP(division, "DIVISION", distribution_within_one, 2);
+    COMPUTE_GAP(division, "DIVISION", distribution_within_one, 2, true);
 }
 
 void comp_expr1()
 {
-    COMPUTE_GAP(expr1, "COMPOSITE EXPRESSION 1", distribution_within_one, 10);
+    COMPUTE_GAP(expr1, "COMPOSITE EXPRESSION 1", distribution_within_one, 10, true);
 }
 
 void comp_expr2()
 {
-    COMPUTE_GAP(expr2, "COMPOSITE EXPRESSION 2", distribution_within_one, 10);
+    COMPUTE_GAP(expr2, "COMPOSITE EXPRESSION 2", distribution_within_one, 10, true);
 }
 
 void comp_expr3()
 {
-    COMPUTE_GAP(expr3, "COMPOSITE EXPRESSION 3", distribution_within_one, 10);
+    COMPUTE_GAP(expr3, "COMPOSITE EXPRESSION 3", distribution_within_one, 10, true);
+}
+
+void comp_square_root()
+{
+    COMPUTE_GAP(square_root, "SQUARE ROOT", distribution_positive, 1, false);
 }
 
 void time_addition()
@@ -424,4 +438,9 @@ void time_expr2()
 void time_expr3()
 {
     SPEED_TEST(expr3, "COMPOSITE EXPRESSION 3", distribution_within_one, 10);
+}
+
+void print_square_root()
+{
+    PRINT_QUERIES(square_root, "Sqrt", distribution_positive, 1);
 }
