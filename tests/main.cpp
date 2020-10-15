@@ -14,7 +14,8 @@ void test_gap()
         // comp_expr1();
         // comp_expr2();
         // comp_expr3();
-        comp_square_root();
+        // comp_square_root();
+        comp_exponential();
     }
 }
 
@@ -37,6 +38,14 @@ void test_sqrt()
     }
 }
 
+void test_exp()
+{
+    for (int i = 0; i < TEST_SIZE; i++)
+    {
+        print_exponential();
+    }
+}
+
 int main(int argc, char *argv[])
 {
     generator.seed(13);
@@ -48,6 +57,7 @@ int main(int argc, char *argv[])
     test_gap();
     // test_time();
     // test_sqrt();
+    // test_exp();
 
     return 0;
 }

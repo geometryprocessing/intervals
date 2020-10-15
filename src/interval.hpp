@@ -47,4 +47,5 @@ public:
     friend std::pair<interval, interval> bisect(const interval &n); // bisect the interval to two parts
 
     friend interval sqrt(const interval &v);
+    friend interval exp(const interval &v);
 };

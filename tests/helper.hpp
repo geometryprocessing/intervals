@@ -26,26 +26,52 @@ namespace interval_options
     typedef boost::numeric::interval_lib::checking_base<double> CheckingPolicy;
 } // namespace interval_options
 
+#if defined(__APPLE__)
 typedef boost::numeric::interval<
     double,
     boost::numeric::interval_lib::policies<
         boost::numeric::interval_lib::save_state<
-            boost::numeric::interval_lib::rounded_arith_std<double>>,
+            boost::numeric::interval_lib::rounded_transc_exact<double>>,
         interval_options::CheckingPolicy>>
     boost_interval;
+#else
+typedef boost::numeric::interval<
+    double,
+    boost::numeric::interval_lib::policies<
+        boost::numeric::interval_lib::save_state<
+            boost::numeric::interval_lib::rounded_transc_std<double>>,
+        interval_options::CheckingPolicy>>
+    boost_interval;
+#endif
 
 std::default_random_engine generator;
 std::uniform_real_distribution<double> distribution_all_range(-RAND_MAX + 1, RAND_MAX);
 std::uniform_real_distribution<double> distribution_within_one(-1, 1);
 std::uniform_real_distribution<double> distribution_positive(0, RAND_MAX);
+std::uniform_real_distribution<double> distribution_exp(-40, 40);
 
 std::vector<double> comp_doubles;                 // store the doubles
 std::vector<gmp::Rational> comp_gmp_rationals;    // store the gmp rationals
 std::vector<interval> comp_our_intervals;         // store the intervals for us
 std::vector<boost_interval> comp_boost_intervals; // store the intervals for boost
 
-// define sqare root for a rational file
+// define empty function for a rational file
 gmp::Rational sqrt(const gmp::Rational &value)
+{
+    return gmp::Rational(0);
+}
+
+gmp::Rational sin(const gmp::Rational &value)
+{
+    return gmp::Rational(0);
+}
+
+gmp::Rational cos(const gmp::Rational &value)
+{
+    return gmp::Rational(0);
+}
+
+gmp::Rational exp(const gmp::Rational &value)
 {
     return gmp::Rational(0);
 }
@@ -118,6 +144,12 @@ template <class T>
 inline T square_root(const std::vector<T> &value_array)
 {
     return sqrt(value_array[0]);
+}
+
+template <class T>
+inline T exponential(const std::vector<T> &value_array)
+{
+    return exp(value_array[0]);
 }
 
 // compute the interval size and convert it to rational
@@ -333,7 +365,7 @@ inline double benchmarkTimer(std::function<void()> op)
             comp_boost_intervals[i] = boost_interval(r);                                                                                                                                                      \
         }                                                                                                                                                                                                     \
         interval our_result = METHOD<interval>(comp_our_intervals);                                                                                                                                           \
-        boost_interval boost_result = METHOD<boost_interval>(comp_boost_intervals);                                                                                                                           \
+        boost_interval boost_result = cos(comp_boost_intervals[0]);                                                                                                                                           \
         filib::fp_traits<double, filib::native_switched>::setup();                                                                                                                                            \
         std::vector<filib::interval<double, filib::native_switched, filib::i_mode_normal>> native_switched_values;                                                                                            \
         native_switched_values.resize(VARIABLE_COUNT);                                                                                                                                                        \
@@ -405,6 +437,11 @@ void comp_square_root()
     COMPUTE_GAP(square_root, "SQUARE ROOT", distribution_positive, 1, false);
 }
 
+void comp_exponential()
+{
+    COMPUTE_GAP(exponential, "EXPONENTIAL", distribution_exp, 1, false);
+}
+
 void time_addition()
 {
     SPEED_TEST(addition, "ADDITION", distribution_within_one, 2);
@@ -443,4 +480,9 @@ void time_expr3()
 void print_square_root()
 {
     PRINT_QUERIES(square_root, "Sqrt", distribution_positive, 1);
+}
+
+void print_exponential()
+{
+    PRINT_QUERIES(exponential, "Exp", distribution_exp, 1);
 }

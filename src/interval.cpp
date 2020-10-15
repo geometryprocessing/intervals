@@ -209,3 +209,9 @@ interval sqrt(const interval &v)
     interval_c result = sqrt_interval(v.val);
     return result;
 }
+
+interval exp(const interval &v)
+{
+    interval_c result = exp_interval(v.val);
+    return result;
+}

@@ -1028,11 +1028,23 @@ extern "C"
         }
     }
 
-    EXPORT interval_c sqrt_interval(const interval_c& a){
+    EXPORT interval_c sqrt_interval(const interval_c &a)
+    {
         fesetround(FE_DOWNWARD);
         double lower = sqrt(a.lower);
         fesetround(FE_UPWARD);
         double upper = sqrt(a.upper);
+        fesetround(FE_TONEAREST);
+        interval_c result = {lower, upper};
+        return result;
+    }
+
+    EXPORT interval_c exp_interval(const interval_c &a)
+    {
+        fesetround(FE_DOWNWARD);
+        double lower = exp(a.lower);
+        fesetround(FE_UPWARD);
+        double upper = exp(a.upper);
         fesetround(FE_TONEAREST);
         interval_c result = {lower, upper};
         return result;

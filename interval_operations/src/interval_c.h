@@ -120,7 +120,10 @@ extern "C" EXPORT interval_c div_interval(const interval_c &a, const interval_c 
 // sqrt(a)
 extern "C" EXPORT interval_c sqrt_interval(const interval_c &a);
 
+// compute the exponential of an interval
+// exp(a)
+extern "C" EXPORT interval_c exp_interval(const interval_c &a);
+
 // // compute the cosine of the interval_c
 // // cos(a)
 // extern "C" EXPORT interval_c cosine_interval(const interval_c &a);
-
