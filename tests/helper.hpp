@@ -1,4 +1,5 @@
 #pragma once
+
 #include "boost/numeric/interval.hpp"
 #include <gmpxx.h>
 #include <stdlib.h>
@@ -18,6 +19,12 @@
 #include <string.h>
 #include "Timer.h"
 
+namespace filib_c
+{
+#include "filib/interval.hpp"
+}
+typedef filib_c::interval fic_interval;
+
 #define SPEED_TEST_SIZE 100
 #define SPEED_TEST_LOOP 1
 
@@ -31,7 +38,7 @@ typedef boost::numeric::interval<
     double,
     boost::numeric::interval_lib::policies<
         boost::numeric::interval_lib::save_state<
-            boost::numeric::interval_lib::rounded_transc_exact<double>>,
+            boost::numeric::interval_lib::rounded_transc_std<double>>,
         interval_options::CheckingPolicy>>
     boost_interval;
 #else
@@ -193,6 +200,13 @@ void print_query(double lower, double upper, double input, std::string info)
         }                                                                                                                                                                                                     \
         interval our_result = METHOD<interval>(comp_our_intervals);                                                                                                                                           \
         boost_interval boost_result = METHOD<boost_interval>(comp_boost_intervals);                                                                                                                           \
+        std::vector<fic_interval> fic_values;                                                                                                                                                                 \
+        fic_values.resize(VARIABLE_COUNT);                                                                                                                                                                    \
+        for (int i = 0; i < VARIABLE_COUNT; i++)                                                                                                                                                              \
+        {                                                                                                                                                                                                     \
+            fic_values[i] = {comp_doubles[i], comp_doubles[i]};                                                                                                                                               \
+        }                                                                                                                                                                                                     \
+        fic_interval fic_result = METHOD<fic_interval>(fic_values);                                                                                                                                           \
         filib::fp_traits<double, filib::native_switched>::setup();                                                                                                                                            \
         std::vector<filib::interval<double, filib::native_switched, filib::i_mode_normal>> native_switched_values;                                                                                            \
         native_switched_values.resize(VARIABLE_COUNT);                                                                                                                                                        \
@@ -228,6 +242,10 @@ void print_query(double lower, double upper, double input, std::string info)
             {                                                                                                                                                                                                 \
                 printf("FAIL, %s, BOOST METHOD\n", INFO);                                                                                                                                                     \
             }                                                                                                                                                                                                 \
+            if (!within_range(fic_result.INF, fic_result.SUP, rational_result))                                                                                                                               \
+            {                                                                                                                                                                                                 \
+                printf("FAIL, %s, FILIB C\n", INFO);                                                                                                                                                          \
+            }                                                                                                                                                                                                 \
             if (!within_range(native_switched_result.inf(), native_switched_result.sup(), rational_result))                                                                                                   \
             {                                                                                                                                                                                                 \
                 printf("FAIL, %s, NATIVE SWITCHED\n", INFO);                                                                                                                                                  \
@@ -246,6 +264,9 @@ void print_query(double lower, double upper, double input, std::string info)
         printf("\n");                                                                                                                                                                                         \
         printf("GAP, %s, BOOST METHOD, ", INFO);                                                                                                                                                              \
         print_rational(interval_size(boost_result.lower(), boost_result.upper()));                                                                                                                            \
+        printf("\n");                                                                                                                                                                                         \
+        printf("GAP, %s, FILIB_C METHOD, ", INFO);                                                                                                                                                            \
+        print_rational(interval_size(fic_result.INF, fic_result.SUP));                                                                                                                                        \
         printf("\n");                                                                                                                                                                                         \
         printf("GAP, %s, NATIVE SWITCHED, ", INFO);                                                                                                                                                           \
         print_rational(interval_size(native_switched_result.inf(), native_switched_result.sup()));                                                                                                            \

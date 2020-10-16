@@ -7,14 +7,14 @@ void test_gap()
 {
     for (int i = 0; i < TEST_SIZE; i++)
     {
-        // comp_addition();
-        // comp_subtraction();
-        // comp_multiplication();
-        // comp_division();
-        // comp_expr1();
-        // comp_expr2();
-        // comp_expr3();
-        // comp_square_root();
+        comp_addition();
+        comp_subtraction();
+        comp_multiplication();
+        comp_division();
+        comp_expr1();
+        comp_expr2();
+        comp_expr3();
+        comp_square_root();
         comp_exponential();
     }
 }
