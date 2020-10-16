@@ -46,6 +46,12 @@ function(intervals_download_gmp)
     )
 endfunction()
 
+function(intervals_download_filib)
+	intervals_download_project(filib
+		GIT_REPOSITORY https://github.com/txstc55/filib
+		GIT_TAG        0979d8212ee1823e257a70a6b034d0295e057df5
+	)
+endfunction()
 
 ## Sanitizers
 function(intervals_download_sanitizers)

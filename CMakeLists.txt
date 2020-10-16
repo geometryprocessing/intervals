@@ -24,6 +24,9 @@ include(IntervalsUtils)
 # Generate position independent code by default
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+intervals_download_filib()
+add_subdirectory(${THIRD_PARTY_DIR}/filib)
+
 # add_library() can only be called without any source since CMake 3.11 ...
 add_library(intervals src/interval.cpp src/interval.hpp)
 
