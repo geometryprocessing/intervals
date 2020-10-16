@@ -84,3 +84,5 @@ if(APPLE)
             "-change" "interval_c.dylib" "@executable_path/../interval_operations/src/interval_c.dylib"
         "$<TARGET_FILE:unit_tests>" VERBATIM)
 endif()
+
+target_link_libraries(unit_tests PUBLIC filib)
