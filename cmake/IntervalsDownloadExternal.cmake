@@ -49,7 +49,7 @@ endfunction()
 function(intervals_download_filib)
 	intervals_download_project(filib
 		GIT_REPOSITORY https://github.com/txstc55/filib
-		GIT_TAG        0979d8212ee1823e257a70a6b034d0295e057df5
+		GIT_TAG        1b36c5047fd2ee27fcbb6d73deb25da7f77a6f70
 	)
 endfunction()
 
