@@ -46,6 +46,18 @@ void test_exp()
     }
 }
 
+void test_trig()
+{
+    for (int i = 0; i < TEST_SIZE; i++)
+    {
+        print_sin();
+    }
+    for (int i = 0; i < TEST_SIZE; i++)
+    {
+        print_cos();
+    }
+}
+
 int main(int argc, char *argv[])
 {
     generator.seed(13);
@@ -55,10 +67,11 @@ int main(int argc, char *argv[])
     comp_boost_intervals.resize(10);
     comp_fic_intervals.resize(10);
 
-    test_gap();
+    // test_gap();
     // test_time();
     // test_sqrt();
     // test_exp();
+    test_trig();
 
     return 0;
 }

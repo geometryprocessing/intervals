@@ -215,3 +215,19 @@ interval exp(const interval &v)
     interval_c result = exp_interval(v.val);
     return result;
 }
+
+interval sin(const interval& v){
+    if (v.lower() == v.upper()){
+        return interval(sin_downward(v.lower()), sin_upward(v.upper()));
+    }else{
+        return interval(0, 0);
+    }
+}
+
+interval cos(const interval& v){
+    if (v.lower() == v.upper()){
+        return interval(cos_downward(v.lower()), cos_upward(v.upper()));
+    }else{
+        return interval(0, 0);
+    }
+}

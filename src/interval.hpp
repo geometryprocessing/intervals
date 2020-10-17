@@ -48,4 +48,6 @@ public:
 
     friend interval sqrt(const interval &v);
     friend interval exp(const interval &v);
+    friend interval sin(const interval &v);
+    friend interval cos(const interval &v);
 };

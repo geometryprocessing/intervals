@@ -56,6 +56,7 @@ std::uniform_real_distribution<double> distribution_all_range(-RAND_MAX + 1, RAN
 std::uniform_real_distribution<double> distribution_within_one(-1, 1);
 std::uniform_real_distribution<double> distribution_positive(0, RAND_MAX);
 std::uniform_real_distribution<double> distribution_exp(-40, 40);
+std::uniform_real_distribution<double> distribution_pi_over_four(0, 41629395862109680461101929914152.0 / 53004193035072394913113926582208.0);
 
 std::vector<double> comp_doubles;                 // store the doubles
 std::vector<gmp::Rational> comp_gmp_rationals;    // store the gmp rationals
@@ -158,6 +159,18 @@ template <class T>
 inline T exponential(const std::vector<T> &value_array)
 {
     return exp(value_array[0]);
+}
+
+template <class T>
+inline T sin(const std::vector<T> &value_array)
+{
+    return sin(value_array[0]);
+}
+
+template <class T>
+inline T cos(const std::vector<T> &value_array)
+{
+    return cos(value_array[0]);
 }
 
 // compute the interval size and convert it to rational
@@ -488,4 +501,14 @@ void print_square_root()
 void print_exponential()
 {
     PRINT_QUERIES(exponential, "Exp", distribution_exp, 1);
+}
+
+void print_sin()
+{
+    PRINT_QUERIES(sin, "sin", distribution_pi_over_four, 1);
+}
+
+void print_cos()
+{
+    PRINT_QUERIES(cos, "cos", distribution_pi_over_four, 1);
 }
