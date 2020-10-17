@@ -124,9 +124,11 @@ def plot_comparisons(datas, saved_file="", system="mac"):
                     pad_inches=0, dpi=2000)
         plt.close()
 
+# datas = populate_data("build/gaps_windows.txt", system="windows")
+# plot_comparisons(datas, system="windows")
 
-# datas = populate_data("build/gaps_linux.txt", system="linux")
-# plot_comparisons([], system="linux")
+datas = populate_data("build/gaps_linux.txt", system="linux")
+plot_comparisons(datas, system="linux")
 
-datas = populate_data("build/gaps_mac_sqrt.txt", system="mac")
+datas = populate_data("build/gaps_mac.txt", system="mac")
 plot_comparisons(datas, system="mac")
