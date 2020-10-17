@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
     comp_gmp_rationals.resize(10);
     comp_our_intervals.resize(10);
     comp_boost_intervals.resize(10);
+    comp_fic_intervals.resize(10);
 
     test_gap();
     // test_time();
