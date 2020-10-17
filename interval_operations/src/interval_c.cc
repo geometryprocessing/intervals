@@ -12,6 +12,9 @@ extern "C"
 #include <fenv.h>
 #include <math.h>
 #define PI 3.1415926535897932
+    double round_up_factor = 4503599627370504.0 / 4503599627370496.0;
+    double round_down_factor = 9007199254740979.0 / 9007199254740992.0;
+
     double taylor_sin_positive[3] = {
         4803839602527639.0 / 576460752303423488.0,
         6506787178212600.0 / 2361183241434822606848.0,
@@ -134,7 +137,7 @@ extern "C"
         if (a < boundary_numbers[3])
         {
             // a is small enough we can just return itself
-            return a;
+            return round_down_factor * a;
         }
 
         // upward rounding a square
@@ -157,7 +160,7 @@ extern "C"
         if (a < boundary_numbers[3])
         {
             // a is small enough we can just return itself
-            return a;
+            return round_up_factor * a;
         }
 
         // downward rounding a square
