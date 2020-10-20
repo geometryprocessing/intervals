@@ -16,6 +16,8 @@ void test_gap()
         comp_expr3();
         comp_square_root();
         comp_exponential();
+        comp_sin();
+        comp_cos();
     }
 }
 
@@ -67,11 +69,11 @@ int main(int argc, char *argv[])
     comp_boost_intervals.resize(10);
     comp_fic_intervals.resize(10);
 
-    // test_gap();
+    test_gap();
     // test_time();
     // test_sqrt();
     // test_exp();
     // test_trig();
 
-        return 0;
+    return 0;
 }

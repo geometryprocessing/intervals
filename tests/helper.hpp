@@ -458,6 +458,16 @@ void comp_exponential()
     COMPUTE_GAP(exponential, "EXPONENTIAL", distribution_exp, 1, false);
 }
 
+void comp_sin()
+{
+    COMPUTE_GAP(sin, "SIN", distribution_exp, 1, false);
+}
+
+void comp_cos()
+{
+    COMPUTE_GAP(cos, "COS", distribution_exp, 1, false);
+}
+
 void time_addition()
 {
     SPEED_TEST(addition, "ADDITION", distribution_within_one, 2);
