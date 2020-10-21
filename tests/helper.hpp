@@ -25,8 +25,8 @@ namespace filib_c
 }
 typedef filib_c::interval fic_interval;
 
-#define SPEED_TEST_SIZE 100
-#define SPEED_TEST_LOOP 1
+#define SPEED_TEST_SIZE 1000
+#define SPEED_TEST_LOOP 10000
 
 namespace interval_options
 {
@@ -302,6 +302,7 @@ inline double benchmarkTimer(std::function<void()> op)
     {                                                                                                                                                                                                                     \
         double our_time = 0;                                                                                                                                                                                              \
         double boost_time = 0;                                                                                                                                                                                            \
+        double fic_time = 0;                                                                                                                                                                                              \
         double native_switched_time = 0;                                                                                                                                                                                  \
         double multiplicative_time = 0;                                                                                                                                                                                   \
         double pred_succ_time = 0;                                                                                                                                                                                        \
@@ -313,6 +314,7 @@ inline double benchmarkTimer(std::function<void()> op)
                 comp_doubles[j] = r;                                                                                                                                                                                      \
                 comp_our_intervals[j] = interval(r);                                                                                                                                                                      \
                 comp_boost_intervals[j] = boost_interval(r);                                                                                                                                                              \
+                comp_fic_intervals[j] = {r, r};                                                                                                                                                                           \
             }                                                                                                                                                                                                             \
             our_time += benchmarkTimer([&]() {                                                                                                                                                                            \
                 for (int j = 0; j < SPEED_TEST_LOOP; j++)                                                                                                                                                                 \
@@ -324,6 +326,12 @@ inline double benchmarkTimer(std::function<void()> op)
                 for (int j = 0; j < SPEED_TEST_LOOP; j++)                                                                                                                                                                 \
                 {                                                                                                                                                                                                         \
                     boost_interval boost_result = METHOD<boost_interval>(comp_boost_intervals);                                                                                                                           \
+                }                                                                                                                                                                                                         \
+            });                                                                                                                                                                                                           \
+            fic_time += benchmarkTimer([&]() {                                                                                                                                                                            \
+                for (int j = 0; j < SPEED_TEST_LOOP; j++)                                                                                                                                                                 \
+                {                                                                                                                                                                                                         \
+                    fic_interval fic_result = METHOD<fic_interval>(comp_fic_intervals);                                                                                                                                   \
                 }                                                                                                                                                                                                         \
             });                                                                                                                                                                                                           \
             filib::fp_traits<double, filib::native_switched>::setup();                                                                                                                                                    \
@@ -371,6 +379,9 @@ inline double benchmarkTimer(std::function<void()> op)
         printf("\n");                                                                                                                                                                                                     \
         printf("TIME, %s, BOOST METHOD, ", INFO);                                                                                                                                                                         \
         printf("%lf", boost_time);                                                                                                                                                                                        \
+        printf("\n");                                                                                                                                                                                                     \
+        printf("TIME, %s, FILIB C, ", INFO);                                                                                                                                                                              \
+        printf("%lf", fic_time);                                                                                                                                                                                          \
         printf("\n");                                                                                                                                                                                                     \
         printf("TIME, %s, NATIVE SWITCHED, ", INFO);                                                                                                                                                                      \
         printf("%lf", native_switched_time);                                                                                                                                                                              \
@@ -501,6 +512,11 @@ void time_expr2()
 void time_expr3()
 {
     SPEED_TEST(expr3, "COMPOSITE EXPRESSION 3", distribution_within_one, 10);
+}
+
+void time_sin()
+{
+    SPEED_TEST(sin, "SIN", distribution_pi_over_four, 1);
 }
 
 void print_square_root()

@@ -30,6 +30,7 @@ void test_time()
     time_expr1();
     time_expr2();
     time_expr3();
+    time_sin();
 }
 
 void test_sqrt()
@@ -69,8 +70,8 @@ int main(int argc, char *argv[])
     comp_boost_intervals.resize(10);
     comp_fic_intervals.resize(10);
 
-    test_gap();
-    // test_time();
+    // test_gap();
+    test_time();
     // test_sqrt();
     // test_exp();
     // test_trig();
