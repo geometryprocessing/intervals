@@ -1,0 +1,24 @@
+TIME, ADDITION, OUR METHOD, 3363048.000000, 4.934028x time that filib c version took
+TIME, ADDITION, BOOST METHOD, 2880597.000000, 4.226209x time that filib c version took
+TIME, ADDITION, FILIB C, 681603.000000, 1.000000x time that filib c version took
+TIME, SUBTRACTION, OUR METHOD, 3354916.000000, 5.188252x time that filib c version took
+TIME, SUBTRACTION, BOOST METHOD, 2874411.000000, 4.445169x time that filib c version took
+TIME, SUBTRACTION, FILIB C, 646637.000000, 1.000000x time that filib c version took
+TIME, MULTIPLICATION, OUR METHOD, 3570279.000000, 4.049960x time that filib c version took
+TIME, MULTIPLICATION, BOOST METHOD, 3152569.000000, 3.576129x time that filib c version took
+TIME, MULTIPLICATION, FILIB C, 881559.000000, 1.000000x time that filib c version took
+TIME, DIVISION, OUR METHOD, 3700143.000000, 3.754623x time that filib c version took
+TIME, DIVISION, BOOST METHOD, 3757960.000000, 3.813291x time that filib c version took
+TIME, DIVISION, FILIB C, 985490.000000, 1.000000x time that filib c version took
+TIME, COMPOSITE EXPRESSION 1, OUR METHOD, 32436618.000000, 3.408160x time that filib c version took
+TIME, COMPOSITE EXPRESSION 1, BOOST METHOD, 30006226.000000, 3.152795x time that filib c version took
+TIME, COMPOSITE EXPRESSION 1, FILIB C, 9517340.000000, 1.000000x time that filib c version took
+TIME, COMPOSITE EXPRESSION 2, OUR METHOD, 48696445.000000, 3.780114x time that filib c version took
+TIME, COMPOSITE EXPRESSION 2, BOOST METHOD, 42062012.000000, 3.265109x time that filib c version took
+TIME, COMPOSITE EXPRESSION 2, FILIB C, 12882269.000000, 1.000000x time that filib c version took
+TIME, COMPOSITE EXPRESSION 3, OUR METHOD, 64970806.000000, 3.535054x time that filib c version took
+TIME, COMPOSITE EXPRESSION 3, BOOST METHOD, 65174687.000000, 3.546147x time that filib c version took
+TIME, COMPOSITE EXPRESSION 3, FILIB C, 18379016.000000, 1.000000x time that filib c version took
+TIME, SIN, OUR METHOD, 15755480.000000, 5.710113x time that filib c version took
+TIME, SIN, BOOST METHOD, 23485081.000000, 8.511480x time that filib c version took
+TIME, SIN, FILIB C, 2759224.000000, 1.000000x time that filib c version took
