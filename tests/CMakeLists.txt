@@ -8,6 +8,7 @@ set(test_sources
     Rational.h
     helper.hpp
     Timer.h
+    macro_functions.hpp
 )
 
 include(CheckCXXCompilerFlag)
