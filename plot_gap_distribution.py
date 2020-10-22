@@ -98,6 +98,11 @@ def plot_comparisons(datas, saved_file="", system="mac"):
             comp = datas[test][method]
             total_count = sum(comp)
             comp = [float(x)*1.0 / total_count for x in comp]
+            for j in range(6):
+                sum_percentage  = 0
+                for k in range(10):
+                    sum_percentage +=comp[j*10+k]
+                print("%s, %s, %d~%d: %f"%(test, method_names[i], j, j+1, sum_percentage*100))
             bar = plt.bar(bins, comp, label=method +
                           " / " + method_names[0], color=colors[i-1], alpha=0.8, width=0.1)
             rect = bar[-1]
@@ -106,7 +111,7 @@ def plot_comparisons(datas, saved_file="", system="mac"):
                 # print(comp[-1])
                 plt.text(rect.get_x() + rect.get_width()/2.0, height,
                          ('%s:\n%f' % (method, comp[-1] * 100)).rstrip('0').rstrip('.')+"%"+"\n\n"*outlier_count, ha='center', va='bottom')
-                outlier_count+=1
+                outlier_count += 1
             # plt.hist(comp, bins = bins, label=method +
             #          " / " + method_names[0], color=colors[i-1], alpha=0.8)
             plt.legend()
@@ -127,8 +132,12 @@ def plot_comparisons(datas, saved_file="", system="mac"):
 # datas = populate_data("build/gaps_windows.txt", system="windows")
 # plot_comparisons(datas, system="windows")
 
-datas = populate_data("build/gaps_linux.txt", system="linux")
-plot_comparisons(datas, system="linux")
+# datas = populate_data("build/gaps_linux.txt", system="linux")
+# plot_comparisons(datas, system="linux")
 
-datas = populate_data("build/gaps_mac.txt", system="mac")
+# datas = populate_data("build/gaps_mac.txt", system="mac")
+# plot_comparisons(datas, system="mac")
+
+
+datas = populate_data("build/gaps_sin_mac.txt", system="sin_mac")
 plot_comparisons(datas, system="mac")
