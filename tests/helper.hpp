@@ -4,7 +4,7 @@
 #include <gmpxx.h>
 #include <stdlib.h>
 #include "../src/interval.hpp"
-#include "interval/interval.hpp"
+
 #include <random>
 #include "Rational.h"
 #include <cmath>
