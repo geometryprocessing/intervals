@@ -82,7 +82,7 @@ void read_to_ratioanl_list(std::string file_name)
 {
     std::ifstream infile(file_name);
     std::string rational_string;
-    while (infile >> rational_string)
+    while (infile >> rational_string && all_used_rationals.size() < 1001)
     {
         mpq_t rational;
         mpq_set_str(rational, rational_string.c_str(), 10);

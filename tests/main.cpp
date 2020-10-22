@@ -1,6 +1,6 @@
 #include "helper.hpp"
 #include "../src/interval.hpp"
-#define TEST_SIZE 10000000
+#define TEST_SIZE 1000
 using namespace std;
 
 void test_gap()
