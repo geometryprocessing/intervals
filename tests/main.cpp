@@ -1,6 +1,6 @@
 #include "helper.hpp"
 #include "../src/interval.hpp"
-#define TEST_SIZE 100000000
+#define TEST_SIZE 10000000
 using namespace std;
 
 void test_gap()
@@ -71,10 +71,11 @@ int main(int argc, char *argv[])
     comp_fic_intervals.resize(10);
 
     // test_gap();
-    test_time();
+    // test_time();
     // test_sqrt();
     // test_exp();
     // test_trig();
+    
 
     return 0;
 }

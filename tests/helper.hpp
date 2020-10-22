@@ -64,7 +64,10 @@ std::vector<gmp::Rational> comp_gmp_rationals;    // store the gmp rationals
 std::vector<interval> comp_our_intervals;         // store the intervals for us
 std::vector<boost_interval> comp_boost_intervals; // store the intervals for boost
 std::vector<fic_interval> comp_fic_intervals;     // store the intervals for filib c implementation
-std::vector<gmp::Rational> all_used_rationals;    // store all the rationals that will be used
+
+std::vector<gmp::Rational> all_used_rationals; // store all the rationals that will be used
+int global_used_rational_index = 0;            // to use the rationals stored
+int local_used_rational_index = 0;             // to use the rationals stored
 
 // define empty function for a rational file
 gmp::Rational sqrt(const gmp::Rational &value)
@@ -90,8 +93,14 @@ gmp::Rational exp(const gmp::Rational &value)
 // return a random double
 double random_double(std::uniform_real_distribution<double> distribution)
 {
+#ifdef USE_SYSTEM_RANDOM
     double number = distribution(generator);
     return number;
+#else
+    gmp::Rational recoreded_rat = all_used_rationals[global_used_rational_index + local_used_rational_index];
+    local_used_rational_index++;
+    return recorded_rat.to_double();
+#endif
 }
 
 // check if the rational is within the range
@@ -203,8 +212,6 @@ void print_query(double lower, double upper, double input, std::string info)
     printf("\n");
 }
 
-
-
 inline double benchmarkTimer(std::function<void()> op)
 {
     igl::Timer t;
@@ -213,10 +220,6 @@ inline double benchmarkTimer(std::function<void()> op)
     t.stop();
     return t.getElapsedTimeInMicroSec();
 }
-
-
-
-
 
 void comp_addition()
 {
