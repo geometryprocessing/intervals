@@ -14,10 +14,10 @@ void test_gap()
         comp_expr1();
         comp_expr2();
         comp_expr3();
-        comp_square_root();
-        comp_exponential();
+        // comp_square_root();
+        // comp_exponential();
         comp_sin();
-        comp_cos();
+        // comp_cos();
     }
 }
 
@@ -69,13 +69,15 @@ int main(int argc, char *argv[])
     comp_our_intervals.resize(10);
     comp_boost_intervals.resize(10);
     comp_fic_intervals.resize(10);
+#ifndef USE_SYSTEM_RANDOM
+    read_to_ratioanl_list("../numbers.txt");
+#endif
 
-    // test_gap();
+    test_gap();
     // test_time();
     // test_sqrt();
     // test_exp();
     // test_trig();
-    
 
     return 0;
 }

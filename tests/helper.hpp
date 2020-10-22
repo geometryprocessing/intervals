@@ -19,6 +19,7 @@
 #include <string.h>
 #include "Timer.h"
 #include "macro_functions.hpp"
+#include <fstream>
 
 namespace filib_c
 {
@@ -69,6 +70,27 @@ std::vector<gmp::Rational> all_used_rationals; // store all the rationals that w
 int global_used_rational_index = 0;            // to use the rationals stored
 int local_used_rational_index = 0;             // to use the rationals stored
 
+double random_double(std::uniform_real_distribution<double> distribution);    // generate a random double based on distribution, or return a pre recorded double
+bool within_range(double lower, double upper, gmp::Rational rational_result); // check if a rational is within range of lower and upper
+gmp::Rational interval_size(double lower, double upper);                      // return the interval size in rational
+void print_rational(gmp::Rational r);                                         // print the rational
+void read_to_ratioanl_list(std::string file_name);                            // read a file that contains number used for doing tests
+void print_query(double lower, double upper, double input, std::string info); // print a query used for checking in mathematica
+inline double benchmarkTimer(std::function<void()> op);                       // a benchmark timer
+
+void read_to_ratioanl_list(std::string file_name)
+{
+    std::ifstream infile(file_name);
+    std::string rational_string;
+    while (infile >> rational_string)
+    {
+        mpq_t rational;
+        mpq_set_str(rational, rational_string.c_str(), 10);
+        gmp::Rational rat(rational);
+        all_used_rationals.push_back(rat);
+    }
+}
+
 // define empty function for a rational file
 gmp::Rational sqrt(const gmp::Rational &value)
 {
@@ -97,13 +119,17 @@ double random_double(std::uniform_real_distribution<double> distribution)
     double number = distribution(generator);
     return number;
 #else
-    gmp::Rational recoreded_rat = all_used_rationals[global_used_rational_index + local_used_rational_index];
+    if (global_used_rational_index + local_used_rational_index >= all_used_rationals.size())
+    {
+        global_used_rational_index = 0;
+        local_used_rational_index = 0;
+    }
+    gmp::Rational recorded_rat = all_used_rationals[global_used_rational_index + local_used_rational_index];
     local_used_rational_index++;
     return recorded_rat.to_double();
 #endif
 }
 
-// check if the rational is within the range
 bool within_range(double lower, double upper, gmp::Rational rational_result)
 {
     gmp::Rational lower_rat = gmp::Rational(lower);

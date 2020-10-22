@@ -14,6 +14,7 @@
             comp_fic_intervals[i] = {r, r};                                                                                                                                                                   \
         }                                                                                                                                                                                                     \
         local_used_rational_index = 0;                                                                                                                                                                        \
+        global_used_rational_index++;                                                                                                                                                                         \
         interval our_result = METHOD<interval>(comp_our_intervals);                                                                                                                                           \
         boost_interval boost_result = METHOD<boost_interval>(comp_boost_intervals);                                                                                                                           \
         fic_interval fic_result = METHOD<fic_interval>(comp_fic_intervals);                                                                                                                                   \
@@ -102,6 +103,7 @@
             comp_fic_intervals[i] = {r, r};                                                 \
         }                                                                                   \
         local_used_rational_index = 0;                                                      \
+        global_used_rational_index++;                                                       \
         interval our_result = METHOD<interval>(comp_our_intervals);                         \
         boost_interval boost_result = METHOD<boost_interval>(comp_boost_intervals);         \
         fic_interval fic_result = METHOD<fic_interval>(comp_fic_intervals);                 \
@@ -154,6 +156,7 @@
                 comp_fic_intervals[j] = {r, r};                                                                                                                                                                           \
             }                                                                                                                                                                                                             \
             local_used_rational_index = 0;                                                                                                                                                                                \
+            global_used_rational_index++;                                                                                                                                                                                 \
             our_time += benchmarkTimer([&]() {                                                                                                                                                                            \
                 for (int j = 0; j < SPEED_TEST_LOOP; j++)                                                                                                                                                                 \
                 {                                                                                                                                                                                                         \
@@ -252,6 +255,7 @@
                 comp_fic_intervals[j] = {r, r};                                                 \
             }                                                                                   \
             local_used_rational_index = 0;                                                      \
+            global_used_rational_index++;                                                       \
             our_time += benchmarkTimer([&]() {                                                  \
                 for (int j = 0; j < SPEED_TEST_LOOP; j++)                                       \
                 {                                                                               \
@@ -299,6 +303,7 @@
             comp_fic_intervals[i] = {r, r};                                                                                                                                                             \
         }                                                                                                                                                                                               \
         local_used_rational_index = 0;                                                                                                                                                                  \
+        global_used_rational_index++;                                                                                                                                                                   \
         interval our_result = METHOD<interval>(comp_our_intervals);                                                                                                                                     \
         boost_interval boost_result = METHOD<boost_interval>(comp_boost_intervals);                                                                                                                     \
         fic_interval fic_result = METHOD<fic_interval>(comp_fic_intervals);                                                                                                                             \
@@ -328,6 +333,7 @@
             comp_fic_intervals[i] = {r, r};                                             \
         }                                                                               \
         local_used_rational_index = 0;                                                  \
+        global_used_rational_index++;                                                   \
         interval our_result = METHOD<interval>(comp_our_intervals);                     \
         boost_interval boost_result = METHOD<boost_interval>(comp_boost_intervals);     \
         fic_interval fic_result = METHOD<fic_interval>(comp_fic_intervals);             \
