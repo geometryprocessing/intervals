@@ -79,6 +79,9 @@ target_link_libraries(unit_tests PUBLIC ${prim})
 find_package(Boost REQUIRED)
 target_link_libraries(unit_tests PUBLIC Boost::boost)
 
+## link highfive for hdf5 file writing and reading
+target_link_libraries(unit_tests PUBLIC HighFive)
+
 
 if(APPLE)
     add_custom_command (TARGET unit_tests

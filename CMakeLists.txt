@@ -24,8 +24,13 @@ include(IntervalsUtils)
 # Generate position independent code by default
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+## download c version of filib for testing
 intervals_download_filib()
 add_subdirectory(${THIRD_PARTY_DIR}/filib)
+
+## download highfive for reading hdf5 files
+intervals_download_highfive()
+add_subdirectory(${THIRD_PARTY_DIR}/highfive)
 
 # add_library() can only be called without any source since CMake 3.11 ...
 add_library(intervals src/interval.cpp src/interval.hpp)

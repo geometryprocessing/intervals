@@ -21,6 +21,9 @@
 #include "macro_functions.hpp"
 #include <fstream>
 
+#include <highfive/H5Easy.hpp>
+#include <highfive/H5File.hpp>
+
 namespace filib_c
 {
 #include "filib/interval.hpp"

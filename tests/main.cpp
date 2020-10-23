@@ -2,7 +2,7 @@
 #include "../src/interval.hpp"
 #define TEST_SIZE 1000
 using namespace std;
-
+using namespace HighFive;
 void test_gap()
 {
     for (int i = 0; i < TEST_SIZE; i++)
@@ -70,7 +70,14 @@ int main(int argc, char *argv[])
     comp_boost_intervals.resize(10);
     comp_fic_intervals.resize(10);
 #ifndef USE_SYSTEM_RANDOM
-    read_to_ratioanl_list("../numbers.txt");
+    File file("numbers.h5", File::ReadOnly);
+    std::vector<double> double_vector;
+    double_vector = H5Easy::load<vector<double>>(file, "/dataset_large");
+    for (int i = 0; i < double_vector.size(); i++)
+    {
+        all_used_rationals.push_back(double_vector[i]);
+    }
+    double_vector.clear();
 #endif
 
     test_gap();

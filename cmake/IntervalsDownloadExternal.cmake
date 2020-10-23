@@ -46,10 +46,17 @@ function(intervals_download_gmp)
     )
 endfunction()
 
+## download c version of filib
 function(intervals_download_filib)
 	intervals_download_project(filib
 		GIT_REPOSITORY https://github.com/txstc55/filib
 		GIT_TAG        1b36c5047fd2ee27fcbb6d73deb25da7f77a6f70
+	)
+endfunction()
+
+function(intervals_download_highfive)
+	intervals_download_project(highfive
+		GIT_REPOSITORY https://github.com/BlueBrain/HighFive	
 	)
 endfunction()
 
