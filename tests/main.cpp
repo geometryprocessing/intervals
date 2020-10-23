@@ -1,6 +1,6 @@
 #include "helper.hpp"
 #include "../src/interval.hpp"
-#define TEST_SIZE 1000
+#define TEST_SIZE 10000000
 using namespace std;
 using namespace HighFive;
 void test_gap()
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     comp_boost_intervals.resize(10);
     comp_fic_intervals.resize(10);
 #ifndef USE_SYSTEM_RANDOM
-    File file("numbers.h5", File::ReadOnly);
+    File file("../numbers.h5", File::ReadOnly);
     std::vector<double> double_vector;
     double_vector = H5Easy::load<vector<double>>(file, "/dataset_large");
     for (int i = 0; i < double_vector.size(); i++)
