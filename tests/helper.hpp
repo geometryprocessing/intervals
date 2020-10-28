@@ -1,9 +1,9 @@
 #pragma once
-
-#include "boost/numeric/interval.hpp"
-#include <gmpxx.h>
-#include <stdlib.h>
 #include "../src/interval.hpp"
+
+#include <gmpxx.h>
+
+
 #include <functional>
 #include <random>
 #include "Rational.h"
@@ -12,7 +12,6 @@
 #include <iomanip>
 #include <cmath>
 #include <string>
-#include <fenv.h>
 #include <vector>
 #include <fstream>
 #include <stdio.h>
@@ -24,37 +23,13 @@
 #include <highfive/H5Easy.hpp>
 #include <highfive/H5File.hpp>
 
-namespace filib_c
-{
-#include "filib/interval.hpp"
-}
-typedef filib_c::interval fic_interval;
+
 
 #define SPEED_TEST_SIZE 1000
 #define SPEED_TEST_LOOP 10000
 
-namespace interval_options
-{
-    typedef boost::numeric::interval_lib::checking_base<double> CheckingPolicy;
-} // namespace interval_options
 
-#if defined(__APPLE__)
-typedef boost::numeric::interval<
-    double,
-    boost::numeric::interval_lib::policies<
-        boost::numeric::interval_lib::save_state<
-            boost::numeric::interval_lib::rounded_transc_std<double>>,
-        interval_options::CheckingPolicy>>
-    boost_interval;
-#else
-typedef boost::numeric::interval<
-    double,
-    boost::numeric::interval_lib::policies<
-        boost::numeric::interval_lib::save_state<
-            boost::numeric::interval_lib::rounded_transc_std<double>>,
-        interval_options::CheckingPolicy>>
-    boost_interval;
-#endif
+
 
 std::default_random_engine generator;
 std::uniform_real_distribution<double> distribution_all_range(-RAND_MAX + 1, RAND_MAX);
@@ -65,7 +40,6 @@ std::uniform_real_distribution<double> distribution_pi_over_four(0, 416293958621
 
 std::vector<double> comp_doubles;                 // store the doubles
 std::vector<gmp::Rational> comp_gmp_rationals;    // store the gmp rationals
-std::vector<interval> comp_our_intervals;         // store the intervals for us
 std::vector<boost_interval> comp_boost_intervals; // store the intervals for boost
 std::vector<fic_interval> comp_fic_intervals;     // store the intervals for filib c implementation
 
@@ -94,26 +68,6 @@ void read_to_ratioanl_list(std::string file_name)
     }
 }
 
-// define empty function for a rational file
-gmp::Rational sqrt(const gmp::Rational &value)
-{
-    return gmp::Rational(0);
-}
-
-gmp::Rational sin(const gmp::Rational &value)
-{
-    return gmp::Rational(0);
-}
-
-gmp::Rational cos(const gmp::Rational &value)
-{
-    return gmp::Rational(0);
-}
-
-gmp::Rational exp(const gmp::Rational &value)
-{
-    return gmp::Rational(0);
-}
 
 // return a random double
 double random_double(std::uniform_real_distribution<double> distribution)
@@ -252,57 +206,57 @@ inline double benchmarkTimer(std::function<void()> op)
 
 void comp_addition()
 {
-    COMPUTE_GAP(addition, "ADDITION", distribution_within_one, 2, true);
+    COMPUTE_GAP(addition, "ADDITION", distribution_within_one, 2);
 }
 
 void comp_subtraction()
 {
-    COMPUTE_GAP(subtraction, "SUBTRACTION", distribution_within_one, 2, true);
+    COMPUTE_GAP(subtraction, "SUBTRACTION", distribution_within_one, 2);
 }
 
 void comp_multiplication()
 {
-    COMPUTE_GAP(multiplication, "MULTIPLICATION", distribution_within_one, 2, true);
+    COMPUTE_GAP(multiplication, "MULTIPLICATION", distribution_within_one, 2);
 }
 
 void comp_division()
 {
-    COMPUTE_GAP(division, "DIVISION", distribution_within_one, 2, true);
+    COMPUTE_GAP(division, "DIVISION", distribution_within_one, 2);
 }
 
 void comp_expr1()
 {
-    COMPUTE_GAP(expr1, "COMPOSITE EXPRESSION 1", distribution_within_one, 10, true);
+    COMPUTE_GAP(expr1, "COMPOSITE EXPRESSION 1", distribution_within_one, 10);
 }
 
 void comp_expr2()
 {
-    COMPUTE_GAP(expr2, "COMPOSITE EXPRESSION 2", distribution_within_one, 10, true);
+    COMPUTE_GAP(expr2, "COMPOSITE EXPRESSION 2", distribution_within_one, 10);
 }
 
 void comp_expr3()
 {
-    COMPUTE_GAP(expr3, "COMPOSITE EXPRESSION 3", distribution_within_one, 10, true);
+    COMPUTE_GAP(expr3, "COMPOSITE EXPRESSION 3", distribution_within_one, 10);
 }
 
 void comp_square_root()
 {
-    COMPUTE_GAP(square_root, "SQUARE ROOT", distribution_positive, 1, false);
+    COMPUTE_GAP(square_root, "SQUARE ROOT", distribution_positive, 1);
 }
 
 void comp_exponential()
 {
-    COMPUTE_GAP(exponential, "EXPONENTIAL", distribution_exp, 1, false);
+    COMPUTE_GAP(exponential, "EXPONENTIAL", distribution_exp, 1);
 }
 
 void comp_sin()
 {
-    COMPUTE_GAP(sin, "SIN", distribution_exp, 1, false);
+    COMPUTE_GAP(sin, "SIN", distribution_exp, 1);
 }
 
 void comp_cos()
 {
-    COMPUTE_GAP(cos, "COS", distribution_exp, 1, false);
+    COMPUTE_GAP(cos, "COS", distribution_exp, 1);
 }
 
 void time_addition()

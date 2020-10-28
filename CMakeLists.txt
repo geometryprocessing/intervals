@@ -12,6 +12,11 @@ else()
 endif()
 
 set (CMAKE_CXX_STANDARD 11)
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-march=native" COMPILER_SUPPORTS_MARCH_NATIVE)
+if(COMPILER_SUPPORTS_MARCH_NATIVE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
+endif()
 
 
 ## include the cmake directory
@@ -30,7 +35,11 @@ add_subdirectory(${THIRD_PARTY_DIR}/filib)
 
 ## download highfive for reading hdf5 files
 intervals_download_highfive()
+set(HIGHFIVE_UNIT_TESTS OFF CACHE BOOL "Enable unit tests")
+set(HIGHFIVE_EXAMPLES OFF CACHE BOOL "Compile examples")
 add_subdirectory(${THIRD_PARTY_DIR}/highfive)
+
+
 
 # add_library() can only be called without any source since CMake 3.11 ...
 add_library(intervals src/interval.cpp src/interval.hpp)
@@ -42,6 +51,18 @@ target_include_directories(intervals PUBLIC ${PROJECT_BINARY_DIR}/include)
 
 target_compile_features(intervals PUBLIC ${CXX14_FEATURES})
 target_include_directories(intervals PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/)
+
+# add boost library for interval
+find_package(Boost REQUIRED)
+target_link_libraries(intervals PUBLIC Boost::boost)
+
+# add filib c++ library for interval
+find_library(prim prim "/usr/local/lib")
+message("filib LIBRARY = ${prim}")
+target_link_libraries(intervals PUBLIC ${prim})
+
+# add filib c version for interval
+target_link_libraries(intervals PUBLIC filib)
 
 if(INTERVALS_TOPLEVEL_PROJECT)
 	# Unit tests

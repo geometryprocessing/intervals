@@ -66,7 +66,6 @@ int main(int argc, char *argv[])
     generator.seed(13);
     comp_doubles.resize(10);
     comp_gmp_rationals.resize(10);
-    comp_our_intervals.resize(10);
     comp_boost_intervals.resize(10);
     comp_fic_intervals.resize(10);
 #ifndef USE_SYSTEM_RANDOM

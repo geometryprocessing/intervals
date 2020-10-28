@@ -1,53 +1,44 @@
+// any implementation of interval you want to do
+// you can do it here
+// alternatively you can also link link libraries and define the type here
 #pragma once
-#include "interval_c.h"
-#include <tuple>
+#include <stdlib.h>
+#include <functional>
+#include <random>
 
-class interval
+// include filib c version interval
+// do not change the order, always put this one first
+// otherwise there gonna be some error
+// and id rather not deal with those errors
+#include "filib/interval.hpp"
+typedef interval fic_interval;
+
+// include boost interval
+#include "boost/numeric/interval.hpp"
+namespace interval_options
 {
-private:
-    interval_c val;                  // the lower c level interval that we implemented
-    interval(const interval_c &val); // init with lower level interval
+    typedef boost::numeric::interval_lib::checking_base<double> CheckingPolicy;
+} // namespace interval_options
+#if defined(__APPLE__)
+typedef boost::numeric::interval<
+    double,
+    boost::numeric::interval_lib::policies<
+        boost::numeric::interval_lib::save_state<
+            boost::numeric::interval_lib::rounded_transc_std<double>>,
+        interval_options::CheckingPolicy>>
+    boost_interval;
+#else
+typedef boost::numeric::interval<
+    double,
+    boost::numeric::interval_lib::policies<
+        boost::numeric::interval_lib::save_state<
+            boost::numeric::interval_lib::rounded_transc_std<double>>,
+        interval_options::CheckingPolicy>>
+    boost_interval;
+#endif
 
-public:
-    interval();                           // empty init
-    interval(double lower, double upper); // init with upper and lower
-    interval(const interval &val);        // init with anther interval
-    interval(double val);                 // init with one double
-    double lower() const;                 // return the lower
-    double upper() const;                 // return the upper
-    interval_c c_interval_val() const;    // return interval struct we implemented in c
-
-    // operations
-    interval operator+(const interval &v) const;
-    interval operator-(const interval &v) const;
-    interval operator*(const interval &v) const;
-    interval operator/(const interval &v) const;
-    interval operator+(double v) const;
-    interval operator-(double v) const;
-    interval operator*(double v) const;
-    interval operator/(double v) const;
-
-    interval operator+=(const interval &v);
-    interval operator-=(const interval &v);
-    interval operator*=(const interval &v);
-    interval operator/=(const interval &v);
-    interval operator+=(double v);
-    interval operator-=(double v);
-    interval operator*=(double v);
-    interval operator/=(double v);
-
-    friend interval operator+(double v, const interval &n);
-    friend interval operator-(double v, const interval &n);
-    friend interval operator*(double v, const interval &n);
-    friend interval operator/(double v, const interval &n);
-
-    double width();                                                 // return the width of the interval
-    friend double width(const interval &n);                         // return the width of the interval
-    friend bool zero_in(const interval &n);                         // return if zero is inside the interval
-    friend std::pair<interval, interval> bisect(const interval &n); // bisect the interval to two parts
-
-    friend interval sqrt(const interval &v);
-    friend interval exp(const interval &v);
-    friend interval sin(const interval &v);
-    friend interval cos(const interval &v);
-};
+// include filib c++ version interval
+#define USE_FILIB_PLUSPLUS // weather we will use the filib plus plus version
+#ifdef USE_FILIB_PLUSPLUS
+#include "interval/interval.hpp"
+#endif
