@@ -29,28 +29,29 @@ include(IntervalsUtils)
 # Generate position independent code by default
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+# add_library() can only be called without any source since CMake 3.11 ...
+add_library(intervals src/interval.cpp src/interval.hpp src/flags.hpp src/helper_functions.hpp src/Rational.h src/Timer.h src/methods.hpp)
+
+# Public include directory for the project
+target_include_directories(intervals PUBLIC ${PROJECT_BINARY_DIR}/include)
+target_compile_features(intervals PUBLIC ${CXX14_FEATURES})
+
 ## download c version of filib for testing
 intervals_download_filib()
 add_subdirectory(${THIRD_PARTY_DIR}/filib)
+target_link_libraries(intervals PUBLIC filib)
 
 ## download highfive for reading hdf5 files
 intervals_download_highfive()
 set(HIGHFIVE_UNIT_TESTS OFF CACHE BOOL "Enable unit tests")
 set(HIGHFIVE_EXAMPLES OFF CACHE BOOL "Compile examples")
 add_subdirectory(${THIRD_PARTY_DIR}/highfive)
+target_link_libraries(intervals PUBLIC HighFive)
 
 
 
-# add_library() can only be called without any source since CMake 3.11 ...
-add_library(intervals src/interval.cpp src/interval.hpp)
 
 
-# Public include directory for the project
-target_include_directories(intervals PUBLIC ${PROJECT_BINARY_DIR}/include)
-
-
-target_compile_features(intervals PUBLIC ${CXX14_FEATURES})
-target_include_directories(intervals PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/interval_operations/src/)
 
 # add boost library for interval
 find_package(Boost REQUIRED)
@@ -58,11 +59,25 @@ target_link_libraries(intervals PUBLIC Boost::boost)
 
 # add filib c++ library for interval
 find_library(prim prim "/usr/local/lib")
-message("filib LIBRARY = ${prim}")
-target_link_libraries(intervals PUBLIC ${prim})
+if (NOT prim)
+else()
+	add_definitions(-DUSE_FILIB_PLUSPLUS)
+	message("filib++ LIBRARY = ${prim}")
+	target_link_libraries(intervals PUBLIC ${prim})
+endif()
 
-# add filib c version for interval
-target_link_libraries(intervals PUBLIC filib)
+
+
+# use GMP library to ensure query outputs are in rationals
+find_package(GMP REQUIRED)
+INCLUDE_DIRECTORIES(
+    "${GMP_INCLUDES}"
+)
+message("GMP LIBRARY = ${GMP_LIBRARIES}")
+target_link_libraries(intervals PUBLIC ${GMP_LIBRARIES})
+
+
+
 
 if(INTERVALS_TOPLEVEL_PROJECT)
 	# Unit tests
