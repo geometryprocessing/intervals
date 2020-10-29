@@ -26,7 +26,7 @@ std::default_random_engine generator;
 std::uniform_real_distribution<double> distribution_all_range(-RAND_MAX + 1, RAND_MAX);
 std::uniform_real_distribution<double> distribution_within_one(-1, 1);
 std::uniform_real_distribution<double> distribution_positive(0, RAND_MAX);
-std::uniform_real_distribution<double> distribution_exp(-40, 40);
+std::uniform_real_distribution<double> distribution_exp(-700, 700);
 std::uniform_real_distribution<double> distribution_pi_over_four(0, 41629395862109680461101929914152.0 / 53004193035072394913113926582208.0);
 
 std::vector<double> comp_doubles;              // store the doubles
@@ -161,7 +161,7 @@ inline double benchmarkTimer(std::function<void()> op)
             used_variables[i] = INTERVAL(comp_doubles[i]);          \
         }                                                           \
         TIMER += benchmarkTimer([&]() {                             \
-            for (int j = 0; j < SPEED_TEST_LOOP; j++)               \
+            for (int j = 0; j < SPEED_TEST_SIZE; j++)               \
             {                                                       \
                 INTERVAL result = METHOD<INTERVAL>(used_variables); \
             }                                                       \

@@ -27,6 +27,7 @@ else()
 endif()
 
 add_subdirectory("speed")
+add_subdirectory("gap")
 
 
 
