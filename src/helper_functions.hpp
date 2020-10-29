@@ -115,6 +115,11 @@ inline double benchmarkTimer(std::function<void()> op)
 }
 
 // a macro function to fill up the doubles we need, as well as the rationals being used
+// INPUT =>
+// DISTRIBUTION:   the range of within which the random generator will pick numbers from
+// VARIABLE_COUNT: the number of variables need to be filled
+// OUTPUT =>
+// the random number and their corresponding rantional version will be stored in two arrays
 #define PRE_FILL_RANDOM_DOUBLES(DISTRIBUTION, VARIABLE_COUNT)   \
     do                                                          \
     {                                                           \
@@ -137,6 +142,14 @@ inline double benchmarkTimer(std::function<void()> op)
     } while (0)
 
 // print out the gap of the interval
+// INPUT =>
+// INTERVAL:       the type of interval using this method
+// TYPE_NAME:      the name of the interval type
+// METHOD:         the method we are running, composit expression, sin, cos etc
+// INFO:           the method name
+// VARIABLE_COUNT: the number of variables needed for this computation
+// OUTPUT =>
+// print out the gap for this interval type for this method
 #define COMPUTE_GAP(INTERVAL, TYPE_NAME, METHOD, INFO, VARIABLE_COUNT) \
     do                                                                 \
     {                                                                  \
@@ -152,6 +165,14 @@ inline double benchmarkTimer(std::function<void()> op)
     } while (0)
 
 // accumulate the time for doing a method
+// INPUT =>
+// INTERVAL:       the type of interval using this method
+// METHOD:         the method we are running, composit expression, sin, cos etc
+// VARIABLE_COUNT: the number of variables needed for this computation
+// TIMER:          the double number recording the accumulated time in micro seconds
+// OUTPUT =>
+// the time will be accumulated by TIMER variable, user should decide what to do what the time
+// to print or to factor by number of runs, whatever the user choose
 #define COMPUTE_TIME(INTERVAL, METHOD, VARIABLE_COUNT, TIMER)       \
     do                                                              \
     {                                                               \
@@ -169,6 +190,13 @@ inline double benchmarkTimer(std::function<void()> op)
     } while (0)
 
 // print the result as a query which can be checked in mathematica
+// INPUT =>
+// INTERVAL:       the type of interval using this method
+// METHOD:         the method we are running, composit expression, sin, cos etc
+// VARIABLE_COUNT: the number of variables needed for this computation
+// PRINT_METHOD:   the printing of the method we use, should be one to one correspondent and defined in methods.hpp
+// OUTPUT =>
+// The query will be printed out and this query can be used for checking correctness
 #define PRINT_QUERIES(INTERVAL, METHOD, VARIABLE_COUNT, PRINT_METHOD)                \
     do                                                                               \
     {                                                                                \
