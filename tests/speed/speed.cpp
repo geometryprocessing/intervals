@@ -4,6 +4,7 @@ using namespace std;
 // get a timer for each interval type we have
 double boost_timer, fic_timer, native_switch_timer, multiplicative_timer, pred_succ_timer;
 
+#ifdef USE_FILIB_PLUSPLUS
 #define RUN_SPEED(METHOD, VARIABLE_COUNT, INFO, DISTRIBUTION)                                                                                                   \
     {                                                                                                                                                           \
         boost_timer = 0;                                                                                                                                        \
@@ -30,6 +31,25 @@ double boost_timer, fic_timer, native_switch_timer, multiplicative_timer, pred_s
         printf("TIME, %s, PRED SUCC METHOD, %lf us, %lfx time that FILIB C version took\n", INFO, pred_succ_timer, pred_succ_timer / fic_timer);                \
     }                                                                                                                                                           \
     while (0)
+#else
+#define RUN_SPEED(METHOD, VARIABLE_COUNT, INFO, DISTRIBUTION)                                                                                                   \
+    {                                                                                                                                                           \
+        boost_timer = 0;                                                                                                                                        \
+        fic_timer = 0;                                                                                                                                          \
+        native_switch_timer = 0;                                                                                                                                \
+        multiplicative_timer = 0;                                                                                                                               \
+        pred_succ_timer = 0;                                                                                                                                    \
+        for (int i = 0; i < SPEED_TEST_LOOP; i++)                                                                                                               \
+        {                                                                                                                                                       \
+            PRE_FILL_RANDOM_DOUBLES(DISTRIBUTION, VARIABLE_COUNT);                                                                                              \
+            COMPUTE_TIME(fic_interval, METHOD, VARIABLE_COUNT, fic_timer);                                                                                      \
+            COMPUTE_TIME(boost_interval, METHOD, VARIABLE_COUNT, boost_timer);                                                                                  \
+        }                                                                                                                                                       \
+        printf("TIME, %s, FILIB C, %lf us, %lfx time that FILIB C version took\n", INFO, fic_timer, fic_timer / fic_timer);                                     \
+        printf("TIME, %s, BOOST, %lf us, %lfx time that FILIB C version took\n", INFO, boost_timer, boost_timer / fic_timer);                                   \
+    }                                                                                                                                                           \
+    while (0)
+#endif
 
 int main(int argc, char *argv[])
 {
