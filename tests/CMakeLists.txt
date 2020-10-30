@@ -28,7 +28,7 @@ endif()
 
 add_subdirectory("speed")
 add_subdirectory("gap")
-
+add_subdirectory("query")
 
 
 

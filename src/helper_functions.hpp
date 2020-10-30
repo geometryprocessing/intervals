@@ -23,11 +23,11 @@
 
 // all the generator stuffs for random numbers
 std::default_random_engine generator;
-std::uniform_real_distribution<double> distribution_all_range(-RAND_MAX + 1, RAND_MAX);
-std::uniform_real_distribution<double> distribution_within_one(-1, 1);
-std::uniform_real_distribution<double> distribution_positive(0, RAND_MAX);
-std::uniform_real_distribution<double> distribution_exp(-700, 700);
-std::uniform_real_distribution<double> distribution_pi_over_four(0, 41629395862109680461101929914152.0 / 53004193035072394913113926582208.0);
+std::uniform_real_distribution<double> distribution_all_range(-RAND_MAX + 1, RAND_MAX);                                                       // an all range distribution
+std::uniform_real_distribution<double> distribution_within_one(-1, 1);                                                                        // distribution between -1 and 1
+std::uniform_real_distribution<double> distribution_positive(0, RAND_MAX);                                                                    // only positive numbers
+std::uniform_real_distribution<double> distribution_exp(-700, 700);                                                                           // within the reach of exponential
+std::uniform_real_distribution<double> distribution_pi_over_four(0, 41629395862109680461101929914152.0 / 53004193035072394913113926582208.0); // 0 to pi/4, which is the kernel sin and cos's range
 
 std::vector<double> comp_doubles;              // store the doubles
 std::vector<gmp::Rational> comp_gmp_rationals; // store the gmp rationals
@@ -192,12 +192,13 @@ inline double benchmarkTimer(std::function<void()> op)
 // print the result as a query which can be checked in mathematica
 // INPUT =>
 // INTERVAL:       the type of interval using this method
+// TYPE_NAME:      the name of the interval type
 // METHOD:         the method we are running, composit expression, sin, cos etc
 // VARIABLE_COUNT: the number of variables needed for this computation
 // PRINT_METHOD:   the printing of the method we use, should be one to one correspondent and defined in methods.hpp
 // OUTPUT =>
 // The query will be printed out and this query can be used for checking correctness
-#define PRINT_QUERIES(INTERVAL, METHOD, VARIABLE_COUNT, PRINT_METHOD)                \
+#define PRINT_QUERIES(INTERVAL, TYPE_NAME, METHOD, PRINT_METHOD, VARIABLE_COUNT)     \
     do                                                                               \
     {                                                                                \
         std::vector<INTERVAL> used_variables(VARIABLE_COUNT);                        \
@@ -206,5 +207,6 @@ inline double benchmarkTimer(std::function<void()> op)
             used_variables[i] = INTERVAL(comp_doubles[i]);                           \
         }                                                                            \
         INTERVAL result = METHOD<INTERVAL>(used_variables);                          \
+        printf("%s: ", TYPE_NAME);                                                   \
         print_query(lower(result), upper(result), PRINT_METHOD(comp_gmp_rationals)); \
     } while (0)
