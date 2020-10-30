@@ -1,19 +1,24 @@
-from fractions import Fraction
+import sys
+import platform
+from matplotlib.ticker import FixedLocator
 import matplotlib.pyplot as plt
-import scipy.stats as st
 import numpy as np
+from fractions import Fraction
+import matplotlib as mpl
+mpl.use('Agg')
 try:
     import cPickle as pickle
 except ImportError:  # Python 3.x
     import pickle
+
+
 test_names = []
 method_names = []
-colors = ["#FFBF00", "#2274A5", "#32936F", "#D00000", "#1C3144"]
+colors = ["#1C3144", "#2274A5", "#32936F", "#D00000", "#FFBF00"]
 
-bin_size = 72  # the last one is for outliers
-
-bins = [x/10.0 for x in list(range(0, bin_size, 1))]
-# print(bins)
+bin_size = 30  # the ones that we actually care about, in this case we care about distribution between 0 to 3
+actual_bin_size = 50  # position 40 and 50 are for outliers and negative intervals
+bins = [x/10.0 for x in list(range(0, actual_bin_size+1, 1))]
 
 
 def populate_data(file_name, system="mac"):
@@ -41,7 +46,7 @@ def populate_data(file_name, system="mac"):
             all_datas[test_name] = {}
             test_names.append(test_name)
         if (not method_name in all_datas[test_name]):
-            all_datas[test_name][method_name] = [0]*bin_size
+            all_datas[test_name][method_name] = [0] * (actual_bin_size + 1)
             if (not method_name in method_names):
                 method_names.append(method_name)
         if method_name == method_names[0]:
@@ -62,13 +67,21 @@ def populate_data(file_name, system="mac"):
                 frac = float(length / base)
 
             position = int(frac / 0.1)
-            if position < 61:
+
+            if position <= bin_size and position >= 0:
+                # within 0 to 3
                 all_datas[test_name][method_name][position] += 1
+            elif position < 0:
+                # negative interval
+                outlier_file.write(base_line)
+                outlier_file.write(line)
+                outlier_file.write("FRACTION: "+str(frac)+"\n")
+                all_datas[test_name][method_name][actual_bin_size] += 1
             else:
                 outlier_file.write(base_line)
                 outlier_file.write(line)
                 outlier_file.write("FRACTION: "+str(frac)+"\n")
-                all_datas[test_name][method_name][-1] += 1
+                all_datas[test_name][method_name][actual_bin_size-10] += 1
 
         count += 1
 
@@ -79,48 +92,56 @@ def populate_data(file_name, system="mac"):
     return all_datas
 
 
-def plot_comparisons(datas, saved_file="", system="mac"):
-    if saved_file != "":
-        with open(saved_file, 'rb') as fp:
-            datas = pickle.load(fp)
-            for item in datas:
-                if not item in test_names:
-                    test_names.append(item)
-                for method in datas[item]:
-                    if not method in method_names:
-                        method_names.append(method)
+def read_saved_file(saved_file):
+    datas = {}
+    with open(saved_file, 'rb') as fp:
+        datas = pickle.load(fp)
+        for item in datas:
+            if not item in test_names:
+                test_names.append(item)
+            for method in datas[item]:
+                if not method in method_names:
+                    method_names.append(method)
+    return datas
 
+
+def plot_comparisons(datas, system="mac"):
+    bar_width = 0.1/(len(method_names)-1)
     for test in datas:
         ax = plt.axes()
         outlier_count = 0
+        negative_count = 0
         for i in range(1, len(method_names)):
             method = method_names[i]
             comp = datas[test][method]
             total_count = sum(comp)
             comp = [float(x)*1.0 / total_count for x in comp]
-            for j in range(6):
-                sum_percentage  = 0
-                for k in range(10):
-                    sum_percentage +=comp[j*10+k]
-                print("%s, %s, %d~%d: %f"%(test, method_names[i], j, j+1, sum_percentage*100))
-            bar = plt.bar(bins, comp, label=method +
-                          " / " + method_names[0], color=colors[i-1], alpha=0.8, width=0.1)
-            rect = bar[-1]
+            bar = plt.bar([x+bar_width/2 + bar_width*(i-1) for x in bins], comp, label=method,
+                          color=colors[i-1], alpha=1.0, width=bar_width)
+            # put text for outliers
+            rect = bar[actual_bin_size-10]
             height = rect.get_height()
             if height > 0:
-                # print(comp[-1])
                 plt.text(rect.get_x() + rect.get_width()/2.0, height,
-                         ('%s:\n%f' % (method, comp[-1] * 100)).rstrip('0').rstrip('.')+"%"+"\n\n"*outlier_count, ha='center', va='bottom')
+                         ('%s:\n%f' % (method, comp[actual_bin_size-10] * 100)).rstrip('0').rstrip('.')+"%", ha='center', va='bottom')
                 outlier_count += 1
-            # plt.hist(comp, bins = bins, label=method +
-            #          " / " + method_names[0], color=colors[i-1], alpha=0.8)
-            plt.legend()
+            # put text for negative intervals
+            rect = bar[actual_bin_size]
+            height = rect.get_height()
+            if height > 0:
+                plt.text(rect.get_x() + rect.get_width()/2.0, height,
+                         ('%s:\n%f' % (method, comp[actual_bin_size] * 100)).rstrip('0').rstrip('.')+"%", ha='center', va='bottom')
+                negative_count += 1
+            plt.legend(prop={'size': 6})
 
-        plt.xlim([0, 8])
+        plt.xlim([0, int(bin_size/10 + 3)])
         plt.ylim([0, 1])
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
-        plt.xticks(list(range(0, 8)), list(range(0, 7))+[">6"])
+        plt.xticks(list(range(0, int(bin_size/10 + 3))), list(range(0,
+                                                                    int(bin_size/10 + 1)))+[">" + str(int(bin_size/10))] + ["<0"])
+        ax.xaxis.set_minor_locator(FixedLocator(
+            [x*0.1 for x in list(range(bin_size))]))
         plt.title(test)
         # plt.text(7, 0, "OUTLIER")
         save_plot_name = "graphs/" + test + "_gap_" + system + ".pdf"
@@ -129,15 +150,16 @@ def plot_comparisons(datas, saved_file="", system="mac"):
                     pad_inches=0, dpi=2000)
         plt.close()
 
-# datas = populate_data("build/gaps_windows.txt", system="windows")
-# plot_comparisons(datas, system="windows")
 
-# datas = populate_data("build/gaps_linux.txt", system="linux")
-# plot_comparisons(datas, system="linux")
+def main():
+    datas = None
+    system = str(platform.platform())
+    # load data from pickle file
+    if len(sys.argv) > 1:
+        datas = read_saved_file(sys.argv[1])
+    else:
+        datas = populate_data("build/gaps.txt", system=system)
+    plot_comparisons(datas, system=system)
 
-# datas = populate_data("build/gaps_mac.txt", system="mac")
-# plot_comparisons(datas, system="mac")
-
-
-datas = populate_data("build/gaps_sin_mac.txt", system="sin_mac")
-plot_comparisons(datas, system="mac")
+if __name__ == "__main__":
+    main()
