@@ -1,13 +1,6 @@
 #include "../../src/interval.hpp"
 using namespace std;
 
-// get a timer for each interval type we have
-double boost_timer, fic_timer, native_switch_timer, multiplicative_timer, pred_succ_timer;
-
-// although those definition seems redundant
-// I'm just trying to make my life easier
-// do whatever you want for the spped thest
-// see the helper_functions.hpp for input and output deatail
 #ifdef USE_FILIB_PLUSPLUS
 #define RUN_QUERY(METHOD, INFO, PRINT_METHOD, VARIABLE_COUNT, DISTRIBUTION)                             \
     do                                                                                                  \
