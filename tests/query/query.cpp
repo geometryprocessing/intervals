@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     RUN_QUERY(expr3, "EXPRESSION 3", print_expr3, 10, distribution_all_range);
     RUN_QUERY(square_root, "SQUARE ROOT", print_square_root, 1, distribution_positive);
     RUN_QUERY(exponential, "EXPONENTIAL", print_exponential, 1, distribution_exp);
-    RUN_QUERY(sin, "SIN", print_sin, 1, distribution_all_range);
-    RUN_QUERY(cos, "COS", print_cos, 1, distribution_all_range);
+    RUN_QUERY(sin, "SIN", print_sin, 1, distribution_pi_over_four);
+    RUN_QUERY(cos, "COS", print_cos, 1, distribution_pi_over_four);
     return 0;
 }
