@@ -1,6 +1,7 @@
 import pandas as pd
-
-def to_table(file_name, system="mac"):
+import platform
+def to_table(file_name):
+    system = str(platform.platform())
     test_names = []
     method_names = []
     all_datas = {}
@@ -9,7 +10,7 @@ def to_table(file_name, system="mac"):
         splitted = line.strip().split(",")
         test_name = splitted[1]
         method_name = splitted[2]
-        raw_time = splitted[3]
+        raw_time = splitted[3].split("us")[0]
         fraction = splitted[4].split("x")[0]
         if (not test_name in all_datas):
             all_datas[test_name] = {}
@@ -36,9 +37,7 @@ def to_table(file_name, system="mac"):
     # print(all_datas)
 
 
-to_table("datas/mac_time.txt")
-to_table("datas/linux_time.txt", system="linux")
-to_table("datas/arm_time.txt", system="arm")
+to_table("build/time.txt")
             
         
         
