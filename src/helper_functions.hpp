@@ -21,21 +21,20 @@
 #include <highfive/H5Easy.hpp>
 #include <highfive/H5File.hpp>
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // all the generator stuffs for random numbers
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 std::default_random_engine generator;
 std::uniform_real_distribution<double> distribution_all_range(-RAND_MAX + 1, RAND_MAX);                                                       // an all range distribution
 std::uniform_real_distribution<double> distribution_within_one(-1, 1);                                                                        // distribution between -1 and 1
 std::uniform_real_distribution<double> distribution_positive(0, RAND_MAX);                                                                    // only positive numbers
 std::uniform_real_distribution<double> distribution_exp(-700, 700);                                                                           // within the reach of exponential
 std::uniform_real_distribution<double> distribution_pi_over_four(0, 41629395862109680461101929914152.0 / 53004193035072394913113926582208.0); // 0 to pi/4, which is the kernel sin and cos's range
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-std::vector<double> comp_doubles;              // store the doubles
-std::vector<gmp::Rational> comp_gmp_rationals; // store the gmp rationals
-
-std::vector<gmp::Rational> all_used_rationals; // store all the rationals that will be used
-int global_used_rational_index = 0;            // to use the rationals stored
-int local_used_rational_index = 0;             // to use the rationals stored
-
+// ******************************************************************************************************************************************************************************************************
+// all the function declarations
+// ******************************************************************************************************************************************************************************************************
 double random_double(std::uniform_real_distribution<double> distribution);    // generate a random double based on distribution, or return a pre recorded double
 bool within_range(double lower, double upper, gmp::Rational rational_result); // check if a rational is within range of lower and upper
 gmp::Rational interval_size(double lower, double upper);                      // return the interval size in rational
@@ -44,7 +43,26 @@ void read_to_ratioanl_list(std::string file_name);                            //
 void print_query(double lower, double upper, double input, std::string info); // print a query used for checking in mathematica
 inline double benchmarkTimer(std::function<void()> op);                       // a benchmark timer
 double random_double(std::uniform_real_distribution<double> distribution);    // get a random double if USE_SYSTEM_RANDOM is defined, otherwise use a pre stored double
+// ******************************************************************************************************************************************************************************************************
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// the arrays that will be used to set and store doubles and rational numbers
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+std::vector<double> comp_doubles;              // store the doubles
+std::vector<gmp::Rational> comp_gmp_rationals; // store the gmp rationals
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// ******************************************************************************************************************************************************************************************************
+// if we want to read pre-defined doubles, we will read them into rational then convert to double
+// ******************************************************************************************************************************************************************************************************
+std::vector<gmp::Rational> all_used_rationals; // store all the rationals that will be used
+int global_used_rational_index = 0;            // to use the rationals stored
+int local_used_rational_index = 0;             // to use the rationals stored
+// ******************************************************************************************************************************************************************************************************
+
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// the beginning of functions
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 double random_double(std::uniform_real_distribution<double> distribution)
 {
 #ifdef USE_SYSTEM_RANDOM
@@ -113,7 +131,11 @@ inline double benchmarkTimer(std::function<void()> op)
     t.stop();
     return t.getElapsedTimeInMicroSec();
 }
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+// ******************************************************************************************************************************************************************************************************
+// macro functions
+// ******************************************************************************************************************************************************************************************************
 // a macro function to fill up the doubles we need, as well as the rationals being used
 // INPUT =>
 // DISTRIBUTION:   the range of within which the random generator will pick numbers from
@@ -210,3 +232,4 @@ inline double benchmarkTimer(std::function<void()> op)
         printf("%s: ", TYPE_NAME);                                                   \
         print_query(lower(result), upper(result), PRINT_METHOD(comp_gmp_rationals)); \
     } while (0)
+// ******************************************************************************************************************************************************************************************************
