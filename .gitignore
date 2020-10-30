@@ -231,3 +231,6 @@ dmypy.json
 errors*
 
 mathmetica_notebooks/*.txt
+
+datas/
+graphs/
