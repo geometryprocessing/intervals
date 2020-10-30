@@ -24,7 +24,7 @@ def to_table(file_name):
     for test in test_names:
         raw_datas[test] = [all_datas[test][x][0] for x in method_names]
     raw_datas_table = pd.DataFrame.from_dict(raw_datas, orient='index', columns=method_names)
-    raw_datas_table.reindex(test_names)
+    raw_datas_table = raw_datas_table.reindex(test_names)
     print(raw_datas_table)
 
     print("Comparing to filib c version on %s: "%system)
@@ -32,7 +32,7 @@ def to_table(file_name):
     for test in test_names:
         comp_datas[test] = [all_datas[test][x][1] for x in method_names]
     comp_datas_table = pd.DataFrame.from_dict(comp_datas, orient='index', columns=method_names)
-    comp_datas_table.reindex(test_names)
+    comp_datas_table = comp_datas_table.reindex(test_names)
     print(comp_datas_table)
 
 
