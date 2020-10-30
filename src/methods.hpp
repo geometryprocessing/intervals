@@ -1,6 +1,5 @@
 #pragma once
 #include "helper_functions.hpp"
-#include <tuple>
 
 // In this file you will need to define the expression you want to test on
 // for each expression you will need to functions:
