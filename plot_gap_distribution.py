@@ -1,11 +1,11 @@
+import matplotlib as mpl
+mpl.use('Agg')
 import sys
 import platform
 from matplotlib.ticker import FixedLocator
 import matplotlib.pyplot as plt
 import numpy as np
 from fractions import Fraction
-import matplotlib as mpl
-mpl.use('Agg')
 try:
     import cPickle as pickle
 except ImportError:  # Python 3.x
