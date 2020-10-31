@@ -1,5 +1,6 @@
 import pandas as pd
 import platform
+import sys
 def to_table(file_name):
     system = str(platform.platform())
     test_names = []
@@ -35,11 +36,12 @@ def to_table(file_name):
     comp_datas_table = comp_datas_table.reindex(test_names)
     print(comp_datas_table)
 
-
-    # print(all_datas)
-
-
-to_table("build/time.txt")
+def main():
+    if len(sys.argv)>1:
+        to_table(sys.argv[1])
+    else:
+        to_table("build/time.txt")
             
-        
+if __name__ == "__main__":
+    main()
         
