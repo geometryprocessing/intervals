@@ -4,7 +4,7 @@
 #include "interval.hpp"
 #include "Rational.h"
 #include "Timer.h"
-#include <gmpxx.h>
+#include <gmp.h>
 
 #include <functional>
 #include <random>
