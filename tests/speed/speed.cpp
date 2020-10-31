@@ -1,4 +1,4 @@
-#include "../../src/interval.hpp"
+#include "../../src/methods.hpp"
 using namespace std;
 
 // get a timer for each interval type we have

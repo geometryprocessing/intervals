@@ -1,4 +1,4 @@
-#include "../../src/interval.hpp"
+#include "../../src/methods.hpp"
 using namespace std;
 
 #ifdef USE_FILIB_PLUSPLUS

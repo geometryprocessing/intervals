@@ -1,4 +1,4 @@
-#include "../../src/interval.hpp"
+#include "../../src/methods.hpp"
 using namespace std;
 
 // because filib c++ version is not supported everywhere
