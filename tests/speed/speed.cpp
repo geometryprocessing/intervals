@@ -58,17 +58,17 @@ double boost_timer, fic_timer, native_switch_timer, multiplicative_timer, pred_s
 int main(int argc, char *argv[])
 {
     // we will run each method defined in method.hpp for each available interval library
-    RUN_SPEED(addition, "ADDITION", 2, distribution_all_range);
-    RUN_SPEED(subtraction, "SUBTRACTION", 2, distribution_all_range);
-    RUN_SPEED(multiplication, "MULTIPLICATION", 2, distribution_all_range);
-    RUN_SPEED(division, "DIVISION", 2, distribution_all_range);
-    RUN_SPEED(expr1, "EXPRESSION 1", 10, distribution_all_range);
-    RUN_SPEED(expr2, "EXPRESSION 2", 10, distribution_all_range);
-    RUN_SPEED(expr3, "EXPRESSION 3", 10, distribution_all_range);
-    RUN_SPEED(square_root, "SQUARE ROOT", 1, distribution_positive);
-    RUN_SPEED(exponential, "EXPONENTIAL", 1, distribution_exp);
-    RUN_SPEED(sin, "SIN", 1, distribution_all_range);
-    RUN_SPEED(cos, "COS", 1, distribution_all_range);
+    RUN_SPEED(addition, "ADDITION", 2, binary_all_range);
+    RUN_SPEED(subtraction, "SUBTRACTION", 2, binary_all_range);
+    RUN_SPEED(multiplication, "MULTIPLICATION", 2, binary_all_range);
+    RUN_SPEED(division, "DIVISION", 2, binary_all_range);
+    RUN_SPEED(expr1, "EXPRESSION 1", 10, comp_all_range);
+    RUN_SPEED(expr2, "EXPRESSION 2", 10, comp_all_range);
+    RUN_SPEED(expr3, "EXPRESSION 3", 10, comp_all_range);
+    RUN_SPEED(square_root, "SQUARE ROOT", 1, square_root_range);
+    RUN_SPEED(exponential, "EXPONENTIAL", 1, exp_range);
+    RUN_SPEED(sin, "SIN", 1, trig_all_range);
+    RUN_SPEED(cos, "COS", 1, trig_all_range);
 
     return 0;
 }

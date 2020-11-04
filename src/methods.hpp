@@ -12,7 +12,6 @@
 // alternatively I think there's this discussion of using boost::any for a vector
 // but I will not do that for now for my distaste for boost
 
-
 template <class T>
 inline T addition(const std::vector<T> &value_array)
 {
@@ -21,6 +20,10 @@ inline T addition(const std::vector<T> &value_array)
 std::string print_addition(const std::vector<gmp::Rational> &value_array)
 {
     return rational_to_string(value_array[0]) + "+" + rational_to_string(value_array[1]);
+}
+bool check_input_addition(const std::vector<double> &value_array)
+{
+    return true;
 }
 
 template <class T>
@@ -32,6 +35,10 @@ std::string print_subtraction(const std::vector<gmp::Rational> &value_array)
 {
     return rational_to_string(value_array[0]) + "-" + rational_to_string(value_array[1]);
 }
+bool check_input_subtraction(const std::vector<double> &value_array)
+{
+    return true;
+}
 
 template <class T>
 inline T multiplication(const std::vector<T> &value_array)
@@ -42,6 +49,10 @@ std::string print_multiplication(const std::vector<gmp::Rational> &value_array)
 {
     return rational_to_string(value_array[0]) + "*" + rational_to_string(value_array[1]);
 }
+bool check_input_multiplication(const std::vector<double> &value_array)
+{
+    return true;
+}
 
 template <class T>
 inline T division(const std::vector<T> &value_array)
@@ -51,6 +62,12 @@ inline T division(const std::vector<T> &value_array)
 std::string print_division(const std::vector<gmp::Rational> &value_array)
 {
     return rational_to_string(value_array[0]) + "/" + rational_to_string(value_array[1]);
+}
+bool check_input_division(const std::vector<double> &value_array)
+{
+    if (value_array[1] == 0)
+        return false;
+    return true;
 }
 
 // test equation 1
@@ -64,6 +81,20 @@ std::string print_expr1(const std::vector<gmp::Rational> &value_array)
 {
     return rational_to_string(value_array[0]) + "/" + rational_to_string(value_array[1]) + "*" + rational_to_string(value_array[2]) + "/" + rational_to_string(value_array[3]) + "*" + rational_to_string(value_array[4]) + "/" + rational_to_string(value_array[5]) + "*" + rational_to_string(value_array[6]) + "/" + rational_to_string(value_array[7]) + "*" + rational_to_string(value_array[8]) + "/" + rational_to_string(value_array[9]);
 }
+bool check_input_expr1(const std::vector<double> &value_array)
+{
+    if (value_array[1] == 0)
+        return false;
+    if (value_array[3] == 0)
+        return false;
+    if (value_array[5] == 0)
+        return false;
+    if (value_array[7] == 0)
+        return false;
+    if (value_array[9] == 0)
+        return false;
+    return true;
+}
 
 // test equation 2
 // a * (a + b * c) / (b + c * d) - d * (e + f / g) / (g + h) - i / j
@@ -75,6 +106,16 @@ inline T expr2(const std::vector<T> &value_array)
 std::string print_expr2(const std::vector<gmp::Rational> &value_array)
 {
     return rational_to_string(value_array[0]) + "*" + "(" + rational_to_string(value_array[0]) + "+" + rational_to_string(value_array[1]) + "*" + rational_to_string(value_array[2]) + ")" + "/" + "(" + rational_to_string(value_array[1]) + "+" + rational_to_string(value_array[2]) + "*" + rational_to_string(value_array[3]) + ")" + "-" + rational_to_string(value_array[3]) + "*" + "(" + rational_to_string(value_array[4]) + "+" + rational_to_string(value_array[5]) + "/" + rational_to_string(value_array[6]) + ")" + "/" + "(" + rational_to_string(value_array[6]) + "+" + rational_to_string(value_array[7]) + ")" + "-" + rational_to_string(value_array[8]) + "/" + rational_to_string(value_array[9]);
+}
+bool check_input_expr2(const std::vector<double> &value_array)
+{
+    if (value_array[1] + value_array[2] * value_array[3] == 0)
+        return false;
+    if (value_array[6] == 0)
+        return false;
+    if (value_array[9] == 0)
+        return false;
+    return true;
 }
 
 // test equation 3
@@ -88,6 +129,22 @@ std::string print_expr3(const std::vector<gmp::Rational> &value_array)
 {
     return "(" + rational_to_string(value_array[0]) + "*" + "(" + rational_to_string(value_array[0]) + "/" + rational_to_string(value_array[1]) + ")" + "*" + "(" + rational_to_string(value_array[0]) + "/" + rational_to_string(value_array[1]) + "/" + rational_to_string(value_array[2]) + ")" + "-" + rational_to_string(value_array[3]) + "*" + "(" + rational_to_string(value_array[3]) + "/" + rational_to_string(value_array[4]) + ")" + "*" + "(" + rational_to_string(value_array[3]) + "/" + rational_to_string(value_array[4]) + "/" + rational_to_string(value_array[5]) + ")" + "+" + rational_to_string(value_array[6]) + "*" + "(" + rational_to_string(value_array[6]) + "/" + rational_to_string(value_array[7]) + ")" + "*" + "(" + rational_to_string(value_array[6]) + "/" + rational_to_string(value_array[7]) + "/" + rational_to_string(value_array[8]) + ")" + ")" + "*" + rational_to_string(value_array[9]);
 }
+bool check_input_expr3(const std::vector<double> &value_array)
+{
+    if (value_array[1] == 0)
+        return false;
+    if (value_array[2] == 0)
+        return false;
+    if (value_array[4] == 0)
+        return false;
+    if (value_array[5] == 0)
+        return false;
+    if (value_array[7] == 0)
+        return false;
+    if (value_array[8] == 0)
+        return false;
+    return true;
+}
 
 template <class T>
 inline T square_root(const std::vector<T> &value_array)
@@ -97,6 +154,12 @@ inline T square_root(const std::vector<T> &value_array)
 std::string print_square_root(const std::vector<gmp::Rational> &value_array)
 {
     return "Sqrt" + rational_to_string(value_array[0]);
+}
+bool check_input_square_root(const std::vector<double> &value_array)
+{
+    if (value_array[0] < 0)
+        return false;
+    return true;
 }
 
 template <class T>
@@ -108,6 +171,12 @@ std::string print_exponential(const std::vector<gmp::Rational> &value_array)
 {
     return "Exp" + rational_to_string(value_array[0]);
 }
+bool check_input_exponential(const std::vector<double> &value_array)
+{
+    if (value_array[0] > 700)
+        return false;
+    return true;
+}
 
 template <class T>
 inline T sin(const std::vector<T> &value_array)
@@ -118,6 +187,10 @@ std::string print_sin(const std::vector<gmp::Rational> &value_array)
 {
     return "sin" + rational_to_string(value_array[0]);
 }
+bool check_input_sin(const std::vector<double> &value_array)
+{
+    return true;
+}
 
 template <class T>
 inline T cos(const std::vector<T> &value_array)
@@ -127,4 +200,8 @@ inline T cos(const std::vector<T> &value_array)
 std::string print_cos(const std::vector<gmp::Rational> &value_array)
 {
     return "cos" + rational_to_string(value_array[0]);
+}
+bool check_input_cos(const std::vector<double> &value_array)
+{
+    return true;
 }

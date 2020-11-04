@@ -34,15 +34,15 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    RUN_GAP(addition, "ADDITION", 2, distribution_all_range);
-    RUN_GAP(subtraction, "SUBTRACTION", 2, distribution_all_range);
-    RUN_GAP(multiplication, "MULTIPLICATION", 2, distribution_all_range);
-    RUN_GAP(division, "DIVISION", 2, distribution_all_range);
-    RUN_GAP(expr1, "EXPRESSION 1", 10, distribution_all_range);
-    RUN_GAP(expr2, "EXPRESSION 2", 10, distribution_all_range);
-    RUN_GAP(expr3, "EXPRESSION 3", 10, distribution_all_range);
-    RUN_GAP(square_root, "SQUARE ROOT", 1, distribution_positive);
-    RUN_GAP(exponential, "EXPONENTIAL", 1, distribution_exp);
-    RUN_GAP(sin, "SIN", 1, distribution_all_range);
-    RUN_GAP(cos, "COS", 1, distribution_all_range);
+    RUN_GAP(addition, "ADDITION", 2, binary_all_range);
+    RUN_GAP(subtraction, "SUBTRACTION", 2, binary_all_range);
+    RUN_GAP(multiplication, "MULTIPLICATION", 2, binary_all_range);
+    RUN_GAP(division, "DIVISION", 2, binary_all_range);
+    RUN_GAP(expr1, "EXPRESSION 1", 10, comp_all_range);
+    RUN_GAP(expr2, "EXPRESSION 2", 10, comp_all_range);
+    RUN_GAP(expr3, "EXPRESSION 3", 10, comp_all_range);
+    RUN_GAP(square_root, "SQUARE ROOT", 1, square_root_range);
+    RUN_GAP(exponential, "EXPONENTIAL", 1, exp_range);
+    RUN_GAP(sin, "SIN", 1, trig_all_range);
+    RUN_GAP(cos, "COS", 1, trig_all_range);
 }

@@ -33,16 +33,16 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    RUN_QUERY(addition, "ADDITION", print_addition, 2, distribution_all_range);
-    RUN_QUERY(subtraction, "SUBTRACTION", print_subtraction, 2, distribution_all_range);
-    RUN_QUERY(multiplication, "MULTIPLICATION", print_multiplication, 2, distribution_all_range);
-    RUN_QUERY(division, "DIVISION", print_division, 2, distribution_all_range);
-    RUN_QUERY(expr1, "EXPRESSION 1", print_expr1, 10, distribution_all_range);
-    RUN_QUERY(expr2, "EXPRESSION 2", print_expr2, 10, distribution_all_range);
-    RUN_QUERY(expr3, "EXPRESSION 3", print_expr3, 10, distribution_all_range);
-    RUN_QUERY(square_root, "SQUARE ROOT", print_square_root, 1, distribution_positive);
-    RUN_QUERY(exponential, "EXPONENTIAL", print_exponential, 1, distribution_exp);
-    RUN_QUERY(sin, "SIN", print_sin, 1, distribution_pi_over_four);
-    RUN_QUERY(cos, "COS", print_cos, 1, distribution_pi_over_four);
+    RUN_QUERY(addition, "ADDITION", print_addition, 2, binary_all_range);
+    RUN_QUERY(subtraction, "SUBTRACTION", print_subtraction, 2, binary_all_range);
+    RUN_QUERY(multiplication, "MULTIPLICATION", print_multiplication, 2, binary_all_range);
+    RUN_QUERY(division, "DIVISION", print_division, 2, binary_all_range);
+    RUN_QUERY(expr1, "EXPRESSION 1", print_expr1, 10, comp_all_range);
+    RUN_QUERY(expr2, "EXPRESSION 2", print_expr2, 10, comp_all_range);
+    RUN_QUERY(expr3, "EXPRESSION 3", print_expr3, 10, comp_all_range);
+    RUN_QUERY(square_root, "SQUARE ROOT", print_square_root, 1, square_root_range);
+    RUN_QUERY(exponential, "EXPONENTIAL", print_exponential, 1, exp_range);
+    RUN_QUERY(sin, "SIN", print_sin, 1, trig_pi_over_four);
+    RUN_QUERY(cos, "COS", print_cos, 1, trig_pi_over_four);
     return 0;
 }

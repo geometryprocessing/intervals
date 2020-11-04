@@ -30,6 +30,12 @@ std::uniform_real_distribution<double> distribution_within_one(-1, 1);          
 std::uniform_real_distribution<double> distribution_positive(0, RAND_MAX);                                                                    // only positive numbers
 std::uniform_real_distribution<double> distribution_exp(-700, 700);                                                                           // within the reach of exponential
 std::uniform_real_distribution<double> distribution_pi_over_four(0, 41629395862109680461101929914152.0 / 53004193035072394913113926582208.0); // 0 to pi/4, which is the kernel sin and cos's range
+std::vector<std::uniform_real_distribution<double>> binary_all_range(2, distribution_all_range);                                              // for binary, we need two values from all range
+std::vector<std::uniform_real_distribution<double>> comp_all_range(10, distribution_all_range);                                               // for composite, we need 10 values from all range
+std::vector<std::uniform_real_distribution<double>> exp_range(1, distribution_exp);                                                           // for exponential, use -700 to 700 (otherwise overflow)
+std::vector<std::uniform_real_distribution<double>> square_root_range(1, distribution_positive);                                              // for square root, we need positive
+std::vector<std::uniform_real_distribution<double>> trig_all_range(1, distribution_all_range);                                                // all range for trignometry
+std::vector<std::uniform_real_distribution<double>> trig_pi_over_four(1, distribution_pi_over_four);                                          // kernel function's range
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 // ******************************************************************************************************************************************************************************************************
@@ -147,7 +153,7 @@ inline double benchmarkTimer(std::function<void()> op)
     {                                                           \
         for (int i = 0; i < VARIABLE_COUNT; i++)                \
         {                                                       \
-            double r = random_double(DISTRIBUTION);             \
+            double r = random_double(DISTRIBUTION[i]);          \
             if (i < comp_doubles.size())                        \
             {                                                   \
                 comp_doubles[i] = r;                            \
