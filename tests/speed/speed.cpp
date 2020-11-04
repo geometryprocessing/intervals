@@ -9,7 +9,7 @@ double boost_timer, fic_timer, native_switch_timer, multiplicative_timer, pred_s
 // do whatever you want for the spped thest
 // see the helper_functions.hpp for input and output deatail
 #ifdef USE_FILIB_PLUSPLUS
-#define RUN_SPEED(METHOD, INFO, VARIABLE_COUNT, DISTRIBUTION)                                                                                                   \
+#define RUN_SPEED(METHOD, INFO, VARIABLE_COUNT, DISTRIBUTION, VERIFY_METHOD)                                                                                    \
     {                                                                                                                                                           \
         boost_timer = 0;                                                                                                                                        \
         fic_timer = 0;                                                                                                                                          \
@@ -18,7 +18,7 @@ double boost_timer, fic_timer, native_switch_timer, multiplicative_timer, pred_s
         pred_succ_timer = 0;                                                                                                                                    \
         for (int i = 0; i < SPEED_TEST_LOOP; i++)                                                                                                               \
         {                                                                                                                                                       \
-            PRE_FILL_RANDOM_DOUBLES(DISTRIBUTION, VARIABLE_COUNT);                                                                                              \
+            PRE_FILL_RANDOM_DOUBLES(DISTRIBUTION, VARIABLE_COUNT, VERIFY_METHOD);                                                                               \
             COMPUTE_TIME(fic_interval, METHOD, VARIABLE_COUNT, fic_timer);                                                                                      \
             COMPUTE_TIME(boost_interval, METHOD, VARIABLE_COUNT, boost_timer);                                                                                  \
             filib::fp_traits<double, filib::native_switched>::setup();                                                                                          \
@@ -58,17 +58,17 @@ double boost_timer, fic_timer, native_switch_timer, multiplicative_timer, pred_s
 int main(int argc, char *argv[])
 {
     // we will run each method defined in method.hpp for each available interval library
-    RUN_SPEED(addition, "ADDITION", 2, binary_all_range);
-    RUN_SPEED(subtraction, "SUBTRACTION", 2, binary_all_range);
-    RUN_SPEED(multiplication, "MULTIPLICATION", 2, binary_all_range);
-    RUN_SPEED(division, "DIVISION", 2, binary_all_range);
-    RUN_SPEED(expr1, "EXPRESSION 1", 10, comp_all_range);
-    RUN_SPEED(expr2, "EXPRESSION 2", 10, comp_all_range);
-    RUN_SPEED(expr3, "EXPRESSION 3", 10, comp_all_range);
-    RUN_SPEED(square_root, "SQUARE ROOT", 1, square_root_range);
-    RUN_SPEED(exponential, "EXPONENTIAL", 1, exp_range);
-    RUN_SPEED(sin, "SIN", 1, trig_all_range);
-    RUN_SPEED(cos, "COS", 1, trig_all_range);
+    RUN_SPEED(addition, "ADDITION", 2, binary_all_range, check_input_addition);
+    RUN_SPEED(subtraction, "SUBTRACTION", 2, binary_all_range, check_input_subtraction);
+    RUN_SPEED(multiplication, "MULTIPLICATION", 2, binary_all_range, check_input_multiplication);
+    RUN_SPEED(division, "DIVISION", 2, binary_all_range, check_input_division);
+    RUN_SPEED(expr1, "EXPRESSION 1", 10, comp_all_range, check_input_expr1);
+    RUN_SPEED(expr2, "EXPRESSION 2", 10, comp_all_range, check_input_expr2);
+    RUN_SPEED(expr3, "EXPRESSION 3", 10, comp_all_range, check_input_expr3);
+    RUN_SPEED(square_root, "SQUARE ROOT", 1, square_root_range, check_input_square_root);
+    RUN_SPEED(exponential, "EXPONENTIAL", 1, exp_range, check_input_exponential);
+    RUN_SPEED(sin, "SIN", 1, trig_all_range, check_input_sin);
+    RUN_SPEED(cos, "COS", 1, trig_all_range, check_input_cos);
 
     return 0;
 }

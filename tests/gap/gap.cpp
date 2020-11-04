@@ -3,11 +3,11 @@ using namespace std;
 
 // because filib c++ version is not supported everywhere
 #ifdef USE_FILIB_PLUSPLUS
-#define RUN_GAP(METHOD, INFO, VARIABLE_COUNT, DISTRIBUTION)                                   \
+#define RUN_GAP(METHOD, INFO, VARIABLE_COUNT, DISTRIBUTION, VERIFY_METHOD)                    \
     {                                                                                         \
         for (int i = 0; i < TEST_SIZE; i++)                                                   \
         {                                                                                     \
-            PRE_FILL_RANDOM_DOUBLES(DISTRIBUTION, VARIABLE_COUNT);                            \
+            PRE_FILL_RANDOM_DOUBLES(DISTRIBUTION, VARIABLE_COUNT, VERIFY_METHOD);             \
             COMPUTE_GAP(fic_interval, "FILIB C", METHOD, INFO, VARIABLE_COUNT);               \
             COMPUTE_GAP(boost_interval, "BOOST", METHOD, INFO, VARIABLE_COUNT);               \
             filib::fp_traits<double, filib::native_switched>::setup();                        \
@@ -34,15 +34,15 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    RUN_GAP(addition, "ADDITION", 2, binary_all_range);
-    RUN_GAP(subtraction, "SUBTRACTION", 2, binary_all_range);
-    RUN_GAP(multiplication, "MULTIPLICATION", 2, binary_all_range);
-    RUN_GAP(division, "DIVISION", 2, binary_all_range);
-    RUN_GAP(expr1, "EXPRESSION 1", 10, comp_all_range);
-    RUN_GAP(expr2, "EXPRESSION 2", 10, comp_all_range);
-    RUN_GAP(expr3, "EXPRESSION 3", 10, comp_all_range);
-    RUN_GAP(square_root, "SQUARE ROOT", 1, square_root_range);
-    RUN_GAP(exponential, "EXPONENTIAL", 1, exp_range);
-    RUN_GAP(sin, "SIN", 1, trig_all_range);
-    RUN_GAP(cos, "COS", 1, trig_all_range);
+    RUN_GAP(addition, "ADDITION", 2, binary_all_range, check_input_addition);
+    RUN_GAP(subtraction, "SUBTRACTION", 2, binary_all_range, check_input_subtraction);
+    RUN_GAP(multiplication, "MULTIPLICATION", 2, binary_all_range, check_input_multiplication);
+    RUN_GAP(division, "DIVISION", 2, binary_all_range, check_input_division);
+    RUN_GAP(expr1, "EXPRESSION 1", 10, comp_all_range, check_input_expr1);
+    RUN_GAP(expr2, "EXPRESSION 2", 10, comp_all_range, check_input_expr2);
+    RUN_GAP(expr3, "EXPRESSION 3", 10, comp_all_range, check_input_expr3);
+    RUN_GAP(square_root, "SQUARE ROOT", 1, square_root_range, check_input_square_root);
+    RUN_GAP(exponential, "EXPONENTIAL", 1, exp_range, check_input_exponential);
+    RUN_GAP(sin, "SIN", 1, trig_all_range, check_input_sin);
+    RUN_GAP(cos, "COS", 1, trig_all_range, check_input_cos);
 }

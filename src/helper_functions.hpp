@@ -148,25 +148,42 @@ inline double benchmarkTimer(std::function<void()> op)
 // VARIABLE_COUNT: the number of variables need to be filled
 // OUTPUT =>
 // the random number and their corresponding rantional version will be stored in two arrays
-#define PRE_FILL_RANDOM_DOUBLES(DISTRIBUTION, VARIABLE_COUNT)   \
-    do                                                          \
-    {                                                           \
-        for (int i = 0; i < VARIABLE_COUNT; i++)                \
-        {                                                       \
-            double r = random_double(DISTRIBUTION[i]);          \
-            if (i < comp_doubles.size())                        \
-            {                                                   \
-                comp_doubles[i] = r;                            \
-                comp_gmp_rationals[i] = gmp::Rational(r);       \
-            }                                                   \
-            else                                                \
-            {                                                   \
-                comp_doubles.push_back(r);                      \
-                comp_gmp_rationals.push_back(gmp::Rational(r)); \
-            }                                                   \
-        }                                                       \
-        local_used_rational_index = 0;                          \
-        global_used_rational_index++;                           \
+#define PRE_FILL_RANDOM_DOUBLES(DISTRIBUTION, VARIABLE_COUNT, VERIFY_METHOD) \
+    do                                                                       \
+    {                                                                        \
+        for (int i = 0; i < VARIABLE_COUNT; i++)                             \
+        {                                                                    \
+            double r = random_double(DISTRIBUTION[i]);                       \
+            if (i < comp_doubles.size())                                     \
+            {                                                                \
+                comp_doubles[i] = r;                                         \
+                comp_gmp_rationals[i] = gmp::Rational(r);                    \
+            }                                                                \
+            else                                                             \
+            {                                                                \
+                comp_doubles.push_back(r);                                   \
+                comp_gmp_rationals.push_back(gmp::Rational(r));              \
+            }                                                                \
+        }                                                                    \
+        while (!VERIFY_METHOD(comp_doubles))                                 \
+        {                                                                    \
+            for (int i = 0; i < VARIABLE_COUNT; i++)                         \
+            {                                                                \
+                double r = random_double(DISTRIBUTION[i]);                   \
+                if (i < comp_doubles.size())                                 \
+                {                                                            \
+                    comp_doubles[i] = r;                                     \
+                    comp_gmp_rationals[i] = gmp::Rational(r);                \
+                }                                                            \
+                else                                                         \
+                {                                                            \
+                    comp_doubles.push_back(r);                               \
+                    comp_gmp_rationals.push_back(gmp::Rational(r));          \
+                }                                                            \
+            }                                                                \
+        }                                                                    \
+        local_used_rational_index = 0;                                       \
+        global_used_rational_index++;                                        \
     } while (0)
 
 // print out the gap of the interval
