@@ -15,8 +15,6 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 ### Conditionally compile certain modules depending on libraries found on the system
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake)
 
-### Download data
-# igl_download_tutorial_data()
 
 ### Output directories
 if(MSVC)
