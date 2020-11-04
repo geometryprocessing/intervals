@@ -25,13 +25,17 @@ queryFile = OpenRead[queryFileName];
 errorFile= OpenWrite[errorFileName];
 
 
-equery[x_] := If[ToExpression[StringSplit[ x, ": "][[2]], TraditionalForm],
-                Return[True],
-                (* put this info inside the association *)
-                errorCount = Lookup[errorQueryCount, StringSplit[ x, ": "][[1]], 0];
-                AssociateTo[errorQueryCount, StringSplit[ x, ": "][[1]] -> errorCount+1];
-                Return[False]
-                ];
+equery[x_] := 
+    If[Length[StringSplit[x, ": "]] > 1,
+        If[ToExpression[StringTrim[StringSplit[ x, ": "][[2]]], TraditionalForm],
+            Return[True],
+            (* put this info inside the association *)
+            errorCount = Lookup[errorQueryCount, StringSplit[ x, ": "][[1]], 0];
+            AssociateTo[errorQueryCount, StringSplit[ x, ": "][[1]] -> errorCount+1];
+            Return[False]
+        ],
+        Return[True]
+    ];
 checkQuery[line_,outputFile_]:=
     Module[{queryResult},
         queryResult=equery[line];
