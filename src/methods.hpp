@@ -205,3 +205,31 @@ bool check_input_cos(const std::vector<double> &value_array)
 {
     return true;
 }
+
+
+// Generated function strings for extra_function1
+template <class T>
+inline T extra_function1(const std::vector<T> &value_array)
+{
+    return cos((cos(cos(value_array[5])+exp((value_array[3]) / (value_array[2])))) * (sin(sqrt(value_array[4])+value_array[0]+value_array[1]-sqrt(value_array[3]+value_array[2]))));
+}
+std::string print_extra_function1(const std::vector<gmp::Rational> &value_array)
+{
+    return std::string() + "cos" + "(" + "(" + "cos" + "(" + "cos" + "(" + rational_to_string(value_array[5]) + ")" + "+" + "Exp" + "(" + "(" + rational_to_string(value_array[3]) + ")" + "/" + "(" + rational_to_string(value_array[2])+ ")" + ")" + ")" + ")" + "*" + "(" + "sin" + "(" + "Sqrt" + "(" + rational_to_string(value_array[4]) + ")" + "+" + rational_to_string(value_array[0]) + "+" + rational_to_string(value_array[1]) + "-" + "Sqrt" + "(" + rational_to_string(value_array[3]) + "+" + rational_to_string(value_array[2]) + ")" + ")"+ ")" + ")";
+}
+bool check_input_extra_function1(const std::vector<double> &value_array)
+{
+    if (value_array[2] == 0)
+        return false;
+    if ((value_array[3]) / (value_array[2]) < -700)
+        return false;
+    if ((value_array[3]) / (value_array[2]) > 700)
+        return false;
+    if (value_array[4] < 0)
+        return false;
+    if (value_array[3]+value_array[2] < 0)
+        return false;
+    return true;
+}
+const std::vector<std::uniform_real_distribution<double>> extra_function1_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(0, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+const int extra_function1_variable_count = 6;
