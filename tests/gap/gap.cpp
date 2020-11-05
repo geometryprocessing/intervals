@@ -45,4 +45,7 @@ int main(int argc, char *argv[])
     RUN_GAP(exponential, "EXPONENTIAL", 1, exp_range, check_input_exponential);
     RUN_GAP(sin, "SIN", 1, trig_all_range, check_input_sin);
     RUN_GAP(cos, "COS", 1, trig_all_range, check_input_cos);
+    RUN_GAP(extra_function1, "AUTO GENERATED RANDOM EXPRESSION 1", extra_function1_variable_count, extra_function1_range, check_input_extra_function1);
+    RUN_GAP(extra_function2, "AUTO GENERATED RANDOM EXPRESSION 2", extra_function2_variable_count, extra_function2_range, check_input_extra_function2);
+    RUN_GAP(extra_function3, "AUTO GENERATED RANDOM EXPRESSION 3", extra_function3_variable_count, extra_function3_range, check_input_extra_function3);
 }
