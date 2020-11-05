@@ -239,7 +239,7 @@ class EQTree:
         return s
 
 
-root = EQTree(6, 6, "extra_function1")
+root = EQTree(6, 6, "extra_function3")
 print(root.generateCStrings())
 
 
