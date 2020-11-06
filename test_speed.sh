@@ -6,12 +6,6 @@ fi
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
 make -j
-./tests/gap_bin >> gaps.txt
+./tests/speed >> time.txt
 cd ..
-if [ ! -d "datas"]
-    mkdir datas
-fi
-if [ ! -d "graphs"]
-    mkdir graphs
-fi
-python plot_gap_distribution.py
+python deal_time.py
