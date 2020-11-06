@@ -7,8 +7,8 @@ cd build
 rm queries.txt
 cmake .. -DCMAKE_BUILD_TYPE=Release
 make -j
-./tests/query >> queries.txt
+./tests/query_bin >> queries.txt
 cd ..
 cd mathmetica_notebooks
-./verify_queries ../build/queries.txt errors_"$OSTYPE".txt
+./verify_queries.wls ../build/queries.txt errors_"$OSTYPE".txt
 cd ..

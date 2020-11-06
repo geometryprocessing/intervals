@@ -9,11 +9,11 @@ cmake .. -DCMAKE_BUILD_TYPE=Release
 make -j
 ./tests/gap_bin >> gaps.txt
 cd ..
-if [ ! -d "datas"]
+if [ ! -d "datas" ]
 then
     mkdir datas
 fi
-if [ ! -d "graphs"]
+if [ ! -d "graphs" ]
 then
     mkdir graphs
 fi

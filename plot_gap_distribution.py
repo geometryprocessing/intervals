@@ -139,7 +139,7 @@ def plot_comparisons(datas, system="mac"):
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         plt.xticks(list(range(0, int(bin_size/10 + 3))), list(range(0,
-                                                                    int(bin_size/10 + 1)))+[">" + str(int(bin_size/10))] + ["<0"])
+                                                                    int(bin_size/10 + 1)))+[">" + str(int(bin_size/10))] + ["EMPTY"])
         ax.xaxis.set_minor_locator(FixedLocator(
             [x*0.1 for x in list(range(bin_size))]))
         plt.title(test)
