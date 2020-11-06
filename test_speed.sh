@@ -7,6 +7,6 @@ cd build
 rm time.txt
 cmake .. -DCMAKE_BUILD_TYPE=Release
 make -j
-./tests/speed >> time.txt
+./tests/speed_bin >> time.txt
 cd ..
 python deal_time.py
