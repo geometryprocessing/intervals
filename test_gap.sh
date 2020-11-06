@@ -10,9 +10,11 @@ make -j
 ./tests/gap_bin >> gaps.txt
 cd ..
 if [ ! -d "datas"]
+then
     mkdir datas
 fi
 if [ ! -d "graphs"]
+then
     mkdir graphs
 fi
 python plot_gap_distribution.py
