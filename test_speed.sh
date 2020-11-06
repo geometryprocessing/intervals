@@ -1,4 +1,4 @@
-# do the gap test and plot the distribution of gap size vs the base (default filib c version)
+# do the speed test and print out the table
 if [ ! -d "build" ] 
 then
     mkdir build
