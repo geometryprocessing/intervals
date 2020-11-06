@@ -111,7 +111,7 @@ std::string rational_to_string(gmp::Rational r)
 
 void print_query(double lower, double upper, std::string info)
 {
-    if (lower != lower)
+    if (lower != lower || upper < lower)
     {
         // NaN result
         print_rational(gmp::Rational(1));
@@ -136,7 +136,7 @@ void print_query(double lower, double upper, std::string info)
 // compute the interval size and convert it to rational
 gmp::Rational interval_size(double lower, double upper)
 {
-    if (lower != lower)
+    if (lower != lower || upper < lower)
     {
         // this is a NaN result
         return gmp::Rational(-2);
