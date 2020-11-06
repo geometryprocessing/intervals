@@ -4,6 +4,7 @@ then
     mkdir build
 fi
 cd build
+rm time.txt
 cmake .. -DCMAKE_BUILD_TYPE=Release
 make -j
 ./tests/speed >> time.txt

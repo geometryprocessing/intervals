@@ -4,6 +4,7 @@ then
     mkdir build
 fi
 cd build
+rm gaps.txt
 cmake .. -DCMAKE_BUILD_TYPE=Release
 make -j
 ./tests/gap_bin >> gaps.txt
