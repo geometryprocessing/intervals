@@ -111,18 +111,36 @@ std::string rational_to_string(gmp::Rational r)
 
 void print_query(double lower, double upper, std::string info)
 {
-    gmp::Rational lower_rat = gmp::Rational(lower);
-    gmp::Rational upper_rat = gmp::Rational(upper);
-    print_rational(lower_rat);
-    printf(" <= %s", info.c_str());
-    printf(" <= ");
-    print_rational(upper_rat);
-    printf("\n");
+    if (lower != lower)
+    {
+        // NaN result
+        print_rational(gmp::Rational(1));
+        printf(" <= %s", info.c_str());
+        printf(" <= ");
+        print_rational(-1);
+        printf("\n");
+    }
+    else
+    {
+        gmp::Rational lower_rat = gmp::Rational(lower);
+        gmp::Rational upper_rat = gmp::Rational(upper);
+
+        print_rational(lower_rat);
+        printf(" <= %s", info.c_str());
+        printf(" <= ");
+        print_rational(upper_rat);
+        printf("\n");
+    }
 }
 
 // compute the interval size and convert it to rational
 gmp::Rational interval_size(double lower, double upper)
 {
+    if (lower != lower)
+    {
+        // this is a NaN result
+        return gmp::Rational(-2);
+    }
     gmp::Rational lower_rational = gmp::Rational(lower);
     gmp::Rational upper_rational = gmp::Rational(upper);
     gmp::Rational gap = upper_rational - lower_rational;
