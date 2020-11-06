@@ -289,3 +289,27 @@ bool check_input_extra_function3(const std::vector<double> &value_array)
 }
 const std::vector<std::uniform_real_distribution<double>> extra_function3_range = {std::uniform_real_distribution<double>(0, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(0, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
 const int extra_function3_variable_count = 6;
+
+// special case where boost will return empty interval for fucntion 3
+// {6743510091397869/16777216, -920834981953941/1048576, 6432309939494217/8388608, -2052000078567223/1048576, -101963153724489/65536, -46157478038709/131072}
+
+// // Generated function strings for extra_function4
+// template <class T>
+// inline T extra_function4(const std::vector<T> &value_array)
+// {
+//     return sin(sqrt(cos(cos(value_array[5])-(value_array[0]) * (value_array[1])-(value_array[4]) / (value_array[2])+cos(value_array[3]))));
+// }
+// std::string print_extra_function4(const std::vector<gmp::Rational> &value_array)
+// {
+//     return std::string() + "sin" + "(" + "Sqrt" + "(" + "cos" + "(" + "cos" + "(" + rational_to_string(value_array[5]) + ")" + "-" + "(" + rational_to_string(value_array[0]) + ")" + "*" + "(" + rational_to_string(value_array[1])+ ")" + "-" + "(" + rational_to_string(value_array[4]) + ")" + "/" + "(" + rational_to_string(value_array[2])+ ")" + "+" + "cos" + "(" + rational_to_string(value_array[3]) + ")" + ")" + ")" + ")";
+// }
+// bool check_input_extra_function4(const std::vector<double> &value_array)
+// {
+//     if (value_array[2] == 0)
+//         return false;
+//     if (cos(cos(value_array[5])-(value_array[0]) * (value_array[1])-(value_array[4]) / (value_array[2])+cos(value_array[3])) < 0)
+//         return false;
+//     return true;
+// }
+// const std::vector<std::uniform_real_distribution<double>> extra_function4_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+// const int extra_function4_variable_count = 6;
