@@ -121,10 +121,10 @@ def plot_comparisons(datas, system="mac"):
             # put text for outliers
             rect = bar[actual_bin_size-10]
             height = rect.get_height()
-            if height > 0:
-                plt.text(rect.get_x() + rect.get_width()/2.0, height,
-                         ('%s:\n%f' % (method, comp[actual_bin_size-10] * 100)).rstrip('0').rstrip('.')+"%", ha='center', va='bottom')
-                outlier_count += 1
+            # if height > 0:
+            #     plt.text(rect.get_x() + rect.get_width()/2.0, height,
+            #              ('%s:\n%f' % (method, comp[actual_bin_size-10] * 100)).rstrip('0').rstrip('.')+"%", ha='center', va='bottom')
+            #     outlier_count += 1
             # put text for negative intervals
             rect = bar[actual_bin_size]
             height = rect.get_height()
