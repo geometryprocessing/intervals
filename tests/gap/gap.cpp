@@ -16,6 +16,12 @@ using namespace std;
             COMPUTE_GAP(fi_multiplicative, "MULTIPLICATIVE", METHOD, INFO, VARIABLE_COUNT);   \
             filib::fp_traits<double, filib::pred_succ_rounding>::setup();                     \
             COMPUTE_GAP(fi_pred_succ, "PRED SUCC", METHOD, INFO, VARIABLE_COUNT);             \
+            BiasRoundUp();                                                                    \
+            COMPUTE_GAP(BIASINTERVAL, "BIAS ROUND UP", METHOD, INFO, VARIABLE_COUNT);         \
+            BiasRoundDown();                                                                  \
+            COMPUTE_GAP(BIASINTERVAL, "BIAS ROUND DOWN", METHOD, INFO, VARIABLE_COUNT);       \
+            BiasRoundNear();                                                                  \
+            COMPUTE_GAP(BIASINTERVAL, "BIAS ROUND NEAR", METHOD, INFO, VARIABLE_COUNT);       \
         }                                                                                     \
     }                                                                                         \
     while (0)
@@ -34,6 +40,8 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+    BiasInit();
+    BiasFuncInit();
     RUN_GAP(addition, "ADDITION", 2, binary_all_range, check_input_addition);
     RUN_GAP(subtraction, "SUBTRACTION", 2, binary_all_range, check_input_subtraction);
     RUN_GAP(multiplication, "MULTIPLICATION", 2, binary_all_range, check_input_multiplication);

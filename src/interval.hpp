@@ -91,3 +91,76 @@ double upper(T v)
 #endif
 // ==================================================================================================================
 // ==================================================================================================================
+#include <BIAS/Bias0.h>
+#include <BIAS/BiasF.h>
+#include <BiasRnd.h>
+#define BIASINTERVAL(v) \
+    {                   \
+        v, v            \
+    }
+
+double lower(BIASINTERVAL v)
+{
+    return v.inf;
+}
+
+double upper(BIASINTERVAL v)
+{
+    return v.sup;
+}
+
+BIASINTERVAL operator+(BIASINTERVAL a, BIASINTERVAL b)
+{
+    BIASINTERVAL result;
+    BiasAddII(&result, &a, &b);
+    return result;
+}
+
+BIASINTERVAL operator-(BIASINTERVAL a, BIASINTERVAL b)
+{
+    BIASINTERVAL result;
+    BiasSubII(&result, &a, &b);
+    return result;
+}
+
+BIASINTERVAL operator*(BIASINTERVAL a, BIASINTERVAL b)
+{
+    BIASINTERVAL result;
+    BiasMulII(&result, &a, &b);
+    return result;
+}
+
+BIASINTERVAL operator/(BIASINTERVAL a, BIASINTERVAL b)
+{
+    BIASINTERVAL result;
+    BiasDivII(&result, &a, &b);
+    return result;
+}
+
+BIASINTERVAL sqrt(BIASINTERVAL a)
+{
+    BIASINTERVAL result;
+    BiasSqrt(&result, &a);
+    return result;
+}
+
+BIASINTERVAL exp(BIASINTERVAL a)
+{
+    BIASINTERVAL result;
+    BiasExp(&result, &a);
+    return result;
+}
+
+BIASINTERVAL sin(BIASINTERVAL a)
+{
+    BIASINTERVAL result;
+    BiasSin(&result, &a);
+    return result;
+}
+
+BIASINTERVAL cos(BIASINTERVAL a)
+{
+    BIASINTERVAL result;
+    BiasCos(&result, &a);
+    return result;
+}

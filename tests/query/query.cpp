@@ -2,7 +2,7 @@
 using namespace std;
 
 #ifdef USE_FILIB_PLUSPLUS
-#define RUN_QUERY(METHOD, PRINT_METHOD, VARIABLE_COUNT, DISTRIBUTION, VERIFY_METHOD)              \
+#define RUN_QUERY(METHOD, PRINT_METHOD, VARIABLE_COUNT, DISTRIBUTION, VERIFY_METHOD)                    \
     do                                                                                                  \
     {                                                                                                   \
         for (int i = 0; i < TEST_SIZE; i++)                                                             \
@@ -16,10 +16,16 @@ using namespace std;
             PRINT_QUERIES(fi_multiplicative, "MULTIPLICATIVE", METHOD, PRINT_METHOD, VARIABLE_COUNT);   \
             filib::fp_traits<double, filib::pred_succ_rounding>::setup();                               \
             PRINT_QUERIES(fi_pred_succ, "PRED SUCC", METHOD, PRINT_METHOD, VARIABLE_COUNT);             \
+            BiasRoundUp();                                                                              \
+            PRINT_QUERIES(BIASINTERVAL, "BIAS ROUND UP", METHOD, PRINT_METHOD, VARIABLE_COUNT);         \
+            BiasRoundDown();                                                                            \
+            PRINT_QUERIES(BIASINTERVAL, "BIAS ROUND DOWN", METHOD, PRINT_METHOD, VARIABLE_COUNT);       \
+            BiasRoundNear();                                                                            \
+            PRINT_QUERIES(BIASINTERVAL, "BIAS ROUND NEAR", METHOD, PRINT_METHOD, VARIABLE_COUNT);       \
         }                                                                                               \
     } while (0)
 #else
-#define RUN_QUERY(METHOD, PRINT_METHOD, VARIABLE_COUNT, DISTRIBUTION)               \
+#define RUN_QUERY(METHOD, PRINT_METHOD, VARIABLE_COUNT, DISTRIBUTION)                     \
     do                                                                                    \
     {                                                                                     \
         for (int i = 0; i < TEST_SIZE; i++)                                               \
@@ -33,6 +39,8 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+    BiasInit();
+    BiasFuncInit();
     RUN_QUERY(addition, print_addition, 2, binary_all_range, check_input_addition);
     RUN_QUERY(subtraction, print_subtraction, 2, binary_all_range, check_input_subtraction);
     RUN_QUERY(multiplication, print_multiplication, 2, binary_all_range, check_input_multiplication);

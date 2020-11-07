@@ -14,7 +14,7 @@ except ImportError:  # Python 3.x
 
 test_names = []
 method_names = []
-colors = ["#1C3144", "#2274A5", "#32936F", "#D00000", "#FFBF00"]
+colors = ["#1C3144", "#2274A5", "#32936F", "#D00000", "#FFBF00", "#8D2AB7", "#27182E", "#232534"]
 
 bin_size = 30  # the ones that we actually care about, in this case we care about distribution between 0 to 3
 actual_bin_size = 50  # position 40 and 50 are for outliers and negative intervals

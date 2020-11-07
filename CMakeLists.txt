@@ -13,7 +13,7 @@ endif()
 
 set (CMAKE_CXX_STANDARD 11)
 include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-march=native" COMPILER_SUPPORTS_MARCH_NATIVE)
+CHECK_CXX_COMPILER_FLAG("-march=native -fPIC -lstdc++ -lm" COMPILER_SUPPORTS_MARCH_NATIVE)
 if(COMPILER_SUPPORTS_MARCH_NATIVE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
 endif()
@@ -66,6 +66,24 @@ else()
 	target_link_libraries(intervals PUBLIC ${prim})
 endif()
 
+find_library(Bias Bias "/home/tx/Desktop/Profil-2.0.8/lib")
+if (NOT Bias)
+	message("Bias not found")
+else()
+	message("Bias = ${Bias}")
+	target_link_libraries(intervals PUBLIC ${Bias})
+	target_include_directories(intervals PUBLIC "/home/tx/Desktop/Profil-2.0.8/src")
+	target_include_directories(intervals PUBLIC "/home/tx/Desktop/Profil-2.0.8/config/x86-64-Linux-compat-gcc")
+endif()
+
+find_library(Profil Profil "/home/tx/Desktop/Profil-2.0.8/lib")
+if (NOT Profil)
+	message("Profil not found")
+else()
+	message("Profil = ${Profil}")
+	target_link_libraries(intervals PUBLIC ${Profil})
+	target_include_directories(intervals PUBLIC "/home/tx/Desktop/Profil-2.0.8/src")
+endif()
 
 
 # use GMP library to ensure query outputs are in rationals

@@ -3,6 +3,7 @@ using namespace std;
 
 // get a timer for each interval type we have
 double boost_timer, fic_timer, native_switch_timer, multiplicative_timer, pred_succ_timer;
+double bias_up_timer, bias_down_timer, bias_near_timer;
 
 // although those definition seems redundant
 // I'm just trying to make my life easier
@@ -16,6 +17,9 @@ double boost_timer, fic_timer, native_switch_timer, multiplicative_timer, pred_s
         native_switch_timer = 0;                                                                                                                                \
         multiplicative_timer = 0;                                                                                                                               \
         pred_succ_timer = 0;                                                                                                                                    \
+        bias_up_timer = 0;                                                                                                                                      \
+        bias_down_timer = 0;                                                                                                                                    \
+        bias_near_timer = 0;                                                                                                                                    \
         for (int i = 0; i < SPEED_TEST_LOOP; i++)                                                                                                               \
         {                                                                                                                                                       \
             PRE_FILL_RANDOM_DOUBLES(DISTRIBUTION, VARIABLE_COUNT, VERIFY_METHOD);                                                                               \
@@ -27,12 +31,21 @@ double boost_timer, fic_timer, native_switch_timer, multiplicative_timer, pred_s
             COMPUTE_TIME(fi_multiplicative, METHOD, VARIABLE_COUNT, multiplicative_timer);                                                                      \
             filib::fp_traits<double, filib::pred_succ_rounding>::setup();                                                                                       \
             COMPUTE_TIME(fi_pred_succ, METHOD, VARIABLE_COUNT, pred_succ_timer);                                                                                \
+            BiasRoundUp();                                                                                                                                      \
+            COMPUTE_TIME(BIASINTERVAL, METHOD, VARIABLE_COUNT, bias_up_timer);                                                                                  \
+            BiasRoundDown();                                                                                                                                    \
+            COMPUTE_TIME(BIASINTERVAL, METHOD, VARIABLE_COUNT, bias_down_timer);                                                                                \
+            BiasRoundNear();                                                                                                                                    \
+            COMPUTE_TIME(BIASINTERVAL, METHOD, VARIABLE_COUNT, bias_near_timer);                                                                                \
         }                                                                                                                                                       \
         printf("TIME, %s, FILIB C, %lf us, %lfx time that FILIB C version took\n", INFO, fic_timer, fic_timer / fic_timer);                                     \
         printf("TIME, %s, BOOST, %lf us, %lfx time that FILIB C version took\n", INFO, boost_timer, boost_timer / fic_timer);                                   \
         printf("TIME, %s, NATIVE SWITCHED METHOD, %lf us, %lfx time that FILIB C version took\n", INFO, native_switch_timer, native_switch_timer / fic_timer);  \
         printf("TIME, %s, MULTIPLICATIVE METHOD, %lf us, %lfx time that FILIB C version took\n", INFO, multiplicative_timer, multiplicative_timer / fic_timer); \
         printf("TIME, %s, PRED SUCC METHOD, %lf us, %lfx time that FILIB C version took\n", INFO, pred_succ_timer, pred_succ_timer / fic_timer);                \
+        printf("TIME, %s, BIAS UPWARD, %lf us, %lfx time that FILIB C version took\n", INFO, bias_up_timer, bias_up_timer / fic_timer);                         \
+        printf("TIME, %s, BIAS DOWNWARD, %lf us, %lfx time that FILIB C version took\n", INFO, bias_down_timer, bias_down_timer / fic_timer);                   \
+        printf("TIME, %s, BIAS NEAR, %lf us, %lfx time that FILIB C version took\n", INFO, bias_near_timer, bias_near_timer / fic_timer);                       \
     }                                                                                                                                                           \
     while (0)
 #else
@@ -57,6 +70,8 @@ double boost_timer, fic_timer, native_switch_timer, multiplicative_timer, pred_s
 
 int main(int argc, char *argv[])
 {
+    BiasInit();
+    BiasFuncInit();
     // we will run each method defined in method.hpp for each available interval library
     RUN_SPEED(addition, "ADDITION", 2, binary_all_range, check_input_addition);
     RUN_SPEED(subtraction, "SUBTRACTION", 2, binary_all_range, check_input_subtraction);
