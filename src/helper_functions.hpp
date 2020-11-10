@@ -18,9 +18,6 @@
 #include <string.h>
 #include <fstream>
 
-#include <highfive/H5Easy.hpp>
-#include <highfive/H5File.hpp>
-
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // all the generator stuffs for random numbers
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -63,7 +60,6 @@ std::vector<gmp::Rational> comp_gmp_rationals; // store the gmp rationals
 // ******************************************************************************************************************************************************************************************************
 std::vector<gmp::Rational> all_used_rationals; // store all the rationals that will be used
 int global_used_rational_index = 0;            // to use the rationals stored
-int local_used_rational_index = 0;             // to use the rationals stored
 // ******************************************************************************************************************************************************************************************************
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -75,13 +71,12 @@ double random_double(std::uniform_real_distribution<double> distribution)
     double number = distribution(generator);
     return number;
 #else
-    if (global_used_rational_index + local_used_rational_index >= all_used_rationals.size())
+    if (global_used_rational_index >= all_used_rationals.size())
     {
         global_used_rational_index = 0;
-        local_used_rational_index = 0;
     }
-    gmp::Rational recorded_rat = all_used_rationals[global_used_rational_index + local_used_rational_index];
-    local_used_rational_index++;
+    gmp::Rational recorded_rat = all_used_rationals[global_used_rational_index];
+    global_used_rational_index++;
     return recorded_rat.to_double();
 #endif
 }
@@ -200,8 +195,6 @@ inline double benchmarkTimer(std::function<void()> op)
                 }                                                            \
             }                                                                \
         }                                                                    \
-        local_used_rational_index = 0;                                       \
-        global_used_rational_index++;                                        \
     } while (0)
 
 // print out the gap of the interval
