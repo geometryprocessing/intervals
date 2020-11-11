@@ -1,6 +1,8 @@
 #include "../../src/methods.hpp"
 using namespace std;
+#ifdef USE_SYSTEM_RANDOM
 #undef USE_SYSTEM_RANDOM
+#endif
 #ifdef USE_FILIB_PLUSPLUS
 #define RUN_QUERY(METHOD, PRINT_METHOD, VARIABLE_COUNT, DISTRIBUTION, VERIFY_METHOD)                    \
     do                                                                                                  \
@@ -34,11 +36,11 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     read_rationals_from_file("../rational_datas/addition_used_rationals.txt");
-    for (int i = 0; i<1000000; i++){
-        print_rational(pre_defined_rationals[i]);
-        printf("\n");
-    }
-    // RUN_QUERY(addition, print_addition, 2, binary_all_range, check_input_addition);
+    // for (int i = 0; i<1000000; i++){
+    //     print_rational(pre_defined_rationals[i]);
+    //     printf("\n");
+    // }
+    RUN_QUERY(addition, print_addition, 2, binary_all_range, check_input_addition);
     // RUN_QUERY(subtraction, print_subtraction, 2, binary_all_range, check_input_subtraction);
     // RUN_QUERY(multiplication, print_multiplication, 2, binary_all_range, check_input_multiplication);
     // RUN_QUERY(division, print_division, 2, binary_all_range, check_input_division);
