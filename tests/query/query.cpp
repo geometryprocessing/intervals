@@ -1,6 +1,5 @@
 #include "../../src/methods.hpp"
 using namespace std;
-
 #ifdef USE_FILIB_PLUSPLUS
 #define RUN_QUERY(METHOD, PRINT_METHOD, VARIABLE_COUNT, DISTRIBUTION, VERIFY_METHOD)                    \
     do                                                                                                  \
@@ -41,6 +40,26 @@ int main(int argc, char *argv[])
 {
     BiasInit();
     BiasFuncInit();
+#ifndef USE_SYSTEM_RANDOM
+    read_rationals_from_file("../rational_datas/addition_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/subtraction_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/multiplication_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/division_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/expr1_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/expr2_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/expr3_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/square_root_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/exponential_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/sin_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/cos_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/extra_function1_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/extra_function2_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/extra_function3_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/extra_function4_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/extra_function5_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/extra_function6_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/extra_function7_used_rationals.txt");
+#endif
     RUN_QUERY(addition, print_addition, 2, binary_all_range, check_input_addition);
     RUN_QUERY(subtraction, print_subtraction, 2, binary_all_range, check_input_subtraction);
     RUN_QUERY(multiplication, print_multiplication, 2, binary_all_range, check_input_multiplication);
