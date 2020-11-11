@@ -234,3 +234,5 @@ mathmetica_notebooks/*.txt
 
 datas/
 graphs/
+
+rational_datas/*.txt

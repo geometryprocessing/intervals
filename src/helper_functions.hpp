@@ -15,8 +15,7 @@
 #include <vector>
 #include <fstream>
 #include <stdio.h>
-#include <string.h>
-#include <fstream>
+#include <sstream>
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // all the generator stuffs for random numbers
@@ -58,7 +57,7 @@ std::vector<gmp::Rational> comp_gmp_rationals; // store the gmp rationals
 // ******************************************************************************************************************************************************************************************************
 // if we want to read pre-defined doubles, we will read them into rational then convert to double
 // ******************************************************************************************************************************************************************************************************
-std::vector<gmp::Rational> all_used_rationals; // store all the rationals that will be used
+std::vector<gmp::Rational> pre_defined_rationals; // store all the rationals that will be used
 int global_used_rational_index = 0;            // to use the rationals stored
 // ******************************************************************************************************************************************************************************************************
 
@@ -71,14 +70,55 @@ double random_double(std::uniform_real_distribution<double> distribution)
     double number = distribution(generator);
     return number;
 #else
-    if (global_used_rational_index >= all_used_rationals.size())
+    if (global_used_rational_index >= pre_defined_rationals.size())
     {
         global_used_rational_index = 0;
     }
-    gmp::Rational recorded_rat = all_used_rationals[global_used_rational_index];
+    gmp::Rational recorded_rat = pre_defined_rationals[global_used_rational_index];
     global_used_rational_index++;
     return recorded_rat.to_double();
 #endif
+}
+
+void read_rationals_from_file(const std::string &inputFileName)
+{
+    std::ifstream infile;
+    infile.open(inputFileName);
+    std::vector<std::string> record;
+    record.resize(2);
+    if (!infile.is_open())
+    {
+        std::cout << "Path Wrong or File Does Not Exist" << std::endl;
+        std::cout << "path, " << inputFileName << std::endl;
+    }
+    while (infile) // there is input overload classfile
+    {
+        std::string s;
+        // get the line
+        if (!getline(infile, s))
+            break;
+        std::istringstream ss(s);
+        int c = 0;
+        while (ss)
+        {
+            std::string line;
+
+            if (!getline(ss, line, ','))
+                break;
+            try
+            {
+                record[c] = line;
+                c++;
+            }
+            catch (const std::invalid_argument e)
+            {
+                e.what();
+            }
+        }
+        gmp::Rational rt;
+        mpq_set_str(rt.value, (record[1] + "/" + record[0]).c_str(), 10);
+        pre_defined_rationals.push_back(rt);
+    }
 }
 
 bool within_range(double lower, double upper, gmp::Rational rational_result)
