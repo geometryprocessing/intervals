@@ -206,18 +206,27 @@ inline double benchmarkTimer(std::function<void()> op)
 // VARIABLE_COUNT: the number of variables needed for this computation
 // OUTPUT =>
 // print out the gap for this interval type for this method
-#define COMPUTE_GAP(INTERVAL, TYPE_NAME, METHOD, INFO, VARIABLE_COUNT) \
-    do                                                                 \
-    {                                                                  \
-        std::vector<INTERVAL> used_variables(VARIABLE_COUNT);          \
-        for (int i = 0; i < VARIABLE_COUNT; i++)                       \
-        {                                                              \
-            used_variables[i] = INTERVAL(comp_doubles[i]);             \
-        }                                                              \
-        INTERVAL result = METHOD<INTERVAL>(used_variables);            \
-        printf("GAP, %s, %s, ", INFO, TYPE_NAME);                      \
-        print_rational(interval_size(lower(result), upper(result)));   \
-        printf("\n");                                                  \
+#define COMPUTE_GAP(INTERVAL, TYPE_NAME, METHOD, INFO, VARIABLE_COUNT)   \
+    do                                                                   \
+    {                                                                    \
+        std::vector<INTERVAL> used_variables(VARIABLE_COUNT);            \
+        for (int i = 0; i < VARIABLE_COUNT; i++)                         \
+        {                                                                \
+            used_variables[i] = INTERVAL(comp_doubles[i]);               \
+        }                                                                \
+        try                                                              \
+        {                                                                \
+            INTERVAL result = METHOD<INTERVAL>(used_variables);          \
+            printf("GAP, %s, %s, ", INFO, TYPE_NAME);                    \
+            print_rational(interval_size(lower(result), upper(result))); \
+            printf("\n");                                                \
+        }                                                                \
+        catch (int e)                                                    \
+        {                                                                \
+            printf("GAP, %s, %s, ", INFO, TYPE_NAME);                    \
+            print_rational(interval_size(1.0, -1.0));                    \
+            printf("\n");                                                \
+        }                                                                \
     } while (0)
 
 // accumulate the time for doing a method
@@ -254,16 +263,24 @@ inline double benchmarkTimer(std::function<void()> op)
 // PRINT_METHOD:   the printing of the method we use, should be one to one correspondent and defined in methods.hpp
 // OUTPUT =>
 // The query will be printed out and this query can be used for checking correctness
-#define PRINT_QUERIES(INTERVAL, TYPE_NAME, METHOD, PRINT_METHOD, VARIABLE_COUNT)     \
-    do                                                                               \
-    {                                                                                \
-        std::vector<INTERVAL> used_variables(VARIABLE_COUNT);                        \
-        for (int i = 0; i < VARIABLE_COUNT; i++)                                     \
-        {                                                                            \
-            used_variables[i] = INTERVAL(comp_doubles[i]);                           \
-        }                                                                            \
-        INTERVAL result = METHOD<INTERVAL>(used_variables);                          \
-        printf("%s: ", TYPE_NAME);                                                   \
-        print_query(lower(result), upper(result), PRINT_METHOD(comp_gmp_rationals)); \
+#define PRINT_QUERIES(INTERVAL, TYPE_NAME, METHOD, PRINT_METHOD, VARIABLE_COUNT)         \
+    do                                                                                   \
+    {                                                                                    \
+        std::vector<INTERVAL> used_variables(VARIABLE_COUNT);                            \
+        for (int i = 0; i < VARIABLE_COUNT; i++)                                         \
+        {                                                                                \
+            used_variables[i] = INTERVAL(comp_doubles[i]);                               \
+        }                                                                                \
+        try                                                                              \
+        {                                                                                \
+            INTERVAL result = METHOD<INTERVAL>(used_variables);                          \
+            printf("%s: ", TYPE_NAME);                                                   \
+            print_query(lower(result), upper(result), PRINT_METHOD(comp_gmp_rationals)); \
+        }                                                                                \
+        catch (int e)                                                                    \
+        {                                                                                \
+            printf("%s: ", TYPE_NAME);                                                   \
+            print_query(1.0, -1.0, PRINT_METHOD(comp_gmp_rationals));                    \
+        }                                                                                \
     } while (0)
 // ******************************************************************************************************************************************************************************************************
