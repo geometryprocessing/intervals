@@ -2,7 +2,7 @@
 using namespace std;
 
 #ifdef USE_FILIB_PLUSPLUS
-#define RUN_QUERY(METHOD, PRINT_METHOD, VARIABLE_COUNT, DISTRIBUTION, VERIFY_METHOD)              \
+#define RUN_QUERY(METHOD, PRINT_METHOD, VARIABLE_COUNT, DISTRIBUTION, VERIFY_METHOD)                    \
     do                                                                                                  \
     {                                                                                                   \
         for (int i = 0; i < TEST_SIZE; i++)                                                             \
@@ -19,7 +19,7 @@ using namespace std;
         }                                                                                               \
     } while (0)
 #else
-#define RUN_QUERY(METHOD, PRINT_METHOD, VARIABLE_COUNT, DISTRIBUTION)               \
+#define RUN_QUERY(METHOD, PRINT_METHOD, VARIABLE_COUNT, DISTRIBUTION)                     \
     do                                                                                    \
     {                                                                                     \
         for (int i = 0; i < TEST_SIZE; i++)                                               \

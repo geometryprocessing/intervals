@@ -1,27 +1,91 @@
-// This file is part of TriWild, a software for generating linear/curved triangle meshes.
-//
-// Copyright (C) 2019 Yixin Hu <yixin.hu@nyu.edu>
-// This Source Code Form is subject to the terms of the Mozilla Public License
-// v. 2.0. If a copy of the MPL was not distributed with this file, You can
-// obtain one at http://mozilla.org/MPL/2.0/.
-//
 #pragma once
+
 #include <gmp.h>
 #include <iostream>
 
 namespace gmp
 {
+
     class Rational
-    { //https://cs.nyu.edu/acsys/cvc3/releases/1.5/doc/rational-gmp_8cpp-source.html
+    {
     public:
         mpq_t value;
-        void canonicalize()
+        void canonicalize() { mpq_canonicalize(value); }
+        int get_sign() const { return mpq_sgn(value); }
+        void print_numerator()
         {
-            mpq_canonicalize(value);
+            mpz_t numerator;
+            mpz_init(numerator);
+            // std::cout<<"++++++++++++"<<std::endl;
+            mpq_get_num(numerator, value);
+            // std::cout<<"*************"<<std::endl;
+            mpz_out_str(NULL, 10, numerator);
+            // long v=mpz_get_si(numerator);
+            // std::cout<<v;
+            mpz_clear(numerator);
         }
-        int get_sign()
+        void print_denominator()
         {
-            return mpq_sgn(value);
+            mpz_t denominator;
+            mpz_init(denominator);
+            mpq_get_den(denominator, value);
+
+            mpz_out_str(NULL, 10, denominator);
+            // long v=mpz_get_si(denominator);
+            // std::cout<<v;
+            mpz_clear(denominator);
+        }
+        long long get_numerator()
+        {
+            mpz_t numerator;
+            mpz_init(numerator);
+
+            mpq_get_num(numerator, value);
+            long long v = mpz_get_si(numerator);
+
+            mpz_clear(numerator);
+            return v;
+        }
+        long long get_denominator()
+        {
+            mpz_t denominator;
+            mpz_init(denominator);
+            mpq_get_den(denominator, value);
+
+            long long v = mpz_get_si(denominator);
+            // std::string s(mpz_get_str(NULL, 10, denominator));
+            // long long v=std::stoll(s);
+            mpz_clear(denominator);
+            return v;
+        }
+        std::string get_denominator_str()
+        {
+            mpz_t denominator;
+            mpz_init(denominator);
+            mpq_get_den(denominator, value);
+
+            std::string v(mpz_get_str(NULL, 10, denominator));
+
+            mpz_clear(denominator);
+            return v;
+        }
+        std::string get_numerator_str()
+        {
+            mpz_t numerator;
+            mpz_init(numerator);
+
+            mpq_get_num(numerator, value);
+            std::string v(mpz_get_str(NULL, 10, numerator));
+            ;
+
+            mpz_clear(numerator);
+            return v;
+        }
+        double get_double(const std::string &num, const std::string &denom)
+        {
+            std::string tmp = num + "/" + denom;
+            mpq_set_str(value, tmp.c_str(), 10);
+            return mpq_get_d(value);
         }
 
         Rational()
@@ -34,7 +98,7 @@ namespace gmp
         {
             mpq_init(value);
             mpq_set_d(value, d);
-            //            canonicalize();
+            canonicalize();
         }
 
         Rational(const mpq_t &v_)
@@ -50,46 +114,12 @@ namespace gmp
             mpq_set(value, other.value);
         }
 
-        ~Rational()
-        {
-            mpq_clear(value);
-        }
+        ~Rational() { mpq_clear(value); }
 
-        //        //+, - another point
-        //        Rational operator+(const Rational &r) const {
-        //            Rational r_out;
-        //            mpq_add(r_out.value, value, r.value);
-        //            return r_out;
-        //        }
-        //
-        //        Rational operator-(const Rational &r) const {
-        //            Rational r_out;
-        //            mpq_sub(r_out.value, value, r.value);
-        //            return r_out;
-        //        }
-        //
-        //        //*, / double/rational
-        //        Rational operator*(const Rational &r) const {
-        //            Rational r_out;
-        //            mpq_mul(r_out.value, value, r.value);
-        //            return r_out;
-        //        }
-        //
-        //        Rational operator/(const Rational &r) const {
-        //            Rational r_out;
-        //            mpq_div(r_out.value, value, r.value);
-        //            return r_out;
-        //        }
-        //
-        //        //=
-        //        void operator=(const Rational &r) {
-        //            mpq_set(value, r.value);
-        //        }
-
-        friend Rational operator-(const Rational &x)
+        friend Rational operator-(const Rational &v)
         {
             Rational r_out;
-            mpq_neg(r_out.value, x.value);
+            mpq_neg(r_out.value, v.value);
             return r_out;
         }
 
@@ -118,18 +148,6 @@ namespace gmp
         {
             Rational r_out;
             mpq_div(r_out.value, x.value, y.value);
-            return r_out;
-        }
-
-        friend Rational pow(const Rational &x, int p)
-        {
-            Rational r_out = x;
-            for (int i = 1; i < std::abs(p); i++)
-            {
-                r_out = r_out * x;
-            }
-            if (p < 0)
-                return 1 / r_out;
             return r_out;
         }
 
@@ -179,11 +197,8 @@ namespace gmp
             return !mpq_equal(r.value, r1.value);
         }
 
-        //to double
-        double to_double()
-        {
-            return mpq_get_d(value);
-        }
+        // to double
+        double to_double() { return mpq_get_d(value); }
 
         //<<
         friend std::ostream &operator<<(std::ostream &os, const Rational &r)
