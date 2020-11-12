@@ -68,4 +68,8 @@ int main(int argc, char *argv[])
     RUN_GAP(extra_function1, "AUTO GENERATED RANDOM EXPRESSION 1", extra_function1_variable_count, extra_function1_range, check_input_extra_function1);
     RUN_GAP(extra_function2, "AUTO GENERATED RANDOM EXPRESSION 2", extra_function2_variable_count, extra_function2_range, check_input_extra_function2);
     RUN_GAP(extra_function3, "AUTO GENERATED RANDOM EXPRESSION 3", extra_function3_variable_count, extra_function3_range, check_input_extra_function3);
+    RUN_GAP(extra_function4, "AUTO GENERATED RANDOM EXPRESSION 4", extra_function4_variable_count, extra_function4_range, check_input_extra_function4);
+    RUN_GAP(extra_function5, "AUTO GENERATED RANDOM EXPRESSION 5", extra_function5_variable_count, extra_function5_range, check_input_extra_function5);
+    RUN_GAP(extra_function6, "AUTO GENERATED RANDOM EXPRESSION 6", extra_function6_variable_count, extra_function6_range, check_input_extra_function6);
+    RUN_GAP(extra_function7, "AUTO GENERATED RANDOM EXPRESSION 7", extra_function7_variable_count, extra_function7_range, check_input_extra_function7);
 }
