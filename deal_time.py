@@ -36,6 +36,8 @@ def to_table(file_name):
     comp_datas_table = comp_datas_table.reindex(test_names)
     print(comp_datas_table)
 
+    print(comp_datas_table.to_latex())
+
 def main():
     if len(sys.argv)>1:
         to_table(sys.argv[1])
