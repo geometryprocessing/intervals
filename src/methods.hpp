@@ -146,6 +146,209 @@ bool check_input_expr3(const std::vector<double> &value_array)
     return true;
 }
 
+
+
+// Generated function strings for expr4
+template <class T>
+inline T expr4(const std::vector<T> &value_array)
+{
+    return (((value_array[5]-value_array[2]) * (value_array[0]+value_array[0])-value_array[5]+value_array[0]) * (((value_array[1]-(value_array[4]) * (value_array[3])) * (value_array[2]-value_array[1]-(value_array[5]) / (value_array[2]))) / (value_array[0]-value_array[1]-(value_array[3]) / (value_array[5])-(value_array[4]) * (value_array[0])+value_array[2]))) * (((value_array[3]+value_array[1]-((value_array[1]) / (value_array[2])) * (value_array[3])) / (value_array[4])) * ((value_array[4]-value_array[3]) * ((value_array[5]) / (value_array[3]))-value_array[2]+value_array[5]+(value_array[1]) / (value_array[0])+(value_array[4]+value_array[5]+(value_array[1]) * (value_array[0])) / ((value_array[4]) * ((value_array[4]) * (value_array[2])))));
+}
+std::string print_expr4(const std::vector<gmp::Rational> &value_array)
+{
+    return std::string() + "(" + "(" + "(" + rational_to_string(value_array[5]) + "-" + rational_to_string(value_array[2]) + ")" + "*" + "(" + rational_to_string(value_array[0]) + "+" + rational_to_string(value_array[0])+ ")" + "-" + rational_to_string(value_array[5]) + "+" + rational_to_string(value_array[0]) + ")" + "*" + "(" + "(" + "(" + rational_to_string(value_array[1]) + "-" + "(" + rational_to_string(value_array[4]) + ")" + "*" + "(" + rational_to_string(value_array[3])+ ")" + ")" + "*" + "(" + rational_to_string(value_array[2]) + "-" + rational_to_string(value_array[1]) + "-" + "(" + rational_to_string(value_array[5]) + ")" + "/" + "(" + rational_to_string(value_array[2])+ ")"+ ")" + ")" + "/" + "(" + rational_to_string(value_array[0]) + "-" + rational_to_string(value_array[1]) + "-" + "(" + rational_to_string(value_array[3]) + ")" + "/" + "(" + rational_to_string(value_array[5])+ ")" + "-" + "(" + rational_to_string(value_array[4]) + ")" + "*" + "(" + rational_to_string(value_array[0])+ ")" + "+" + rational_to_string(value_array[2])+ ")"+ ")" + ")" + "*" + "(" + "(" + "(" + rational_to_string(value_array[3]) + "+" + rational_to_string(value_array[1]) + "-" + "(" + "(" + rational_to_string(value_array[1]) + ")" + "/" + "(" + rational_to_string(value_array[2])+ ")" + ")" + "*" + "(" + rational_to_string(value_array[3])+ ")" + ")" + "/" + "(" + rational_to_string(value_array[4])+ ")" + ")" + "*" + "(" + "(" + rational_to_string(value_array[4]) + "-" + rational_to_string(value_array[3]) + ")" + "*" + "(" + "(" + rational_to_string(value_array[5]) + ")" + "/" + "(" + rational_to_string(value_array[3])+ ")"+ ")" + "-" + rational_to_string(value_array[2]) + "+" + rational_to_string(value_array[5]) + "+" + "(" + rational_to_string(value_array[1]) + ")" + "/" + "(" + rational_to_string(value_array[0])+ ")" + "+" + "(" + rational_to_string(value_array[4]) + "+" + rational_to_string(value_array[5]) + "+" + "(" + rational_to_string(value_array[1]) + ")" + "*" + "(" + rational_to_string(value_array[0])+ ")" + ")" + "/" + "(" + "(" + rational_to_string(value_array[4]) + ")" + "*" + "(" + "(" + rational_to_string(value_array[4]) + ")" + "*" + "(" + rational_to_string(value_array[2])+ ")"+ ")"+ ")"+ ")"+ ")";
+}
+bool check_input_expr4(const std::vector<double> &value_array)
+{
+    if (value_array[2] == 0)
+        return false;
+    if (value_array[5] == 0)
+        return false;
+    if (value_array[0]-value_array[1]-(value_array[3]) / (value_array[5])-(value_array[4]) * (value_array[0])+value_array[2] == 0)
+        return false;
+    if (value_array[4] == 0)
+        return false;
+    if (value_array[3] == 0)
+        return false;
+    if (value_array[0] == 0)
+        return false;
+    if ((value_array[4]) * ((value_array[4]) * (value_array[2])) == 0)
+        return false;
+    return true;
+}
+const std::vector<std::uniform_real_distribution<double>> expr4_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+const int expr4_variable_count = 6;
+
+
+// Generated function strings for expr5
+template <class T>
+inline T expr5(const std::vector<T> &value_array)
+{
+    return value_array[1]-(value_array[0]+value_array[5]) * (((value_array[6]-value_array[2]) / ((value_array[9]) / (value_array[1]))+value_array[8]) * (((value_array[8]) / (value_array[5])+value_array[9]+value_array[4]) * (value_array[4])))-((value_array[2]-value_array[0]+value_array[3]-value_array[6]+value_array[7]+value_array[9]+(value_array[4]) * (value_array[3])) * ((value_array[2]+value_array[6]) / ((value_array[0]) / (value_array[8]))+((value_array[1]) / (value_array[5])) / (value_array[3]))) / (value_array[7]);
+}
+std::string print_expr5(const std::vector<gmp::Rational> &value_array)
+{
+    return std::string() + rational_to_string(value_array[1]) + "-" + "(" + rational_to_string(value_array[0]) + "+" + rational_to_string(value_array[5]) + ")" + "*" + "(" + "(" + "(" + rational_to_string(value_array[6]) + "-" + rational_to_string(value_array[2]) + ")" + "/" + "(" + "(" + rational_to_string(value_array[9]) + ")" + "/" + "(" + rational_to_string(value_array[1])+ ")"+ ")" + "+" + rational_to_string(value_array[8]) + ")" + "*" + "(" + "(" + "(" + rational_to_string(value_array[8]) + ")" + "/" + "(" + rational_to_string(value_array[5])+ ")" + "+" + rational_to_string(value_array[9]) + "+" + rational_to_string(value_array[4]) + ")" + "*" + "(" + rational_to_string(value_array[4])+ ")"+ ")"+ ")" + "-" + "(" + "(" + rational_to_string(value_array[2]) + "-" + rational_to_string(value_array[0]) + "+" + rational_to_string(value_array[3]) + "-" + rational_to_string(value_array[6]) + "+" + rational_to_string(value_array[7]) + "+" + rational_to_string(value_array[9]) + "+" + "(" + rational_to_string(value_array[4]) + ")" + "*" + "(" + rational_to_string(value_array[3])+ ")" + ")" + "*" + "(" + "(" + rational_to_string(value_array[2]) + "+" + rational_to_string(value_array[6]) + ")" + "/" + "(" + "(" + rational_to_string(value_array[0]) + ")" + "/" + "(" + rational_to_string(value_array[8])+ ")"+ ")" + "+" + "(" + "(" + rational_to_string(value_array[1]) + ")" + "/" + "(" + rational_to_string(value_array[5])+ ")" + ")" + "/" + "(" + rational_to_string(value_array[3])+ ")"+ ")" + ")" + "/" + "(" + rational_to_string(value_array[7])+ ")";
+}
+bool check_input_expr5(const std::vector<double> &value_array)
+{
+    if (value_array[1] == 0)
+        return false;
+    if ((value_array[9]) / (value_array[1]) == 0)
+        return false;
+    if (value_array[5] == 0)
+        return false;
+    if (value_array[8] == 0)
+        return false;
+    if ((value_array[0]) / (value_array[8]) == 0)
+        return false;
+    if (value_array[3] == 0)
+        return false;
+    if (value_array[7] == 0)
+        return false;
+    return true;
+}
+const std::vector<std::uniform_real_distribution<double>> expr5_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+const int expr5_variable_count = 10;
+
+// Generated function strings for expr6
+template <class T>
+inline T expr6(const std::vector<T> &value_array)
+{
+    return ((value_array[5]) / (((value_array[6]) * (value_array[4])-value_array[2]-value_array[7]) / (((value_array[4]) * (value_array[2])) * (value_array[6]+value_array[3]))+value_array[0]+value_array[0]-value_array[5]-value_array[3]+value_array[7])) * (value_array[1]);
+}
+std::string print_expr6(const std::vector<gmp::Rational> &value_array)
+{
+    return std::string() + "(" + "(" + rational_to_string(value_array[5]) + ")" + "/" + "(" + "(" + "(" + rational_to_string(value_array[6]) + ")" + "*" + "(" + rational_to_string(value_array[4])+ ")" + "-" + rational_to_string(value_array[2]) + "-" + rational_to_string(value_array[7]) + ")" + "/" + "(" + "(" + "(" + rational_to_string(value_array[4]) + ")" + "*" + "(" + rational_to_string(value_array[2])+ ")" + ")" + "*" + "(" + rational_to_string(value_array[6]) + "+" + rational_to_string(value_array[3])+ ")"+ ")" + "+" + rational_to_string(value_array[0]) + "+" + rational_to_string(value_array[0]) + "-" + rational_to_string(value_array[5]) + "-" + rational_to_string(value_array[3]) + "+" + rational_to_string(value_array[7])+ ")" + ")" + "*" + "(" + rational_to_string(value_array[1])+ ")";
+}
+bool check_input_expr6(const std::vector<double> &value_array)
+{
+    if (((value_array[4]) * (value_array[2])) * (value_array[6]+value_array[3]) == 0)
+        return false;
+    if (((value_array[6]) * (value_array[4])-value_array[2]-value_array[7]) / (((value_array[4]) * (value_array[2])) * (value_array[6]+value_array[3]))+value_array[0]+value_array[0]-value_array[5]-value_array[3]+value_array[7] == 0)
+        return false;
+    return true;
+}
+const std::vector<std::uniform_real_distribution<double>> expr6_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+const int expr6_variable_count = 8;
+
+// Generated function strings for expr7
+template <class T>
+inline T expr7(const std::vector<T> &value_array)
+{
+    return (value_array[2]) / (((value_array[1]) / (value_array[3]+value_array[4])+value_array[0]-value_array[2]+(value_array[1]) / (value_array[3])) * (value_array[6])+value_array[5]);
+}
+std::string print_expr7(const std::vector<gmp::Rational> &value_array)
+{
+    return std::string() + "(" + rational_to_string(value_array[2]) + ")" + "/" + "(" + "(" + "(" + rational_to_string(value_array[1]) + ")" + "/" + "(" + rational_to_string(value_array[3]) + "+" + rational_to_string(value_array[4])+ ")" + "+" + rational_to_string(value_array[0]) + "-" + rational_to_string(value_array[2]) + "+" + "(" + rational_to_string(value_array[1]) + ")" + "/" + "(" + rational_to_string(value_array[3])+ ")" + ")" + "*" + "(" + rational_to_string(value_array[6])+ ")" + "+" + rational_to_string(value_array[5])+ ")";
+}
+bool check_input_expr7(const std::vector<double> &value_array)
+{
+    if (value_array[3]+value_array[4] == 0)
+        return false;
+    if (value_array[3] == 0)
+        return false;
+    if (((value_array[1]) / (value_array[3]+value_array[4])+value_array[0]-value_array[2]+(value_array[1]) / (value_array[3])) * (value_array[6])+value_array[5] == 0)
+        return false;
+    return true;
+}
+const std::vector<std::uniform_real_distribution<double>> expr7_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+const int expr7_variable_count = 7;
+
+// Generated function strings for expr8
+template <class T>
+inline T expr8(const std::vector<T> &value_array)
+{
+    return ((value_array[5]) / ((value_array[7]) / (value_array[0]-((value_array[2]+value_array[1]) * ((value_array[1]) * (value_array[3]))) * (value_array[3]-value_array[4])))) / (value_array[6]);
+}
+std::string print_expr8(const std::vector<gmp::Rational> &value_array)
+{
+    return std::string() + "(" + "(" + rational_to_string(value_array[5]) + ")" + "/" + "(" + "(" + rational_to_string(value_array[7]) + ")" + "/" + "(" + rational_to_string(value_array[0]) + "-" + "(" + "(" + rational_to_string(value_array[2]) + "+" + rational_to_string(value_array[1]) + ")" + "*" + "(" + "(" + rational_to_string(value_array[1]) + ")" + "*" + "(" + rational_to_string(value_array[3])+ ")"+ ")" + ")" + "*" + "(" + rational_to_string(value_array[3]) + "-" + rational_to_string(value_array[4])+ ")"+ ")"+ ")" + ")" + "/" + "(" + rational_to_string(value_array[6])+ ")";
+}
+bool check_input_expr8(const std::vector<double> &value_array)
+{
+    if (value_array[0]-((value_array[2]+value_array[1]) * ((value_array[1]) * (value_array[3]))) * (value_array[3]-value_array[4]) == 0)
+        return false;
+    if ((value_array[7]) / (value_array[0]-((value_array[2]+value_array[1]) * ((value_array[1]) * (value_array[3]))) * (value_array[3]-value_array[4])) == 0)
+        return false;
+    if (value_array[6] == 0)
+        return false;
+    return true;
+}
+const std::vector<std::uniform_real_distribution<double>> expr8_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+const int expr8_variable_count = 8;
+
+
+// Generated function strings for expr9
+template <class T>
+inline T expr9(const std::vector<T> &value_array)
+{
+    return (value_array[0]-value_array[3]-(value_array[2]) * (value_array[5])-value_array[7]+value_array[1]) * (value_array[3])+(((((value_array[4]) * (value_array[1])) / (value_array[7]+value_array[6])) * ((value_array[6]) / (value_array[5])-(value_array[1]) * (value_array[8]))) * (value_array[6])) * (((value_array[2]+value_array[7]) / ((value_array[4]) / (value_array[0]))+((value_array[3]) * (value_array[8])) / (value_array[4]+value_array[7])) / (((value_array[6]-value_array[0]) / (value_array[2]+value_array[5])) / ((value_array[3]) / (value_array[1])+(value_array[7]) * (value_array[1]))))-value_array[5]-((value_array[0]) / (value_array[3])) * (value_array[2]+value_array[8])+value_array[2]+((value_array[8]) / (value_array[5]-value_array[4])-(value_array[6]) / (value_array[2])-value_array[0]-value_array[8]) / ((value_array[0]) / (value_array[4]))+value_array[8];
+}
+std::string print_expr9(const std::vector<gmp::Rational> &value_array)
+{
+    return std::string() + "(" + rational_to_string(value_array[0]) + "-" + rational_to_string(value_array[3]) + "-" + "(" + rational_to_string(value_array[2]) + ")" + "*" + "(" + rational_to_string(value_array[5])+ ")" + "-" + rational_to_string(value_array[7]) + "+" + rational_to_string(value_array[1]) + ")" + "*" + "(" + rational_to_string(value_array[3])+ ")" + "+" + "(" + "(" + "(" + "(" + "(" + rational_to_string(value_array[4]) + ")" + "*" + "(" + rational_to_string(value_array[1])+ ")" + ")" + "/" + "(" + rational_to_string(value_array[7]) + "+" + rational_to_string(value_array[6])+ ")" + ")" + "*" + "(" + "(" + rational_to_string(value_array[6]) + ")" + "/" + "(" + rational_to_string(value_array[5])+ ")" + "-" + "(" + rational_to_string(value_array[1]) + ")" + "*" + "(" + rational_to_string(value_array[8])+ ")"+ ")" + ")" + "*" + "(" + rational_to_string(value_array[6])+ ")" + ")" + "*" + "(" + "(" + "(" + rational_to_string(value_array[2]) + "+" + rational_to_string(value_array[7]) + ")" + "/" + "(" + "(" + rational_to_string(value_array[4]) + ")" + "/" + "(" + rational_to_string(value_array[0])+ ")"+ ")" + "+" + "(" + "(" + rational_to_string(value_array[3]) + ")" + "*" + "(" + rational_to_string(value_array[8])+ ")" + ")" + "/" + "(" + rational_to_string(value_array[4]) + "+" + rational_to_string(value_array[7])+ ")" + ")" + "/" + "(" + "(" + "(" + rational_to_string(value_array[6]) + "-" + rational_to_string(value_array[0]) + ")" + "/" + "(" + rational_to_string(value_array[2]) + "+" + rational_to_string(value_array[5])+ ")" + ")" + "/" + "(" + "(" + rational_to_string(value_array[3]) + ")" + "/" + "(" + rational_to_string(value_array[1])+ ")" + "+" + "(" + rational_to_string(value_array[7]) + ")" + "*" + "(" + rational_to_string(value_array[1])+ ")"+ ")"+ ")"+ ")" + "-" + rational_to_string(value_array[5]) + "-" + "(" + "(" + rational_to_string(value_array[0]) + ")" + "/" + "(" + rational_to_string(value_array[3])+ ")" + ")" + "*" + "(" + rational_to_string(value_array[2]) + "+" + rational_to_string(value_array[8])+ ")" + "+" + rational_to_string(value_array[2]) + "+" + "(" + "(" + rational_to_string(value_array[8]) + ")" + "/" + "(" + rational_to_string(value_array[5]) + "-" + rational_to_string(value_array[4])+ ")" + "-" + "(" + rational_to_string(value_array[6]) + ")" + "/" + "(" + rational_to_string(value_array[2])+ ")" + "-" + rational_to_string(value_array[0]) + "-" + rational_to_string(value_array[8]) + ")" + "/" + "(" + "(" + rational_to_string(value_array[0]) + ")" + "/" + "(" + rational_to_string(value_array[4])+ ")"+ ")" + "+" + rational_to_string(value_array[8]);
+}
+bool check_input_expr9(const std::vector<double> &value_array)
+{
+    if (value_array[7]+value_array[6] == 0)
+        return false;
+    if (value_array[5] == 0)
+        return false;
+    if (value_array[0] == 0)
+        return false;
+    if ((value_array[4]) / (value_array[0]) == 0)
+        return false;
+    if (value_array[4]+value_array[7] == 0)
+        return false;
+    if (value_array[2]+value_array[5] == 0)
+        return false;
+    if (value_array[1] == 0)
+        return false;
+    if ((value_array[3]) / (value_array[1])+(value_array[7]) * (value_array[1]) == 0)
+        return false;
+    if (((value_array[6]-value_array[0]) / (value_array[2]+value_array[5])) / ((value_array[3]) / (value_array[1])+(value_array[7]) * (value_array[1])) == 0)
+        return false;
+    if (value_array[3] == 0)
+        return false;
+    if (value_array[5]-value_array[4] == 0)
+        return false;
+    if (value_array[2] == 0)
+        return false;
+    if (value_array[4] == 0)
+        return false;
+    if ((value_array[0]) / (value_array[4]) == 0)
+        return false;
+    return true;
+}
+const std::vector<std::uniform_real_distribution<double>> expr9_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+const int expr9_variable_count = 9;
+
+// Generated function strings for expr10
+template <class T>
+inline T expr10(const std::vector<T> &value_array)
+{
+    return value_array[4]+(value_array[7]+value_array[2]+((value_array[3]) * (value_array[0])-(value_array[4]) * (value_array[7])) / (value_array[8]+value_array[8]+value_array[6])) * (((value_array[0]-value_array[3]-value_array[6]+(value_array[5]) / (value_array[1])-(value_array[2]) / (value_array[2])) / (value_array[1])) / (value_array[5]));
+}
+std::string print_expr10(const std::vector<gmp::Rational> &value_array)
+{
+    return std::string() + rational_to_string(value_array[4]) + "+" + "(" + rational_to_string(value_array[7]) + "+" + rational_to_string(value_array[2]) + "+" + "(" + "(" + rational_to_string(value_array[3]) + ")" + "*" + "(" + rational_to_string(value_array[0])+ ")" + "-" + "(" + rational_to_string(value_array[4]) + ")" + "*" + "(" + rational_to_string(value_array[7])+ ")" + ")" + "/" + "(" + rational_to_string(value_array[8]) + "+" + rational_to_string(value_array[8]) + "+" + rational_to_string(value_array[6])+ ")" + ")" + "*" + "(" + "(" + "(" + rational_to_string(value_array[0]) + "-" + rational_to_string(value_array[3]) + "-" + rational_to_string(value_array[6]) + "+" + "(" + rational_to_string(value_array[5]) + ")" + "/" + "(" + rational_to_string(value_array[1])+ ")" + "-" + "(" + rational_to_string(value_array[2]) + ")" + "/" + "(" + rational_to_string(value_array[2])+ ")" + ")" + "/" + "(" + rational_to_string(value_array[1])+ ")" + ")" + "/" + "(" + rational_to_string(value_array[5])+ ")"+ ")";
+}
+bool check_input_expr10(const std::vector<double> &value_array)
+{
+    if (value_array[8]+value_array[8]+value_array[6] == 0)
+        return false;
+    if (value_array[1] == 0)
+        return false;
+    if (value_array[2] == 0)
+        return false;
+    if (value_array[5] == 0)
+        return false;
+    return true;
+}
+const std::vector<std::uniform_real_distribution<double>> expr10_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+const int expr10_variable_count = 9;
+
 template <class T>
 inline T square_root(const std::vector<T> &value_array)
 {
