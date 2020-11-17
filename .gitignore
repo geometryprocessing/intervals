@@ -236,3 +236,4 @@ datas/
 graphs/
 
 rational_datas/*.txt
+mathmetica_notebooks/check_difference.py
