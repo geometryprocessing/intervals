@@ -60,6 +60,9 @@ int main(int argc, char *argv[])
     read_rationals_from_file("../rational_datas/extra_function5_used_rationals.txt");
     read_rationals_from_file("../rational_datas/extra_function6_used_rationals.txt");
     read_rationals_from_file("../rational_datas/extra_function7_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/extra_function8_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/extra_function9_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/extra_function10_used_rationals.txt");
 #endif
     RUN_GAP(addition, "ADDITION", 2, binary_all_range, check_input_addition);
     RUN_GAP(subtraction, "SUBTRACTION", 2, binary_all_range, check_input_subtraction);
@@ -86,4 +89,7 @@ int main(int argc, char *argv[])
     RUN_GAP(extra_function5, "RANDOM EXPRESSION 5", extra_function5_variable_count, extra_function5_range, check_input_extra_function5);
     RUN_GAP(extra_function6, "RANDOM EXPRESSION 6", extra_function6_variable_count, extra_function6_range, check_input_extra_function6);
     RUN_GAP(extra_function7, "RANDOM EXPRESSION 7", extra_function7_variable_count, extra_function7_range, check_input_extra_function7);
+    RUN_GAP(extra_function8, "RANDOM EXPRESSION 8", extra_function8_variable_count, extra_function8_range, check_input_extra_function8);
+    RUN_GAP(extra_function9, "RANDOM EXPRESSION 9", extra_function9_variable_count, extra_function9_range, check_input_extra_function9);
+    RUN_GAP(extra_function10, "RANDOM EXPRESSION 10", extra_function10_variable_count, extra_function10_range, check_input_extra_function10);
 }

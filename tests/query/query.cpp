@@ -58,6 +58,9 @@ int main(int argc, char *argv[])
     read_rationals_from_file("../rational_datas/extra_function5_used_rationals.txt");
     read_rationals_from_file("../rational_datas/extra_function6_used_rationals.txt");
     read_rationals_from_file("../rational_datas/extra_function7_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/extra_function8_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/extra_function9_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/extra_function10_used_rationals.txt");
 #endif
     RUN_QUERY(addition, print_addition, 2, binary_all_range, check_input_addition);
     RUN_QUERY(subtraction, print_subtraction, 2, binary_all_range, check_input_subtraction);
@@ -84,5 +87,8 @@ int main(int argc, char *argv[])
     RUN_QUERY(extra_function5, print_extra_function5, extra_function5_variable_count, extra_function5_range, check_input_extra_function5);
     RUN_QUERY(extra_function6, print_extra_function6, extra_function6_variable_count, extra_function6_range, check_input_extra_function6);
     RUN_QUERY(extra_function7, print_extra_function7, extra_function7_variable_count, extra_function7_range, check_input_extra_function7);
+    RUN_QUERY(extra_function8, print_extra_function8, extra_function8_variable_count, extra_function8_range, check_input_extra_function8);
+    RUN_QUERY(extra_function9, print_extra_function9, extra_function9_variable_count, extra_function9_range, check_input_extra_function9);
+    RUN_QUERY(extra_function10, print_extra_function10, extra_function10_variable_count, extra_function10_range, check_input_extra_function10);
     return 0;
 }
