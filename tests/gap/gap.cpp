@@ -46,6 +46,13 @@ int main(int argc, char *argv[])
     read_rationals_from_file("../rational_datas/expr1_used_rationals.txt");
     read_rationals_from_file("../rational_datas/expr2_used_rationals.txt");
     read_rationals_from_file("../rational_datas/expr3_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/expr4_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/expr6_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/expr6_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/expr7_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/expr8_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/expr9_used_rationals.txt");
+    read_rationals_from_file("../rational_datas/expr10_used_rationals.txt");
     read_rationals_from_file("../rational_datas/extra_function1_used_rationals.txt");
     read_rationals_from_file("../rational_datas/extra_function2_used_rationals.txt");
     read_rationals_from_file("../rational_datas/extra_function3_used_rationals.txt");
