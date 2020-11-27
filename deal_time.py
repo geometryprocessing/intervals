@@ -1,6 +1,7 @@
 import pandas as pd
 import platform
 import sys
+pd.set_option('display.float_format', lambda x: '%.2f' % x)
 def to_table(file_name):
     system = str(platform.platform())
     test_names = []
@@ -11,7 +12,7 @@ def to_table(file_name):
         splitted = line.strip().split(",")
         test_name = splitted[1]
         method_name = splitted[2]
-        raw_time = splitted[3].split("us")[0]
+        raw_time = float(splitted[3].split("us")[0])/1000
         fraction = splitted[4].split("x")[0]
         if (not test_name in all_datas):
             all_datas[test_name] = {}
@@ -27,6 +28,7 @@ def to_table(file_name):
     raw_datas_table = pd.DataFrame.from_dict(raw_datas, orient='index', columns=method_names)
     raw_datas_table = raw_datas_table.reindex(test_names)
     print(raw_datas_table)
+    print(raw_datas_table.to_latex())
 
     print("Comparing to filib c version on %s: "%system)
     comp_datas = {}
@@ -37,6 +39,7 @@ def to_table(file_name):
     print(comp_datas_table)
 
     print(comp_datas_table.to_latex())
+
 
 def main():
     if len(sys.argv)>1:
