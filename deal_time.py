@@ -1,9 +1,10 @@
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import sys
 import platform
 import pandas as pd
-import matplotlib as mpl
-mpl.use('Agg')
+
 
 pd.set_option('display.float_format', lambda x: '%.2f' % x)
 plt.rc('xtick', labelsize=5)    # fontsize of the tick labels
