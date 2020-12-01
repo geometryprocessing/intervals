@@ -49,7 +49,7 @@ double bias_up_timer, bias_down_timer, bias_near_timer;
     }                                                                                                                                                           \
     while (0)
 #else
-#define RUN_SPEED(METHOD, INFO, VARIABLE_COUNT, DISTRIBUTION)                                                                 \
+#define RUN_SPEED(METHOD, INFO, VARIABLE_COUNT, DISTRIBUTION, VERIFY_METHOD)                                                  \
     {                                                                                                                         \
         boost_timer = 0;                                                                                                      \
         fic_timer = 0;                                                                                                        \
