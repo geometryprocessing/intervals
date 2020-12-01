@@ -45,7 +45,7 @@ double boost_timer, fic_timer, native_switch_timer, multiplicative_timer, pred_s
         pred_succ_timer = 0;                                                                                                  \
         for (int i = 0; i < SPEED_TEST_LOOP; i++)                                                                             \
         {                                                                                                                     \
-            PRE_FILL_RANDOM_DOUBLES(DISTRIBUTION, VARIABLE_COUNT);                                                            \
+            PRE_FILL_RANDOM_DOUBLES(DISTRIBUTION, VARIABLE_COUNT, VERIFY_METHOD);                                             \
             COMPUTE_TIME(fic_interval, METHOD, VARIABLE_COUNT, fic_timer);                                                    \
             COMPUTE_TIME(boost_interval, METHOD, VARIABLE_COUNT, boost_timer);                                                \
         }                                                                                                                     \
@@ -66,16 +66,16 @@ int main(int argc, char *argv[])
     RUN_SPEED(exponential, "EXPONENTIAL", 1, exp_range, check_input_exponential);
     RUN_SPEED(sin, "SIN", 1, trig_all_range, check_input_sin);
     RUN_SPEED(cos, "COS", 1, trig_all_range, check_input_cos);
-    RUN_SPEED(expr1, "ARITEMETIC EXPRESSION 1", 10, comp_all_range, check_input_expr1);
-    RUN_SPEED(expr2, "ARITEMETIC EXPRESSION 2", 10, comp_all_range, check_input_expr2);
-    RUN_SPEED(expr3, "ARITEMETIC EXPRESSION 3", 10, comp_all_range, check_input_expr3);
-    RUN_SPEED(expr4, "ARITEMETIC EXPRESSION 4", expr4_variable_count, expr4_range, check_input_expr4);
-    RUN_SPEED(expr5, "ARITEMETIC EXPRESSION 5", expr5_variable_count, expr5_range, check_input_expr5);
-    RUN_SPEED(expr6, "ARITEMETIC EXPRESSION 6", expr6_variable_count, expr6_range, check_input_expr6);
-    RUN_SPEED(expr7, "ARITEMETIC EXPRESSION 7", expr7_variable_count, expr7_range, check_input_expr7);
-    RUN_SPEED(expr8, "ARITEMETIC EXPRESSION 8", expr8_variable_count, expr8_range, check_input_expr8);
-    RUN_SPEED(expr9, "ARITEMETIC EXPRESSION 9", expr9_variable_count, expr9_range, check_input_expr9);
-    RUN_SPEED(expr10, "ARITEMETIC EXPRESSION 10", expr10_variable_count, expr10_range, check_input_expr10);
+    RUN_SPEED(expr1, "ARITHMETIC EXPRESSION 1", 10, comp_all_range, check_input_expr1);
+    RUN_SPEED(expr2, "ARITHMETIC EXPRESSION 2", 10, comp_all_range, check_input_expr2);
+    RUN_SPEED(expr3, "ARITHMETIC EXPRESSION 3", 10, comp_all_range, check_input_expr3);
+    RUN_SPEED(expr4, "ARITHMETIC EXPRESSION 4", expr4_variable_count, expr4_range, check_input_expr4);
+    RUN_SPEED(expr5, "ARITHMETIC EXPRESSION 5", expr5_variable_count, expr5_range, check_input_expr5);
+    RUN_SPEED(expr6, "ARITHMETIC EXPRESSION 6", expr6_variable_count, expr6_range, check_input_expr6);
+    RUN_SPEED(expr7, "ARITHMETIC EXPRESSION 7", expr7_variable_count, expr7_range, check_input_expr7);
+    RUN_SPEED(expr8, "ARITHMETIC EXPRESSION 8", expr8_variable_count, expr8_range, check_input_expr8);
+    RUN_SPEED(expr9, "ARITHMETIC EXPRESSION 9", expr9_variable_count, expr9_range, check_input_expr9);
+    RUN_SPEED(expr10, "ARITHMETIC EXPRESSION 10", expr10_variable_count, expr10_range, check_input_expr10);
     RUN_SPEED(extra_function1, "RANDOM EXPRESSION 1", extra_function1_variable_count, extra_function1_range, check_input_extra_function1);
     RUN_SPEED(extra_function2, "RANDOM EXPRESSION 2", extra_function2_variable_count, extra_function2_range, check_input_extra_function2);
     RUN_SPEED(extra_function3, "RANDOM EXPRESSION 3", extra_function3_variable_count, extra_function3_range, check_input_extra_function3);
