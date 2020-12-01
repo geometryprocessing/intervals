@@ -36,7 +36,7 @@ double boost_timer, fic_timer, native_switch_timer, multiplicative_timer, pred_s
     }                                                                                                                                                           \
     while (0)
 #else
-#define RUN_SPEED(METHOD, INFO, VARIABLE_COUNT, DISTRIBUTION)                                                                 \
+#define RUN_SPEED(METHOD, INFO, VARIABLE_COUNT, DISTRIBUTION, VERIFY_METHOD)                                                  \
     {                                                                                                                         \
         boost_timer = 0;                                                                                                      \
         fic_timer = 0;                                                                                                        \

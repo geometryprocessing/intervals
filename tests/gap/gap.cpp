@@ -20,7 +20,7 @@ using namespace std;
     }                                                                                         \
     while (0)
 #else
-#define RUN_GAP(METHOD, INFO, VARIABLE_COUNT, DISTRIBUTION)                     \
+#define RUN_GAP(METHOD, INFO, VARIABLE_COUNT, DISTRIBUTION, VERIFY_METHOD)      \
     {                                                                           \
         for (int i = 0; i < TEST_SIZE; i++)                                     \
         {                                                                       \
