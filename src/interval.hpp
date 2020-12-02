@@ -36,7 +36,7 @@ double upper(fic_interval v)
 // ==============================================================================================
 // include boost interval
 #if defined(__APPLE__)
-#warning("__APPLE__ defined so explicitly defining __USE_ISOC99")
+#warning "__APPLE__ defined so explicitly defining __USE_ISOC99"
 #define __USE_ISOC99
 #endif
 #include "boost/numeric/interval.hpp"
