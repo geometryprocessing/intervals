@@ -26,15 +26,15 @@ using namespace std;
     }                                                                                         \
     while (0)
 #else
-#define RUN_GAP(METHOD, INFO, VARIABLE_COUNT, DISTRIBUTION, VERIFY_METHOD)      \
-    {                                                                           \
-        for (int i = 0; i < TEST_SIZE; i++)                                     \
-        {                                                                       \
-            PRE_FILL_RANDOM_DOUBLES(DISTRIBUTION, VARIABLE_COUNT);              \
-            COMPUTE_GAP(fic_interval, "FILIB C", METHOD, INFO, VARIABLE_COUNT); \
-            COMPUTE_GAP(boost_interval, "BOOST", METHOD, INFO, VARIABLE_COUNT); \
-        }                                                                       \
-    }                                                                           \
+#define RUN_GAP(METHOD, INFO, VARIABLE_COUNT, DISTRIBUTION, VERIFY_METHOD)        \
+    {                                                                             \
+        for (int i = 0; i < TEST_SIZE; i++)                                       \
+        {                                                                         \
+            PRE_FILL_RANDOM_DOUBLES(DISTRIBUTION, VARIABLE_COUNT, VERIFY_METHOD); \
+            COMPUTE_GAP(fic_interval, "FILIB C", METHOD, INFO, VARIABLE_COUNT);   \
+            COMPUTE_GAP(boost_interval, "BOOST", METHOD, INFO, VARIABLE_COUNT);   \
+        }                                                                         \
+    }                                                                             \
     while (0)
 #endif
 
