@@ -58,7 +58,7 @@ std::vector<gmp::Rational> comp_gmp_rationals; // store the gmp rationals
 // if we want to read pre-defined doubles, we will read them into rational then convert to double
 // ******************************************************************************************************************************************************************************************************
 std::vector<gmp::Rational> pre_defined_rationals; // store all the rationals that will be used
-int global_used_rational_index = 0;            // to use the rationals stored
+int global_used_rational_index = 0;               // to use the rationals stored
 // ******************************************************************************************************************************************************************************************************
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -82,6 +82,8 @@ double random_double(std::uniform_real_distribution<double> distribution)
 
 void read_rationals_from_file(const std::string &inputFileName)
 {
+    pre_defined_rationals.clear();
+    global_used_rational_index = 0;
     std::ifstream infile;
     infile.open(inputFileName);
     std::vector<std::string> record;

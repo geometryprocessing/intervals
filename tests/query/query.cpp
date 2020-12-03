@@ -33,197 +33,141 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/addition_used_rationals.txt");
 #endif
     RUN_QUERY(addition, print_addition, 2, binary_all_range, check_input_addition);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/subtraction_used_rationals.txt");
 #endif
     RUN_QUERY(subtraction, print_subtraction, 2, binary_all_range, check_input_subtraction);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/multiplication_used_rationals.txt");
 #endif
     RUN_QUERY(multiplication, print_multiplication, 2, binary_all_range, check_input_multiplication);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/division_used_rationals.txt");
 #endif
     RUN_QUERY(division, print_division, 2, binary_all_range, check_input_division);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/square_root_used_rationals.txt");
 #endif
     RUN_QUERY(square_root, print_square_root, 1, square_root_range, check_input_square_root);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/exponential_used_rationals.txt");
 #endif
     RUN_QUERY(exponential, print_exponential, 1, exp_range, check_input_exponential);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/sin_used_rationals.txt");
 #endif
     RUN_QUERY(sin, print_sin, 1, trig_pi_over_four, check_input_sin);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/cos_used_rationals.txt");
 #endif
     RUN_QUERY(cos, print_cos, 1, trig_pi_over_four, check_input_cos);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/expr1_used_rationals.txt");
 #endif
     RUN_QUERY(expr1, print_expr1, 10, comp_all_range, check_input_expr1);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/expr2_used_rationals.txt");
 #endif
     RUN_QUERY(expr2, print_expr2, 10, comp_all_range, check_input_expr2);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/expr3_used_rationals.txt");
 #endif
     RUN_QUERY(expr3, print_expr3, 10, comp_all_range, check_input_expr3);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/expr4_used_rationals.txt");
 #endif
     RUN_QUERY(expr4, print_expr4, expr4_variable_count, expr4_range, check_input_expr4);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/expr5_used_rationals.txt");
 #endif
     RUN_QUERY(expr5, print_expr5, expr5_variable_count, expr5_range, check_input_expr5);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/expr6_used_rationals.txt");
 #endif
     RUN_QUERY(expr6, print_expr6, expr6_variable_count, expr6_range, check_input_expr6);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/expr7_used_rationals.txt");
 #endif
     RUN_QUERY(expr7, print_expr7, expr7_variable_count, expr7_range, check_input_expr7);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/expr8_used_rationals.txt");
 #endif
     RUN_QUERY(expr8, print_expr8, expr8_variable_count, expr8_range, check_input_expr8);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/expr9_used_rationals.txt");
 #endif
     RUN_QUERY(expr9, print_expr9, expr9_variable_count, expr9_range, check_input_expr9);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/expr10_used_rationals.txt");
 #endif
     RUN_QUERY(expr10, print_expr10, expr10_variable_count, expr10_range, check_input_expr10);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/extra_function1_used_rationals.txt");
 #endif
     RUN_QUERY(extra_function1, print_extra_function1, extra_function1_variable_count, extra_function1_range, check_input_extra_function1);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/extra_function2_used_rationals.txt");
 #endif
     RUN_QUERY(extra_function2, print_extra_function2, extra_function2_variable_count, extra_function2_range, check_input_extra_function2);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/extra_function3_used_rationals.txt");
 #endif
     RUN_QUERY(extra_function3, print_extra_function3, extra_function3_variable_count, extra_function3_range, check_input_extra_function3);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/extra_function4_used_rationals.txt");
 #endif
     RUN_QUERY(extra_function4, print_extra_function4, extra_function4_variable_count, extra_function4_range, check_input_extra_function4);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/extra_function5_used_rationals.txt");
 #endif
     RUN_QUERY(extra_function5, print_extra_function5, extra_function5_variable_count, extra_function5_range, check_input_extra_function5);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/extra_function6_used_rationals.txt");
 #endif
     RUN_QUERY(extra_function6, print_extra_function6, extra_function6_variable_count, extra_function6_range, check_input_extra_function6);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/extra_function7_used_rationals.txt");
 #endif
     RUN_QUERY(extra_function7, print_extra_function7, extra_function7_variable_count, extra_function7_range, check_input_extra_function7);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/extra_function8_used_rationals.txt");
 #endif
     RUN_QUERY(extra_function8, print_extra_function8, extra_function8_variable_count, extra_function8_range, check_input_extra_function8);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/extra_function9_used_rationals.txt");
 #endif
     RUN_QUERY(extra_function9, print_extra_function9, extra_function9_variable_count, extra_function9_range, check_input_extra_function9);
 
 #ifndef USE_SYSTEM_RANDOM
-    pre_defined_rationals.clear();
-    global_used_rational_index = 0;
     read_rationals_from_file("../rational_datas/extra_function10_used_rationals.txt");
 #endif
     RUN_QUERY(extra_function10, print_extra_function10, extra_function10_variable_count, extra_function10_range, check_input_extra_function10);
