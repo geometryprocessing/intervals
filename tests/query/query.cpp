@@ -1,4 +1,7 @@
 #include "../../src/methods.hpp"
+#ifdef FPBENCH_TEST
+#include "../../src/FPBench_methods.hpp"
+#endif
 using namespace std;
 #ifdef USE_FILIB_PLUSPLUS
 #define RUN_QUERY(METHOD, PRINT_METHOD, VARIABLE_COUNT, DISTRIBUTION, VERIFY_METHOD)                    \
@@ -172,4 +175,8 @@ int main(int argc, char *argv[])
 #endif
     RUN_QUERY(extra_function10, print_extra_function10, extra_function10_variable_count, extra_function10_range, check_input_extra_function10);
     return 0;
+
+#ifdef FPBENCH_TEST
+
+#endif
 }

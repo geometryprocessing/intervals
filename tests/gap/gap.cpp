@@ -1,4 +1,7 @@
 #include "../../src/methods.hpp"
+#ifdef FPBENCH_TEST
+#include "../../src/FPBench_methods.hpp"
+#endif
 using namespace std;
 
 // because filib c++ version is not supported everywhere
@@ -173,4 +176,8 @@ int main(int argc, char *argv[])
     read_rationals_from_file("../rational_datas/extra_function10_used_rationals.txt");
 #endif
     RUN_GAP(extra_function10, "RANDOM EXPRESSION 10", extra_function10_variable_count, extra_function10_range, check_input_extra_function10);
+
+#ifdef FPBENCH_TEST
+
+#endif
 }

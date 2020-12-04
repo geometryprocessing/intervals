@@ -1,4 +1,7 @@
 #include "../../src/methods.hpp"
+#ifdef FPBENCH_TEST
+#include "../../src/FPBench_methods.hpp"
+#endif
 using namespace std;
 
 // get a timer for each interval type we have
@@ -86,5 +89,7 @@ int main(int argc, char *argv[])
     RUN_SPEED(extra_function8, "RANDOM EXPRESSION 8", extra_function8_variable_count, extra_function8_range, check_input_extra_function8);
     RUN_SPEED(extra_function9, "RANDOM EXPRESSION 9", extra_function9_variable_count, extra_function9_range, check_input_extra_function9);
     RUN_SPEED(extra_function10, "RANDOM EXPRESSION 10", extra_function10_variable_count, extra_function10_range, check_input_extra_function10);
+#ifdef FPBENCH_TEST
+#endif
     return 0;
 }
