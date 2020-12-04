@@ -27,4 +27,4 @@ then
     mkdir graphs/comp
 fi
 
-python plot_gap_distribution.py
+python3 plot_gap_distribution.py
