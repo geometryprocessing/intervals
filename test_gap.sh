@@ -17,4 +17,14 @@ if [ ! -d "graphs" ]
 then
     mkdir graphs
 fi
+if [ ! -d "graphs/raw" ]
+then
+    mkdir graphs/raw
+fi
+
+if [ ! -d "graphs/comp" ]
+then
+    mkdir graphs/comp
+fi
+
 python plot_gap_distribution.py
