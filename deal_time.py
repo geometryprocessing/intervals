@@ -96,21 +96,21 @@ def plot_table(file_name):
     ax = single_op_raw_time.plot.bar(rot=0)
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
-    save_plot_name = "graphs/" + "single_operations_time_" + system + ".pdf"
+    save_plot_name = "graphs/time/" + "single_operations_time_" + system + ".pdf"
     plt.savefig(save_plot_name, bbox_inches='tight',
                 pad_inches=0, dpi=400,)
     plt.close()
     ax = arith_comp_raw_time.plot.bar(rot=0)
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
-    save_plot_name = "graphs/" + "comp_arith_time_" + system + ".pdf"
+    save_plot_name = "graphs/time/" + "comp_arith_time_" + system + ".pdf"
     plt.savefig(save_plot_name, bbox_inches='tight',
                 pad_inches=0, dpi=400)
     plt.close()
     ax = mix_comp_raw_time.plot.bar(rot=0)
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
-    save_plot_name = "graphs/" + "comp_all_time_" + system + ".pdf"
+    save_plot_name = "graphs/time" + "comp_all_time_" + system + ".pdf"
     plt.savefig(save_plot_name, bbox_inches='tight',
                 pad_inches=0, dpi=400)
     plt.close()
