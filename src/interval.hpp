@@ -168,3 +168,18 @@ BIASINTERVAL cos(BIASINTERVAL a)
     BiasCos(&result, &a);
     return result;
 }
+
+BIASINTERVAL tan(BIASINTERVAL a)
+{
+    BIASINTERVAL result;
+    BiasTan(&result, &a);
+    return result;
+}
+
+BIASINTERVAL atan(BIASINTERVAL a)
+{
+    BIASINTERVAL result;
+    BiasArcTan(&result, &a);
+    return result;
+}
+
