@@ -42,15 +42,15 @@ def populate_data(file_name, system="mac"):
             print(count+1)
             # break
         splitted = line.strip().split(", ")
-        test_name = splitted[1]
-        method_name = splitted[2]
+        test_name = ", ".join(splitted[1:-2])
+        method_name = splitted[-2]
         numerator = 1
         denominator = 1
-        if (len(splitted[3].split("/")) == 2):
-            numerator = int(splitted[3].split("/")[0])
-            denominator = int(splitted[3].split("/")[1])
+        if (len(splitted[-1].split("/")) == 2):
+            numerator = int(splitted[-1].split("/")[0])
+            denominator = int(splitted[-1].split("/")[1])
         else:
-            numerator = int(splitted[3].split("/")[0])
+            numerator = int(splitted[-1].split("/")[0])
         if (not test_name in all_datas_comp):
             all_datas_comp[test_name] = {}
             all_datas_raw[test_name] = {}

@@ -6,6 +6,7 @@ set(SOURCES
     Rational.h
     Timer.h
     methods.hpp
+    FPBench_methods.hpp
 )
 
 prepend_current_path(SOURCES)
