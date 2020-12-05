@@ -269,7 +269,7 @@ bool check_input_NMSE_section_3_11(const std::vector<double> &v)
 {
     return true;
 }
-const std::vector<std::uniform_real_distribution<double>> NMSE_section_3_11_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+const std::vector<std::uniform_real_distribution<double>> NMSE_section_3_11_range = {std::uniform_real_distribution<double>(-700, 700)};
 const int NMSE_section_3_11_variable_count = 1;
 
 
@@ -387,7 +387,7 @@ bool check_input_Complex_sine_and_cosine(const std::vector<double> &v)
 {
     return true;
 }
-const std::vector<std::uniform_real_distribution<double>> Complex_sine_and_cosine_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+const std::vector<std::uniform_real_distribution<double>> Complex_sine_and_cosine_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-700, 700)};
 const int Complex_sine_and_cosine_variable_count = 2;
 
 
@@ -433,7 +433,7 @@ bool check_input_NMSE_problem_3_4_2(const std::vector<double> &v)
 {
     return true;
 }
-const std::vector<std::uniform_real_distribution<double>> NMSE_problem_3_4_2_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+const std::vector<std::uniform_real_distribution<double>> NMSE_problem_3_4_2_range = {std::uniform_real_distribution<double>(-12.5, 12.5), std::uniform_real_distribution<double>(-12.5, 12.5), std::uniform_real_distribution<double>(-25, 25)};
 const int NMSE_problem_3_4_2_variable_count = 3;
 
 
@@ -451,7 +451,7 @@ bool check_input_NMSE_example_3_8(const std::vector<double> &v)
 {
     return true;
 }
-const std::vector<std::uniform_real_distribution<double>> NMSE_example_3_8_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+const std::vector<std::uniform_real_distribution<double>> NMSE_example_3_8_range = {std::uniform_real_distribution<double>(0, RAND_MAX)};
 const int NMSE_example_3_8_variable_count = 1;
 
 
@@ -707,24 +707,6 @@ bool check_input_matrixDeterminant2(const std::vector<double> &v)
 }
 const std::vector<std::uniform_real_distribution<double>> matrixDeterminant2_range = {std::uniform_real_distribution<double>(-10.0, 10.0), std::uniform_real_distribution<double>(-10.0, 10.0), std::uniform_real_distribution<double>(-10.0, 10.0), std::uniform_real_distribution<double>(-10.0, 10.0), std::uniform_real_distribution<double>(-10.0, 10.0), std::uniform_real_distribution<double>(-10.0, 10.0), std::uniform_real_distribution<double>(-10.0, 10.0), std::uniform_real_distribution<double>(-10.0, 10.0), std::uniform_real_distribution<double>(-10.0, 10.0)};
 const int matrixDeterminant2_variable_count = 9;
-
-
-// FPBench NMSE problem 3.4.6
-template <class T>
-inline T NMSE_problem_3_4_6(const std::vector<T> &value_array)
-{
-	return pow((value_array[0] + 1.0), (1.0 / value_array[1])) - pow(value_array[0], (1.0 / value_array[1]));
-}
-std::string print_NMSE_problem_3_4_6(const std::vector<gmp::Rational> &v)
-{
-	return std::string() + "pow((" + "(" + rational_to_string(v[0]) + ")" + " + (1)), ((1) / " + "(" + rational_to_string(v[1]) + ")" + ")) - pow(" + "(" + rational_to_string(v[0]) + ")" + ", ((1) / " + "(" + rational_to_string(v[1]) + ")" + "))";
-}
-bool check_input_NMSE_problem_3_4_6(const std::vector<double> &v)
-{
-    return true;
-}
-const std::vector<std::uniform_real_distribution<double>> NMSE_problem_3_4_6_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
-const int NMSE_problem_3_4_6_variable_count = 2;
 
 
 // FPBench delta
@@ -1195,7 +1177,7 @@ bool check_input_NMSE_problem_3_4_4(const std::vector<double> &v)
 {
     return true;
 }
-const std::vector<std::uniform_real_distribution<double>> NMSE_problem_3_4_4_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+const std::vector<std::uniform_real_distribution<double>> NMSE_problem_3_4_4_range = {std::uniform_real_distribution<double>(-350, 350)};
 const int NMSE_problem_3_4_4_variable_count = 1;
 
 
@@ -1407,7 +1389,7 @@ bool check_input_NMSE_problem_3_3_7(const std::vector<double> &v)
 {
     return true;
 }
-const std::vector<std::uniform_real_distribution<double>> NMSE_problem_3_3_7_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+const std::vector<std::uniform_real_distribution<double>> NMSE_problem_3_3_7_range = {std::uniform_real_distribution<double>(-700, 700)};
 const int NMSE_problem_3_3_7_variable_count = 1;
 
 
@@ -1455,28 +1437,6 @@ const std::vector<std::uniform_real_distribution<double>> NMSE_example_3_9_range
 const int NMSE_example_3_9_variable_count = 1;
 
 
-// FPBench Probabilities in a clustering algorithm
-template <class T>
-inline T Probabilities_in_a_clustering_algorithm(const std::vector<T> &value_array)
-{
-	return (pow((1.0 / (1.0 + exp(-value_array[3]))), value_array[0]) * pow((1.0 - (1.0 / (1.0 + exp(-value_array[3])))), value_array[1])) / (pow((1.0 / (1.0 + exp(-value_array[2]))), value_array[0]) * pow((1.0 - (1.0 / (1.0 + exp(-value_array[2])))), value_array[1]));
-}
-std::string print_Probabilities_in_a_clustering_algorithm(const std::vector<gmp::Rational> &v)
-{
-	return std::string() + "(pow(((1) / ((1) + exp(-" + "(" + rational_to_string(v[3]) + ")" + "))), " + "(" + rational_to_string(v[0]) + ")" + ") * pow(((1) - ((1) / ((1) + exp(-" + "(" + rational_to_string(v[3]) + ")" + ")))), " + "(" + rational_to_string(v[1]) + ")" + ")) / (pow(((1) / ((1) + exp(-" + "(" + rational_to_string(v[2]) + ")" + "))), " + "(" + rational_to_string(v[0]) + ")" + ") * pow(((1) - ((1) / ((1) + exp(-" + "(" + rational_to_string(v[2]) + ")" + ")))), " + "(" + rational_to_string(v[1]) + ")" + "))";
-}
-bool check_input_Probabilities_in_a_clustering_algorithm(const std::vector<double> &v)
-{
-    if (0.0 >= v[0])
-        return false;
-    if (0.0 >= v[1])
-        return false;
-    return true;
-}
-const std::vector<std::uniform_real_distribution<double>> Probabilities_in_a_clustering_algorithm_range = {std::uniform_real_distribution<double>(0.0, RAND_MAX), std::uniform_real_distribution<double>(0.0, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
-const int Probabilities_in_a_clustering_algorithm_variable_count = 4;
-
-
 // FPBench NMSE section 3.5
 template <class T>
 inline T NMSE_section_3_5(const std::vector<T> &value_array)
@@ -1491,7 +1451,7 @@ bool check_input_NMSE_section_3_5(const std::vector<double> &v)
 {
     return true;
 }
-const std::vector<std::uniform_real_distribution<double>> NMSE_section_3_5_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+const std::vector<std::uniform_real_distribution<double>> NMSE_section_3_5_range = {std::uniform_real_distribution<double>(-25, 25), std::uniform_real_distribution<double>(-25, 25)};
 const int NMSE_section_3_5_variable_count = 2;
 
 
@@ -2027,7 +1987,7 @@ bool check_input_NMSE_example_3_7(const std::vector<double> &v)
 {
     return true;
 }
-const std::vector<std::uniform_real_distribution<double>> NMSE_example_3_7_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+const std::vector<std::uniform_real_distribution<double>> NMSE_example_3_7_range = {std::uniform_real_distribution<double>(-700, 700)};
 const int NMSE_example_3_7_variable_count = 1;
 
 
@@ -2189,24 +2149,6 @@ const std::vector<std::uniform_real_distribution<double>> triangle6_range = {std
 const int triangle6_variable_count = 3;
 
 
-// FPBench Rump's example, with pow
-template <class T>
-inline T Rump_s_example_with_pow(const std::vector<T> &value_array)
-{
-	return (((333.75 * pow(value_array[1], 6.0)) + (pow(value_array[0], 2.0) * (((((11.0 * pow(value_array[0], 2.0)) * pow(value_array[1], 2.0)) - pow(value_array[1], 6.0)) - (121.0 * pow(value_array[1], 4.0))) - 2.0))) + (5.5 * pow(value_array[1], 8.0))) + (value_array[0] / (2.0 * value_array[1]));
-}
-std::string print_Rump_s_example_with_pow(const std::vector<gmp::Rational> &v)
-{
-	return std::string() + "((((1335/4) * pow(" + "(" + rational_to_string(v[1]) + ")" + ", (6))) + (pow(" + "(" + rational_to_string(v[0]) + ")" + ", (2)) * ((((((11) * pow(" + "(" + rational_to_string(v[0]) + ")" + ", (2))) * pow(" + "(" + rational_to_string(v[1]) + ")" + ", (2))) - pow(" + "(" + rational_to_string(v[1]) + ")" + ", (6))) - ((121) * pow(" + "(" + rational_to_string(v[1]) + ")" + ", (4)))) - (2)))) + ((11/2) * pow(" + "(" + rational_to_string(v[1]) + ")" + ", (8)))) + (" + "(" + rational_to_string(v[0]) + ")" + " / ((2) * " + "(" + rational_to_string(v[1]) + ")" + "))";
-}
-bool check_input_Rump_s_example_with_pow(const std::vector<double> &v)
-{
-    return true;
-}
-const std::vector<std::uniform_real_distribution<double>> Rump_s_example_with_pow_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
-const int Rump_s_example_with_pow_variable_count = 2;
-
-
 // FPBench carbonGas
 template <class T>
 inline T carbonGas(const std::vector<T> &value_array)
@@ -2363,26 +2305,8 @@ bool check_input_NMSE_example_3_1(const std::vector<double> &v)
 {
     return true;
 }
-const std::vector<std::uniform_real_distribution<double>> NMSE_example_3_1_range = {std::uniform_real_distribution<double>(-1.0, RAND_MAX)};
+const std::vector<std::uniform_real_distribution<double>> NMSE_example_3_1_range = {std::uniform_real_distribution<double>(0, RAND_MAX)};
 const int NMSE_example_3_1_variable_count = 1;
-
-
-// FPBench NMSE problem 3.3.4
-template <class T>
-inline T NMSE_problem_3_3_4(const std::vector<T> &value_array)
-{
-	return pow((value_array[0] + 1.0), (1.0 / 3.0)) - pow(value_array[0], (1.0 / 3.0));
-}
-std::string print_NMSE_problem_3_3_4(const std::vector<gmp::Rational> &v)
-{
-	return std::string() + "pow((" + "(" + rational_to_string(v[0]) + ")" + " + (1)), ((1) / (3))) - pow(" + "(" + rational_to_string(v[0]) + ")" + ", ((1) / (3)))";
-}
-bool check_input_NMSE_problem_3_3_4(const std::vector<double> &v)
-{
-    return true;
-}
-const std::vector<std::uniform_real_distribution<double>> NMSE_problem_3_3_4_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
-const int NMSE_problem_3_3_4_variable_count = 1;
 
 
 // FPBench matrixDeterminant
@@ -2567,7 +2491,7 @@ bool check_input_NMSE_problem_3_3_2(const std::vector<double> &v)
 {
     return true;
 }
-const std::vector<std::uniform_real_distribution<double>> NMSE_problem_3_3_2_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX), std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+const std::vector<std::uniform_real_distribution<double>> NMSE_problem_3_3_2_range = {std::uniform_real_distribution<double>((-7074237750381340.0 /  2097152.0) / 2.1, (7074237750381340.0 /  2097152.0) / 2.1), std::uniform_real_distribution<double>((-7074237750381340.0 /  2097152.0) / 2.1, (7074237750381340.0 /  2097152.0) / 2.1)};
 const int NMSE_problem_3_3_2_variable_count = 2;
 
 
@@ -2667,7 +2591,7 @@ bool check_input_NMSE_problem_3_3_6(const std::vector<double> &v)
 {
     return true;
 }
-const std::vector<std::uniform_real_distribution<double>> NMSE_problem_3_3_6_range = {std::uniform_real_distribution<double>(-RAND_MAX + 1, RAND_MAX)};
+const std::vector<std::uniform_real_distribution<double>> NMSE_problem_3_3_6_range = {std::uniform_real_distribution<double>(0, RAND_MAX)};
 const int NMSE_problem_3_3_6_variable_count = 1;
 
 
