@@ -110,7 +110,7 @@ def plot_table(file_name):
     ax = mix_comp_raw_time.plot.bar(rot=0)
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
-    save_plot_name = "graphs/time" + "comp_all_time_" + system + ".pdf"
+    save_plot_name = "graphs/time/" + "comp_all_time_" + system + ".pdf"
     plt.savefig(save_plot_name, bbox_inches='tight',
                 pad_inches=0, dpi=400)
     plt.close()

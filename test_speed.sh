@@ -9,4 +9,12 @@ cmake .. -DCMAKE_BUILD_TYPE=Release
 make -j
 ./tests/speed_bin >> time.txt
 cd ..
+if [ ! -d "graphs" ] 
+then
+    mkdir graphs
+fi
+if [ ! -d "graphs/time" ]
+then 
+    mkdir graphs/time
+fi
 python deal_time.py
