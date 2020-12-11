@@ -21,9 +21,9 @@ def to_table(file_name):
     for line in f:
         splitted = line.strip().split(",")
         test_name = splitted[1]
-        method_name = splitted[2].replace(" METHOD", "")
-        raw_time = float(splitted[3].split("us")[0])/1000
-        fraction = splitted[4].split("x")[0]
+        method_name = ",".join(splitted[2:-2]).replace(" METHOD", "")
+        raw_time = float(splitted[-2].split("us")[0])/1000
+        fraction = splitted[-1].split("x")[0]
         if (not test_name in all_datas):
             all_datas[test_name] = {}
             test_names.append(test_name)
@@ -114,6 +114,16 @@ def plot_table(file_name):
     plt.savefig(save_plot_name, bbox_inches='tight',
                 pad_inches=0, dpi=400)
     plt.close()
+
+    for i in range(28, 132, 4):
+        fpbench_raw_time = raw_datas_table[i:i+4]
+        ax = fpbench_raw_time.plot.bar(rot=0)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        save_plot_name = "graphs/time/" + "comp_fpbench_" + str(i-28) + "_" + str(i+4-28) + ".pdf"
+        plt.savefig(save_plot_name, bbox_inches='tight',
+            pad_inches=0, dpi=400)
+        plt.close()
 
 
 def main():

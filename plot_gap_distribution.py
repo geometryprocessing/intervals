@@ -7,6 +7,7 @@ from matplotlib.ticker import FixedLocator
 import platform
 import sys
 import math
+import statistics
 try:
     import cPickle as pickle
 except ImportError:  # Python 3.x
@@ -29,214 +30,143 @@ bin_size_raw = 22  # the ones that we actually care about, in this case we care 
 actual_bin_size_raw = 23  # position 50 for outliers, position 60 for negatives
 bins_raw = list(range(-17, 6, 1))
 
+def plot_raw(datas, test_name, system = "mac"):
+    plt.rc('xtick', labelsize=7)    # fontsize of the tick labels
+    plt.rc('ytick', labelsize=10)    # fontsize of the tick labels
+    plt.rc('legend', fontsize=10)    # fontsize of the tick labels
+    bar_width = 0.5/(len(datas))
 
-def populate_data(file_name, system="mac"):
-    all_datas_comp = {}
-    all_datas_raw = {}
-    f = open(file_name)
+    all_items = []
+    for item in datas:
+        all_items += datas[item]
+    average = statistics.median(all_items)
+    average_log = int(math.floor(math.log10(average)))
+    limit_down = average_log - 4
+    limit_up = average_log + 4
     count = 0
-    base_line = ""
-    base = Fraction(1, 1)
+    bins = list(range(21))
+    bins = [x * 0.5 + limit_down - 1 for x in bins]
+    # print(bins)
+    # print(len(bins))
+    negative_count = 0
+    ax = plt.axes()
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    plt.xlim([limit_down - 1, limit_up + 2.5])
+    plt.ylim([0, 100])
+    plt.xticks([limit_down - 1] + list(range(limit_down, limit_up + 2)),  [r'$\leq10^{' + str(limit_down) + r'}$'] + [r'$10^{' + str(x) + r'}$' for x in list(range(limit_down, limit_up))] + [r'$\geq10^{' + str(limit_up) + r'}$', "EMPTY"])
+    for item in datas:
+        belows = 0
+        ranges = [0] * 16
+        aboves = 0
+        negatives = 0
+        
+        for gap in datas[item]:
+            if gap < 0:
+                negatives += 1
+            elif gap == 0:
+                belows += 1
+            else:
+                ## compute the log value
+                log_value = math.log10(gap)
+                if log_value <= limit_down:
+                    belows += 1
+                elif log_value >= limit_up:
+                    aboves += 1
+                else:
+                    position = int((log_value - limit_down) * 2)
+                    ranges[position] += 1
+        belows = belows * 100.0 / len(datas[item])
+        ranges = [x * 100.0 / len(datas[item]) for x in ranges]
+        aboves = aboves * 100.0 / len(datas[item])
+        negatives = negatives * 100.0 / len(datas[item])
+        # print(belows)
+        # print(ranges)
+        # print(aboves)
+        # print(negatives)
+
+        bar = plt.bar([x+bar_width / 2 + bar_width * count for x in bins], [0] * 2 + ranges + [0] * 3, label=item, color=colors[count], alpha=1.0, width=bar_width)
+        bar = plt.bar([x+bar_width * 1 + bar_width * 2 * count for x in bins], [belows, 0] + [0] * 16 + [aboves, 0] + [negatives] , color=colors[count], alpha=1.0, width=bar_width *2)
+
+        if (negatives > 0):
+            rect = bar[-1]
+            plt.text(limit_up + 1.5, rect.get_height(), ('%s:\n%f' % (item, negatives)).rstrip('0').rstrip('.')+"%"+"\n\n"*negative_count, ha='center', va='bottom')
+            negative_count += 1
+        count += 1
+
+
+    plt.legend(prop={'size': 6})
+    plt.title(test_name)
+    # plt.show()
+    save_plot_name = "graphs/raw/" + test_name + "_gap_raw_" + system + ".pdf"
+    plt.savefig(save_plot_name, bbox_inches='tight',
+                pad_inches=0, dpi=200)
+    plt.close()
+    print(test_name + " raw interval size graph generated")
+   
+
+    
+
+
+
+
+def plot_comp(datas, test_name, system = "mac"):
+    pass
+
+
+def compute_comparison(base, num):
+    frac = 1.0
+    if (base == 0 and num == 0):
+        frac = 1
+    elif (base == 0 and num != 0):
+        frac = 999
+    elif (base != 0 and num == 0):
+        frac = 0
+    else:
+        frac = float(num / base)
+    return frac
+
+def plot_data(file_name, system = "mac"):
+    f = open(file_name, 'r')
+    last_test_name = None
+    datas = {}
+    numerator = 1
+    denominator = 1
     for line in f:
-        if ((count+1) % 2500000 == 0):
-            print(count+1)
-            # break
         splitted = line.strip().split(", ")
         test_name = ", ".join(splitted[1:-2])
         method_name = splitted[-2]
-        numerator = 1
-        denominator = 1
+        if last_test_name != test_name:
+            if last_test_name!=None:
+                plot_raw(datas, last_test_name, system)
+                plot_comp(datas, last_test_name, system)
+            ## clear data
+            datas = {}
+            ## set the new test name
+            last_test_name = test_name
+            method_names.clear()
+        
+        ## put method name in dictionary
+        if not method_name in method_names:
+            method_names.append(method_name)
+            datas[method_name] = []
+        
+
+        ## get the gap size in numerator and denominator
         if (len(splitted[-1].split("/")) == 2):
             numerator = int(splitted[-1].split("/")[0])
             denominator = int(splitted[-1].split("/")[1])
         else:
             numerator = int(splitted[-1].split("/")[0])
-        if (not test_name in all_datas_comp):
-            all_datas_comp[test_name] = {}
-            all_datas_raw[test_name] = {}
-            test_names.append(test_name)
-        if (not method_name in all_datas_comp[test_name]):
-            all_datas_comp[test_name][method_name] = [0] * (actual_bin_size_comp + 1)
-            all_datas_raw[test_name][method_name] = [0] * actual_bin_size_raw
-            if (not method_name in method_names):
-                method_names.append(method_name)
+            denominator = 1
+        datas[method_name].append(float(Fraction(numerator, denominator)))
+    plot_raw(datas, last_test_name, system)
+    plot_comp(datas, last_test_name, system)
 
-        # get the comparisons
-        if method_name == method_names[0]:
-            # if this is the base method, we use it as our base number
-            base_line = line
-            base = Fraction(numerator, denominator)
-        else:
-            # else, we need to get the fraction
-            length = Fraction(numerator, denominator)
-            frac = 1.0
-            if (base == 0 and length == 0):
-                frac = 1
-            elif (base == 0 and length != 0):
-                frac = 999
-            elif (base != 0 and length == 0):
-                frac = 0
-            else:
-                frac = float(length / base)
-            position = int(frac / 0.1)
-            if position <= bin_size_comp and position >= 0:
-                # within 0 to 3
-                all_datas_comp[test_name][method_name][position] += 1
-            elif position < 0:
-                all_datas_comp[test_name][method_name][actual_bin_size_comp] += 1
-            else:
-                all_datas_comp[test_name][method_name][actual_bin_size_comp-10] += 1
-
-        # get the raw data
-        length = float(Fraction(numerator, denominator))
-        log_value = None
-
-        if length == 0:
-            log_value = -17
-        elif length > 0:
-            log_value = math.log10(length)
-            if log_value < -16:
-                log_value = -17
-
-        if log_value == None:
-            all_datas_raw[test_name][method_name][actual_bin_size_raw - 1] += 1
-        elif log_value < 3:
-            position = math.floor(log_value) + 17
-            all_datas_raw[test_name][method_name][position] += 1
-        elif log_value >= 3:
-            all_datas_raw[test_name][method_name][actual_bin_size_raw - 3] += 1
-
-        count += 1
-
-    with open("datas/comparison_"+system+".p", 'wb') as fp:
-        pickle.dump(all_datas_comp, fp, protocol=pickle.HIGHEST_PROTOCOL)
-
-    with open("datas/raw_"+system+".p", 'wb') as fp:
-        pickle.dump(all_datas_raw, fp, protocol=pickle.HIGHEST_PROTOCOL)
-
-    return all_datas_comp, all_datas_raw
-
-
-def read_saved_file(saved_file_comp, saved_file_raw):
-    datas_comp = {}
-    with open(saved_file_comp, 'rb') as fp:
-        datas_comp = pickle.load(fp)
-        for item in datas_comp:
-            if not item in test_names:
-                test_names.append(item)
-            for method in datas_comp[item]:
-                if not method in method_names:
-                    method_names.append(method)
-    datas_raw = {}
-    with open(saved_file_raw, 'rb') as fp:
-        datas_raw = pickle.load(fp)
-        for item in datas_raw:
-            if not item in test_names:
-                test_names.append(item)
-            for method in datas_raw[item]:
-                if not method in method_names:
-                    method_names.append(method)
-    return datas_comp, datas_raw
-
-
-def plot_comparisons(datas_comp, system="mac"):
-    bar_width = 0.1/(len(method_names)-1)
-    for test in datas_comp:
-        ax = plt.axes()
-        negative_count = 0
-        for i in range(1, len(method_names)):
-            method = method_names[i]
-            comp = datas_comp[test][method]
-            total_count = sum(comp)
-            comp = [float(x)*100.0 / total_count for x in comp]
-            bar = plt.bar([x+bar_width/2 + bar_width*(i-1) for x in bins_comp], comp, label=method,
-                          color=colors[i], alpha=1.0, width=bar_width)
-            # put text for outliers
-            rect = bar[actual_bin_size_comp-10]
-            height = rect.get_height()
-            # if height > 0:
-            #     plt.text(rect.get_x() + rect.get_width()/2.0, height,
-            #              ('%s:\n%f' % (method, comp[actual_bin_size_comp-10] * 100)).rstrip('0').rstrip('.')+"%", ha='center', va='bottom')
-            #     outlier_count += 1
-            # put text for negative intervals
-            rect = bar[actual_bin_size_comp]
-            height = rect.get_height()
-            if height > 0:
-                plt.text(rect.get_x() + rect.get_width()/2.0, height,
-                         ('%s:\n%f' % (method, comp[actual_bin_size_comp] * 100)).rstrip('0').rstrip('.')+"%", ha='center', va='bottom')
-                negative_count += 1
-            plt.legend(prop={'size': 6})
-
-        plt.xlim([0, int(bin_size_comp/10 + 3)])
-        plt.ylim([0, 100])
-        ax.spines['top'].set_visible(False)
-        ax.spines['right'].set_visible(False)
-        plt.xticks(list(range(0, int(bin_size_comp/10 + 3))), list(range(0,
-                                                                         int(bin_size_comp/10 + 1)))+[">" + str(int(bin_size_comp/10))] + ["EMPTY"])
-        ax.xaxis.set_minor_locator(FixedLocator(
-            [x*0.1 for x in list(range(bin_size_comp))]))
-        plt.title(test)
-        # plt.text(7, 0, "OUTLIER")
-        save_plot_name = "graphs/comp/" + test + "_gap_comp_" + system + ".pdf"
-        # print(save_plot_name)
-        plt.savefig(save_plot_name, bbox_inches='tight',
-                    pad_inches=0, dpi=2000)
-        plt.close()
-
-
-def plot_raws(datas_raw, system="mac"):
-    plt.rc('xtick', labelsize=7)    # fontsize of the tick labels
-    plt.rc('ytick', labelsize=10)    # fontsize of the tick labels
-    plt.rc('legend', fontsize=10)    # fontsize of the tick labels
-    bar_width = 1.0/(len(method_names))
-    for test in datas_raw:
-        ax = plt.axes()
-        negative_count = 0
-        for i in range(len(method_names)):
-            method = method_names[i]
-            all_data = datas_raw[test][method]
-            total_count = sum(all_data)
-            all_data = [float(x)*100.0 / total_count for x in all_data]
-            bar = plt.bar([x+bar_width/2 + bar_width*i for x in bins_raw], all_data, label=method,
-                          color=colors[i], alpha=1.0, width=bar_width)
-            # if height > 0:
-            #     plt.text(rect.get_x() + rect.get_width()/2.0, height,
-            #              ('%s:\n%f' % (method, all_data[actual_bin_size_raw-10] * 100)).rstrip('0').rstrip('.')+"%", ha='center', va='bottom')
-            #     outlier_count += 1
-            # put text for negative intervals
-            rect = bar[actual_bin_size_raw-1]
-            height = rect.get_height()
-            if height > 0:
-                plt.text(rect.get_x() + rect.get_width()/2.0 - bar_width*i, height,
-                         ('%s:\n%f' % (method, all_data[actual_bin_size_raw-1] * 100)).rstrip('0').rstrip('.')+"%"+"\n\n"*negative_count, ha='center', va='bottom')
-                negative_count += 1
-            plt.legend(prop={'size': 6})
-
-        plt.xlim([-17, 6])
-        plt.ylim([0, 100])
-        ax.spines['top'].set_visible(False)
-        ax.spines['right'].set_visible(False)
-        plt.xticks(list(range(-17, 4, 1))+[5], [r'$\leq10^{-16}$'] + [r'$10^{' + str(
-            x) + r'}$' if x % 2 == 1 else "" for x in list(range(-16, 3, 1))]+[r"$\geq10^3$", "EMPTY"])
-        plt.title(test)
-        # plt.show()
-        save_plot_name = "graphs/raw/" + test + "_gap_raw_" + system + ".pdf"
-        plt.savefig(save_plot_name, bbox_inches='tight',
-                    pad_inches=0, dpi=200)
-        plt.close()
 
 
 def main():
-    datas_comp = None
-    datas_raw = None
-    system = str(platform.platform())
-    # load data from pickle file
-    if len(sys.argv) > 1:
-        datas_comp, datas_raw = read_saved_file(sys.argv[1], sys.argv[2])
-    else:
-        datas_comp, datas_raw = populate_data("build/gaps.txt", system=system)
-    plot_comparisons(datas_comp, system=system)
-    plot_raws(datas_raw, system=system)
+    plot_data("build/gaps.txt", str(platform.platform()))
 
 
 if __name__ == "__main__":
