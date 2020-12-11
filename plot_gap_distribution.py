@@ -40,11 +40,11 @@ def plot_raw(datas, test_name, system = "mac"):
     for item in datas:
         all_items += datas[item]
     average = statistics.median(all_items)
-    average_log = int(math.floor(math.log10(average)))
     if average <= 0 :
         average = sum(all_items) * 1.0 / len(all_items)
         if average <=0:
             average = math.pow(10, -16)
+    average_log = int(math.floor(math.log10(average)))
     limit_down = average_log - 4
     limit_up = average_log + 4
     count = 0
