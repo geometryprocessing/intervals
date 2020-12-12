@@ -20,8 +20,9 @@ def to_table(file_name):
     f = open(file_name)
     for line in f:
         splitted = line.strip().split(",")
-        test_name = splitted[1]
-        method_name = ",".join(splitted[2:-2]).replace(" METHOD", "")
+        test_name = ",".join(splitted[1:-3])
+        # print(test_name)
+        method_name = splitted[-3].replace(" METHOD", "")
         raw_time = float(splitted[-2].split("us")[0])/1000
         fraction = splitted[-1].split("x")[0]
         if (not test_name in all_datas):
@@ -34,6 +35,7 @@ def to_table(file_name):
     print("Raw timing on %s: " % system)
     raw_datas = {}
     for test in test_names:
+        # print(test)
         raw_datas[test] = [all_datas[test][x][0] for x in method_names]
     raw_datas_table = pd.DataFrame.from_dict(
         raw_datas, orient='index', columns=method_names)
@@ -41,15 +43,15 @@ def to_table(file_name):
     print(raw_datas_table)
     print(raw_datas_table.to_latex())
 
-    print("Comparing to filib c version on %s: " % system)
-    comp_datas = {}
-    for test in test_names:
-        comp_datas[test] = [all_datas[test][x][1] for x in method_names]
-    comp_datas_table = pd.DataFrame.from_dict(
-        comp_datas, orient='index', columns=method_names)
-    comp_datas_table = comp_datas_table.reindex(test_names)
-    print(comp_datas_table)
-    print(comp_datas_table.to_latex())
+    # print("Comparing to filib c version on %s: " % system)
+    # comp_datas = {}
+    # for test in test_names:
+    #     comp_datas[test] = [all_datas[test][x][1] for x in method_names]
+    # comp_datas_table = pd.DataFrame.from_dict(
+    #     comp_datas, orient='index', columns=method_names)
+    # comp_datas_table = comp_datas_table.reindex(test_names)
+    # print(comp_datas_table)
+    # print(comp_datas_table.to_latex())
 
 
 def plot_table(file_name):
@@ -60,15 +62,15 @@ def plot_table(file_name):
     f = open(file_name)
     for line in f:
         splitted = line.strip().split(",")
-        test_name = splitted[1].split()
+        test_name = ",".join(splitted[1:-3]).strip()
         # print(test_name)
-        if len(test_name) == 3:
-            test_name = test_name[0]+test_name[2]
-        else:
-            test_name = splitted[1]
-        method_name = splitted[2].replace(" METHOD", "")
-        raw_time = float(splitted[3].split("us")[0])/1000
-        fraction = splitted[4].split("x")[0]
+        if test_name.startswith("RANDOM") or test_name.startswith("ARITHMETIC"):
+            test_name = test_name.split()
+            test_name = test_name[0] + test_name[2]
+        # print(splitted)
+        method_name = splitted[-3].replace(" METHOD", "")
+        raw_time = float(splitted[-2].split("us")[0])/1000
+        fraction = splitted[-1].split("x")[0]
         if (not test_name in all_datas):
             all_datas[test_name] = {}
             test_names.append(test_name)
@@ -117,6 +119,7 @@ def plot_table(file_name):
 
     for i in range(28, 132, 4):
         fpbench_raw_time = raw_datas_table[i:i+4]
+        # print(fpbench_raw_time)
         ax = fpbench_raw_time.plot.bar(rot=0)
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
