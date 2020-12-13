@@ -45,7 +45,7 @@ If the library does not include operator overloading, you will also need to defi
 
 
 ## Adding new expression
-In this benchmark, we have a total of 134 expressions. 28 of them in [src/methods.hpp](src/methods.hpp) and the rest in [src/FPBench_functions.hpp](src/FPBench_functions.hpp). Those should give you a general idea of what are needed for adding an expression. We will go in detail what and why they are needed here. We will take the `x_by_xy` expression in [src/FPBench_functions.hpp](src/FPBench_functions.hpp) as an example.
+In this benchmark, we have a total of 134 expressions. 28 of them in [src/methods.hpp](src/methods.hpp) and the rest in [src/FPBench_methods.hpp](src/FPBench_methods.hpp). Those should give you a general idea of what are needed for adding an expression. We will go in detail what and why they are needed here. We will take the `x_by_xy` expression in [src/FPBench_methods.hpp](src/FPBench_methods.hpp) as an example.
 
 ### Expression
 The most important thing is to define the expression itself, how it is computed. For our example, it is defined as:
