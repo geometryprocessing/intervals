@@ -121,6 +121,7 @@ void read_rationals_from_file(const std::string &inputFileName)
         mpq_set_str(rt.value, (record[1] + "/" + record[0]).c_str(), 10);
         pre_defined_rationals.push_back(rt);
     }
+    infile.close();
 }
 
 bool within_range(double lower, double upper, gmp::Rational rational_result)
