@@ -41,15 +41,6 @@ intervals_download_filib()
 add_subdirectory(${THIRD_PARTY_DIR}/filib)
 target_link_libraries(intervals PUBLIC filib)
 
-## download highfive for reading hdf5 files
-intervals_download_highfive()
-set(HIGHFIVE_UNIT_TESTS OFF CACHE BOOL "Enable unit tests")
-set(HIGHFIVE_EXAMPLES OFF CACHE BOOL "Compile examples")
-add_subdirectory(${THIRD_PARTY_DIR}/highfive)
-target_link_libraries(intervals PUBLIC HighFive)
-
-
-
 
 
 
